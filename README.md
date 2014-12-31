@@ -1,4 +1,4 @@
 buildingwidgets
 ===============
 
-repo for a htmlwidget a week documented at http://buildingwidgets.com
+repo for a [htmlwidget](http://htmlwidgets.org) a week in 2015 documented at [Building Widgets](http://buildingwidgets.com)
