@@ -45,11 +45,14 @@ tagList(
       data: %s,
       dataType: 'json',
       subDomainTitleFormat:{
-        filled : 'widgets created',
-        empty : 'no widgets'
+        filled : 'widgets created for {date}',
+        empty : 'no widgets {date}'
       },
       verticalOrientation: true,
-      displayLegend: false
+      displayLegend: false, 
+      onClick: function(date, count) {
+      	console.log(d3.time.format('%%U')(date))
+      }
   	});
   ",js))
 ) %>>%
