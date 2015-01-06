@@ -1,33 +1,36 @@
 library(htmltools)
 library(pipeR)
+library(xts)
 
 options("scipen"=100)
 
 Sys.Date():as.Date("2015-12-31") %>>%
-  ( as.xts(x=round(runif(length(.),max=4)),order.by=as.Date(.)) ) %>>%
-  (.[xts::endpoints(.,on="weeks")]) %>>%
+  (
+    as.xts(
+      # make programmatic
+      x = c(100,rep(NA,length(.)-1))
+      ,order.by=as.Date(.)
+    )
+  ) %>>%
+  #(~ .[endpoints(.,on="weeks")][1] = 100) %>>%
   (
     data.frame(
       date = as.integer(index(.))*24*60*60 #*1000
       ,value = coredata(.)
     )
   ) %>>%
-( 
-  structure(
-    lapply(
-      1:nrow(.)
-      ,function(n){
-        .[n,2]
-      }
+  ( 
+    structure(
+      as.list(.[[2]][!is.na(.[[2]])])
+      ,names = as.character(.[[1]][!is.na(.[[2]])])
     )
-    ,names = .[,1]
-  )
-) %>>%
-jsonlite::toJSON(
-    auto_unbox=T
-) %>>%
-(~js) %>>%
-cat( file = "posts.json" )
+  ) %>>%
+  jsonlite::toJSON(
+      auto_unbox=T
+      ,na="null"
+  ) %>>%
+  (~js)# %>>%
+  #cat( file = "posts.json" )
 
 
 tagList(
@@ -40,7 +43,13 @@ tagList(
       start: new Date(2015,0),
       range: 12,
       data: %s,
-      dataType: 'json'
+      dataType: 'json',
+      subDomainTitleFormat:{
+        filled : 'widgets created',
+        empty : 'no widgets'
+      },
+      verticalOrientation: true,
+      displayLegend: false
   	});
   ",js))
 ) %>>%
@@ -54,9 +63,9 @@ tagList(
       )
       ,htmlDependency(
         name = "cal-heatmap"
-        ,version = "3.3.1"
-        ,src = c(href = "http://cdn.jsdelivr.net/cal-heatmap/3.3.10")
-        ,script = "cal-heatmap.min.js"
+        ,version = "3.5"
+        ,src = c(href = "./lib/cal-heatmap")
+        ,script = "cal-heatmap.js"
         ,style = "cal-heatmap.css"
       )
     )
