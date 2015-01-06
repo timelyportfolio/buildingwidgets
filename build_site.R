@@ -51,7 +51,8 @@ tagList(
       verticalOrientation: true,
       displayLegend: false, 
       onClick: function(date, count) {
-      	console.log(d3.time.format('%%U')(date))
+      	console.log(d3.time.format('%%U')(date) + ' clicked')
+        window.open( './week' + d3.time.format('%%U')(date), name = '_blank' )
       }
   	});
   ",js))

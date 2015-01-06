@@ -1,0 +1,53 @@
+---
+title: "Week01 - Easy Flowcharts and Diagrams"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r "setup",echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+)
+
+library(DiagrammeR)
+library(htmltools)
+```
+
+## Already Cheating?
+It's just week 1 of the Building Widgets [widget-a-week challenge](http://www.buildingwidgets.com/blog/2015/1/2/can-i-commit), and some might think I am already cheating for two reasons:
+
+1. This widget was started last week, and
+1. I'm not the sole author.
+
+However, these "transgressions" will likely occur throughout the year, since many widgets will be multi-week projects, and I very much like collaborating on widgets.
+
+## This Week's Widget - [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR)
+[`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) is authored by Air Quality Scientist [Richard Iannone](http://about.me/rich_i/) who has quite a record of [GitHub activity](https://github.com/rich-iannone#contributions-calendar).  If you are asking why I am involved, [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) didn't start out as a [`htmlwidget`](http://htmlwidgets.org).  Since I along with > 5,000 other starrers love [`mermaid.js`](https://github.com/knsv/mermaid) and the `htmlwidgets` infrastructure is so compelling, I thought [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) would be perfect as one of the first `htmlwidgets`.  For more details on the conversion, see [Widgets for Christmas](http://timelyportfolio.blogspot.com/2014/12/widgets-for-christmas.html) or for those more technically inclined inspect this [pull request](https://github.com/rich-iannone/DiagrammeR/pull/2).
+
+### What Does it Do?
+[`mermaid.js`](https://github.com/knsv/mermaid) offers easy diagrams through a markdown-like spec and leverages [`d3`](http://d3js.org) and [`dagre-d3`](https://github.com/cpettitt/dagre-d3).  The `mermaid.js` [site](http://knsv.github.io/mermaid/flowchart.html) offers quite a few examples of flowcharts, experimental sequence diagrams, and other diagrams.
+
+### Examples in `R`
+In general for all the widgets to come, I will try to create entirely new examples and put them in `R` contexts.  I will also try to convert examples from documentation of popular static `R` packages.
+
+<h4>Example 1 - Stylish Nodes</h4>
+```{r}
+DiagrammeR("
+  graph LR;
+    A[rect]-- add style -->A2[rect + style];
+    B{rhombus}---|+ some style|B2{rhombus + style};
+    C(rounded);   D((circle));
+    style A2 fill:#c12,stroke-width:5px;
+    style B2 fill:none, stroke-dasharray:10;
+")
+```
