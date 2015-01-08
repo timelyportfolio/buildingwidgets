@@ -42,6 +42,8 @@ In many cases, development of a [`htmlwidget`] can often impact the JavaScript l
 In general for all the widgets to come, I will try to create entirely new examples and put them in `R` contexts.  I will also try to convert examples from documentation of popular static `R` packages.
 
 <h4>Example 1 - Stylish Nodes</h4>
+As basic as they come, this example shows the options for shapes of nodes and some styling with `CSS`.
+
 ```{r "example1"}
 library(DiagrammeR)
 
@@ -56,6 +58,7 @@ DiagrammeR("
 ```
 
 <h4>Example 2 - Workflow of a Building Widgets Post</h4>
+As I mentioned in my first [blog post](), I chose to build the site on [Squarespace](http://squarespace.com).  Getting the workflow right will require quite a bit of iteration, but for now, here is a diagram of the workflow.
 
 ```{r "example2"}
 library(DiagrammeR)
@@ -74,6 +77,7 @@ DiagrammeR("
 ```
 
 <h4>Example 3 - Dependencies of <a href="http://htmlwidgets.org/showcase_leaflet">Showcase Widgets</a></h4>
+We learn about some of the first `htmlwidgets` in the [showcase](http://htmlwidgets.org/showcase_leaflet).  `htmlwidgets` will often depend on many of the same JavaScript libraries.  Fortunately, `htmlwidgets` handles these duplicate dependencies very nicely.  Let's make a diagram of the dependencies from all of the showcase `htmlwidgets`.
 
 ```{r "example3_load", eval=F}
 # htmlwidgets network of yaml dependency or package imports/suggest
@@ -139,6 +143,7 @@ DiagrammeR(
 ```
 
 <h4>Example 4 - <code>igraph</code></h4>
+Example 3 certainly could have benefitted from the power of `igraph` to build and manipulate the network of dependencies.  Here is one way of combining `igraph` and `DiagrammeR`.
 
 ```{r "example4"}
 library(igraph)
@@ -163,6 +168,10 @@ print( E(iG) ) %>>%
 ```
 
 <h4>Example 5 - Using <code>htmltools</code></h4>
+RStudio's package [`htmltools`](http://github.com/rstudio/htmltools) offers all sorts of helpful tools when constructing web content.  We designed `DiagrammeR` to collaborate nicely with `htmltools`.  In this example, we'll use `DiagrammeR()` with an empty spec just to inject the necessary dependencies.  `tags$div(class='mermaid',...,spec,...)` will provide the diagram spec.
+
+With `tagList` from `htmltools` we could also compose web content with multiple `DiagrammeR`s along with all the HTML & JavaScript that we know and love.  The next example will illustrate this.
+
 ```{r}
 library(htmltools)
 library(DiagrammeR)
@@ -177,6 +186,8 @@ tagList(
 ```
 
 <h4>Example 6 - Animated Path</h4>
+I would consider this example **advanced**.  Various examples on the web demonstrate `CSS` animation to make an animated `path` in `SVG`.  I chose this [example](http://css-tricks.com/svg-line-animation-works) and amended it to work with our `mermaid.js` diagram.  As far as I know, it is the first example of its kind.
+
 ```{r "example6"}
 library(htmltools)
 # animated path example (advanced) and does not work in RStudio
@@ -201,6 +212,8 @@ tagList(
 ```
 
 <h4>Example 7 - Sequence Diagram</h4>
+I just learned about sequence diagrams as I read through the `mermaid.js` documentation, so I apologize if this is not quite right.  While we are on the topic of `htmlwidgets`, a sequence diagram might help explain the life of a `htmlwidget`.
+
 ```{r "example7"}
 library(DiagrammeR)
 DiagrammeR("
@@ -213,8 +226,8 @@ DiagrammeR("
       Note right of Browser: User Interact
     else Shiny
       loop continuously in response to event
-        R->>Browser: json over socket;
-        Browser->>R: json over socket;
+        R-->>Browser: json over socket;
+        Browser-->>R: json over socket;
         Note left of R: Get Data<br/>Do Calculations
         Note right of Browser: User Interact
       end
