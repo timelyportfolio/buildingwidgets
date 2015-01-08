@@ -71,7 +71,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="this-weeks-widget---diagrammer" class="section level2">
 <h2>This Week’s Widget - <a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a></h2>
-<p><a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a> is authored by Air Quality Scientist <a href="http://about.me/rich_i/">Richard Iannone</a> who has quite a record of <a href="https://github.com/rich-iannone#contributions-calendar">GitHub activity</a>. If you are asking why I am involved, <a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a> didn’t start out as a <a href="http://htmlwidgets.org"><code>htmlwidget</code></a>. Since I along with &gt; 5,000 other starrers love <a href="https://github.com/knsv/mermaid"><code>mermaid.js</code></a> and the <code>htmlwidgets</code> infrastructure is so compelling, I thought <a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a> would be perfect as one of the first <code>htmlwidgets</code>. For more details on the conversion, see <a href="http://timelyportfolio.blogspot.com/2014/12/widgets-for-christmas.html">Widgets for Christmas</a> or for those more technically inclined inspect this <a href="https://github.com/rich-iannone/DiagrammeR/pull/2">pull request</a>.</p>
+<p><a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a> is authored by Air Quality Scientist <a href="http://about.me/rich_i/">Richard Iannone</a> who has quite a record of <a href="https://github.com/rich-iannone#contributions-calendar">GitHub activity</a>. Thanks Richard for letting me play along. If you are asking why I am involved, <a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a> didn’t start out as a <a href="http://htmlwidgets.org"><code>htmlwidget</code></a>. Since I along with &gt; 5,000 other starrers love <a href="https://github.com/knsv/mermaid"><code>mermaid.js</code></a> and the <code>htmlwidgets</code> infrastructure is so compelling, I thought <a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a> would be perfect as one of the first <code>htmlwidgets</code>. For more details on the conversion, see <a href="http://timelyportfolio.blogspot.com/2014/12/widgets-for-christmas.html">Widgets for Christmas</a> or for those more technically inclined inspect this <a href="https://github.com/rich-iannone/DiagrammeR/pull/2">pull request</a>.</p>
 <div id="what-does-it-do" class="section level3">
 <h3>What Does it Do?</h3>
 <p><a href="https://github.com/knsv/mermaid"><code>mermaid.js</code></a> offers easy diagrams through a markdown-like spec and leverages <a href="http://d3js.org"><code>d3</code></a> and <a href="https://github.com/cpettitt/dagre-d3"><code>dagre-d3</code></a>. The <code>mermaid.js</code> <a href="http://knsv.github.io/mermaid/flowchart.html">site</a> offers quite a few examples of flowcharts, experimental sequence diagrams, and other diagrams.</p>
@@ -97,8 +97,8 @@ DiagrammeR(&quot;
     style A2 fill:#c12,stroke-width:5px;
     style B2 fill:none, stroke-dasharray:10;
 &quot;)</code></pre>
-<p><div id="htmlwidget-3991" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-3991">{ "x": {
+<p><div id="htmlwidget-916" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-916">{ "x": {
  "diagram": "\n  graph TD;\n    A[rect]-- add style -->A2[rect + style];\n    B{rhombus}---|+ some style|B2{rhombus + style};\n    C(rounded);   D((circle)); \n    style A2 fill:#c12,stroke-width:5px;\n    style B2 fill:none, stroke-dasharray:10;\n" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -118,8 +118,8 @@ DiagrammeR(&quot;
     HTML --&gt;|git push| Github;
     HTML --&gt;|copy/paste| Squarespace ;
 &quot;)</code></pre>
-<p><div id="htmlwidget-3288" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-3288">{ "x": {
+<p><div id="htmlwidget-3178" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-3178">{ "x": {
  "diagram": "\n  graph TD;\n    hw{htmlwidget} -->experiments;\n    hw -->content;\n    experiments -->RMarkdown\n    content -->RMarkdown\n    RMarkdown -->|R/knitr|Markdown;\n    Markdown -->|Pandoc|HTML;\n    HTML -->|git push| Github;\n    HTML -->|copy/paste| Squarespace ;\n" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -179,8 +179,8 @@ deps = do.call(rbind,deps)</code></pre>
     )
   )
 )</code></pre>
-<p><div id="htmlwidget-5938" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-5938">{ "x": {
+<p><div id="htmlwidget-2730" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-2730">{ "x": {
  "diagram": "graph LR;id1[leaflet]-->id13[jquery];id1[leaflet]-->id14[leaflet];id1[leaflet]-->id15[leafletfix];id2[dygraphs]-->id16[dygraphs];id2[dygraphs]-->id17[moment];id2[dygraphs]-->id18[moment-timezone];id3[networkD3]-->id19[d3];id3[networkD3]-->id20[sankey];id4[DT]-->id13[jquery];id4[DT]-->id21[datatables];id5[rthreejs]-->id19[d3];id5[rthreejs]-->id22[threejs];style id1 fill:#E41A1C;style id2 fill:#377EB8;style id3 fill:#4DAF4A;style id4 fill:#984EA3;style id5 fill:#FF7F00;" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -212,8 +212,8 @@ print( E(iG) ) %&gt;&gt;%
 ## [2] Tom  -&gt; Mary
 ## [3] Tom  -&gt; Jill
 ## [4] Jill -&gt; Tom</code></pre>
-<p><div id="htmlwidget-8266" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-8266">{ "x": {
+<p><div id="htmlwidget-1410" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-1410">{ "x": {
  "diagram": "graph LR;Mary-->Sam ;Tom-->Mary;Tom-->Jill;Jill-->Tom " 
 },"evals": [  ] }</script></p>
 <h4>
@@ -232,8 +232,8 @@ tagList(
   ,DiagrammeR()  # here just used to inject dependencies
 )</code></pre>
 <p><div class="mermaid">graph LR; tw[htmltools tag] --&gt; diagram</div>
-<div id="htmlwidget-2405" style="width:960px;height:500px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-2405">{ "x": {
+<div id="htmlwidget-5022" style="width:960px;height:500px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-5022">{ "x": {
  "diagram": "" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -260,8 +260,8 @@ tagList(
     ,HTML( ' @keyframes dash { to { stroke-dashoffset: 20;  } } ' )
   ))
 )</code></pre>
-<p><div id="htmlwidget-237" style="width:960px;height:500px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-237">{ "x": {
+<p><div id="htmlwidget-6692" style="width:960px;height:500px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-6692">{ "x": {
  "diagram": "\n  graph LR; animA[A]; style animA stroke-dasharray: 10,  animation: dash 1s linear infinite; \n",
 "tasks": "makeAnimated" 
 },"evals": [ "tasks" ] }</script>
@@ -295,14 +295,14 @@ DiagrammeR(&quot;
       end
     end
 &quot;)</code></pre>
-<p><div id="htmlwidget-42" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-42">{ "x": {
+<p><div id="htmlwidget-868" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-868">{ "x": {
  "diagram": "\n  sequenceDiagram;\n    participant R;\n    Note left of R: Get Data<br/>Do Calculations\n    htmlwidgets->>R: dependencies, binding \n    alt Static\n      R->>Browser: json;\n      Note right of Browser: User Interact\n    else Shiny\n      loop continuously in response to event\n        R-->>Browser: json over socket;\n        Browser-->>R: json over socket;\n        Note left of R: Get Data<br/>Do Calculations\n        Note right of Browser: User Interact\n      end\n    end\n" 
 },"evals": [  ] }</script></p>
 </div>
 <div id="conclude-and-reproduce" class="section level3">
 <h3>Conclude and Reproduce</h3>
-<p>I hope you enjoyed the first installment of the widget a week project. Please, please let me know your thoughts,comments, brilliant ideas, applications, favorite JavaScript libraries.</p>
+<p>I hope you enjoyed the first installment of the widget a week project. Please, please let me know your thoughts, comments, brilliant ideas, applications, and favorite JavaScript libraries.</p>
 </div>
 </div>
 
