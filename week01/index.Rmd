@@ -235,3 +235,6 @@ DiagrammeR("
 ")
 
 ```
+
+### Conclude and Reproduce
+I hope you enjoyed the first installment of the widget a week project.  Please, please let me know your thoughts,comments, brilliant ideas, applications, favorite JavaScript libraries.

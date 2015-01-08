@@ -55,6 +55,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#what-does-it-do">What Does it Do?</a></li>
 <li><a href="#better-than-where-we-found-out">Better Than Where We Found Out</a></li>
 <li><a href="#examples-in-r">Examples in <code>R</code></a></li>
+<li><a href="#conclude-and-reproduce">Conclude and Reproduce</a></li>
 </ul></li>
 </ul>
 </div>
@@ -96,8 +97,8 @@ DiagrammeR(&quot;
     style A2 fill:#c12,stroke-width:5px;
     style B2 fill:none, stroke-dasharray:10;
 &quot;)</code></pre>
-<p><div id="htmlwidget-9391" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-9391">{ "x": {
+<p><div id="htmlwidget-3991" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-3991">{ "x": {
  "diagram": "\n  graph TD;\n    A[rect]-- add style -->A2[rect + style];\n    B{rhombus}---|+ some style|B2{rhombus + style};\n    C(rounded);   D((circle)); \n    style A2 fill:#c12,stroke-width:5px;\n    style B2 fill:none, stroke-dasharray:10;\n" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -117,8 +118,8 @@ DiagrammeR(&quot;
     HTML --&gt;|git push| Github;
     HTML --&gt;|copy/paste| Squarespace ;
 &quot;)</code></pre>
-<p><div id="htmlwidget-3233" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-3233">{ "x": {
+<p><div id="htmlwidget-3288" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-3288">{ "x": {
  "diagram": "\n  graph TD;\n    hw{htmlwidget} -->experiments;\n    hw -->content;\n    experiments -->RMarkdown\n    content -->RMarkdown\n    RMarkdown -->|R/knitr|Markdown;\n    Markdown -->|Pandoc|HTML;\n    HTML -->|git push| Github;\n    HTML -->|copy/paste| Squarespace ;\n" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -178,8 +179,8 @@ deps = do.call(rbind,deps)</code></pre>
     )
   )
 )</code></pre>
-<p><div id="htmlwidget-8178" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-8178">{ "x": {
+<p><div id="htmlwidget-5938" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-5938">{ "x": {
  "diagram": "graph LR;id1[leaflet]-->id13[jquery];id1[leaflet]-->id14[leaflet];id1[leaflet]-->id15[leafletfix];id2[dygraphs]-->id16[dygraphs];id2[dygraphs]-->id17[moment];id2[dygraphs]-->id18[moment-timezone];id3[networkD3]-->id19[d3];id3[networkD3]-->id20[sankey];id4[DT]-->id13[jquery];id4[DT]-->id21[datatables];id5[rthreejs]-->id19[d3];id5[rthreejs]-->id22[threejs];style id1 fill:#E41A1C;style id2 fill:#377EB8;style id3 fill:#4DAF4A;style id4 fill:#984EA3;style id5 fill:#FF7F00;" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -211,8 +212,8 @@ print( E(iG) ) %&gt;&gt;%
 ## [2] Tom  -&gt; Mary
 ## [3] Tom  -&gt; Jill
 ## [4] Jill -&gt; Tom</code></pre>
-<p><div id="htmlwidget-6293" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-6293">{ "x": {
+<p><div id="htmlwidget-8266" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-8266">{ "x": {
  "diagram": "graph LR;Mary-->Sam ;Tom-->Mary;Tom-->Jill;Jill-->Tom " 
 },"evals": [  ] }</script></p>
 <h4>
@@ -231,8 +232,8 @@ tagList(
   ,DiagrammeR()  # here just used to inject dependencies
 )</code></pre>
 <p><div class="mermaid">graph LR; tw[htmltools tag] --&gt; diagram</div>
-<div id="htmlwidget-9991" style="width:960px;height:500px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-9991">{ "x": {
+<div id="htmlwidget-2405" style="width:960px;height:500px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-2405">{ "x": {
  "diagram": "" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -259,8 +260,8 @@ tagList(
     ,HTML( ' @keyframes dash { to { stroke-dashoffset: 20;  } } ' )
   ))
 )</code></pre>
-<p><div id="htmlwidget-1133" style="width:960px;height:500px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-1133">{ "x": {
+<p><div id="htmlwidget-237" style="width:960px;height:500px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-237">{ "x": {
  "diagram": "\n  graph LR; animA[A]; style animA stroke-dasharray: 10,  animation: dash 1s linear infinite; \n",
 "tasks": "makeAnimated" 
 },"evals": [ "tasks" ] }</script>
@@ -294,10 +295,14 @@ DiagrammeR(&quot;
       end
     end
 &quot;)</code></pre>
-<p><div id="htmlwidget-4409" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-4409">{ "x": {
+<p><div id="htmlwidget-42" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-42">{ "x": {
  "diagram": "\n  sequenceDiagram;\n    participant R;\n    Note left of R: Get Data<br/>Do Calculations\n    htmlwidgets->>R: dependencies, binding \n    alt Static\n      R->>Browser: json;\n      Note right of Browser: User Interact\n    else Shiny\n      loop continuously in response to event\n        R-->>Browser: json over socket;\n        Browser-->>R: json over socket;\n        Note left of R: Get Data<br/>Do Calculations\n        Note right of Browser: User Interact\n      end\n    end\n" 
 },"evals": [  ] }</script></p>
+</div>
+<div id="conclude-and-reproduce" class="section level3">
+<h3>Conclude and Reproduce</h3>
+<p>I hope you enjoyed the first installment of the widget a week project. Please, please let me know your thoughts,comments, brilliant ideas, applications, favorite JavaScript libraries.</p>
 </div>
 </div>
 
