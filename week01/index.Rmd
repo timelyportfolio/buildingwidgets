@@ -34,8 +34,8 @@ However, these "transgressions" will likely occur throughout the year, since man
 ### What Does it Do?
 [`mermaid.js`](https://github.com/knsv/mermaid) offers easy diagrams through a markdown-like spec and leverages [`d3`](http://d3js.org) and [`dagre-d3`](https://github.com/cpettitt/dagre-d3).  The `mermaid.js` [site](http://knsv.github.io/mermaid/flowchart.html) offers quite a few examples of flowcharts, experimental sequence diagrams, and other diagrams.
 
-### Better Than Where We Found Out
-In many cases, development of a [`htmlwidget`] can often impact the JavaScript library in various ways, such as bringing attention, offering new perspective, providing new examples and tests, and applying in different contexts and fields of study.  Just to insure that we didn't just take from `mermaid.js`, we were able to file two issues with `mermaid.js` and demonstrate one way of forcing the diagram to fit in its container `div`.
+### Better Than Where We Found It
+In many cases, development of a [`htmlwidget`](http://htmlwidgets.org) can often impact the JavaScript library in various ways, such as bringing attention, offering new perspective, providing new examples and tests, and applying in different contexts and fields of study.  Just to insure that we didn't just take from `mermaid.js`, we were able to file two issues with `mermaid.js` and demonstrate one way of forcing the diagram to fit in its container `div`.
 
 
 ### Examples in `R`

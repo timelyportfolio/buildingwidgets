@@ -53,7 +53,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#already-cheating">Already Cheating?</a></li>
 <li><a href="#this-weeks-widget---diagrammer">This Week’s Widget - <a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a></a><ul>
 <li><a href="#what-does-it-do">What Does it Do?</a></li>
-<li><a href="#better-than-where-we-found-out">Better Than Where We Found Out</a></li>
+<li><a href="#better-than-where-we-found-it">Better Than Where We Found It</a></li>
 <li><a href="#examples-in-r">Examples in <code>R</code></a></li>
 <li><a href="#conclude-and-reproduce">Conclude and Reproduce</a></li>
 </ul></li>
@@ -76,9 +76,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h3>What Does it Do?</h3>
 <p><a href="https://github.com/knsv/mermaid"><code>mermaid.js</code></a> offers easy diagrams through a markdown-like spec and leverages <a href="http://d3js.org"><code>d3</code></a> and <a href="https://github.com/cpettitt/dagre-d3"><code>dagre-d3</code></a>. The <code>mermaid.js</code> <a href="http://knsv.github.io/mermaid/flowchart.html">site</a> offers quite a few examples of flowcharts, experimental sequence diagrams, and other diagrams.</p>
 </div>
-<div id="better-than-where-we-found-out" class="section level3">
-<h3>Better Than Where We Found Out</h3>
-<p>In many cases, development of a [<code>htmlwidget</code>] can often impact the JavaScript library in various ways, such as bringing attention, offering new perspective, providing new examples and tests, and applying in different contexts and fields of study. Just to insure that we didn’t just take from <code>mermaid.js</code>, we were able to file two issues with <code>mermaid.js</code> and demonstrate one way of forcing the diagram to fit in its container <code>div</code>.</p>
+<div id="better-than-where-we-found-it" class="section level3">
+<h3>Better Than Where We Found It</h3>
+<p>In many cases, development of a <a href="http://htmlwidgets.org"><code>htmlwidget</code></a> can often impact the JavaScript library in various ways, such as bringing attention, offering new perspective, providing new examples and tests, and applying in different contexts and fields of study. Just to insure that we didn’t just take from <code>mermaid.js</code>, we were able to file two issues with <code>mermaid.js</code> and demonstrate one way of forcing the diagram to fit in its container <code>div</code>.</p>
 </div>
 <div id="examples-in-r" class="section level3">
 <h3>Examples in <code>R</code></h3>
@@ -97,8 +97,8 @@ DiagrammeR(&quot;
     style A2 fill:#c12,stroke-width:5px;
     style B2 fill:none, stroke-dasharray:10;
 &quot;)</code></pre>
-<p><div id="htmlwidget-916" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-916">{ "x": {
+<p><div id="htmlwidget-2520" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-2520">{ "x": {
  "diagram": "\n  graph TD;\n    A[rect]-- add style -->A2[rect + style];\n    B{rhombus}---|+ some style|B2{rhombus + style};\n    C(rounded);   D((circle)); \n    style A2 fill:#c12,stroke-width:5px;\n    style B2 fill:none, stroke-dasharray:10;\n" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -118,8 +118,8 @@ DiagrammeR(&quot;
     HTML --&gt;|git push| Github;
     HTML --&gt;|copy/paste| Squarespace ;
 &quot;)</code></pre>
-<p><div id="htmlwidget-3178" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-3178">{ "x": {
+<p><div id="htmlwidget-8809" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-8809">{ "x": {
  "diagram": "\n  graph TD;\n    hw{htmlwidget} -->experiments;\n    hw -->content;\n    experiments -->RMarkdown\n    content -->RMarkdown\n    RMarkdown -->|R/knitr|Markdown;\n    Markdown -->|Pandoc|HTML;\n    HTML -->|git push| Github;\n    HTML -->|copy/paste| Squarespace ;\n" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -179,8 +179,8 @@ deps = do.call(rbind,deps)</code></pre>
     )
   )
 )</code></pre>
-<p><div id="htmlwidget-2730" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-2730">{ "x": {
+<p><div id="htmlwidget-2838" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-2838">{ "x": {
  "diagram": "graph LR;id1[leaflet]-->id13[jquery];id1[leaflet]-->id14[leaflet];id1[leaflet]-->id15[leafletfix];id2[dygraphs]-->id16[dygraphs];id2[dygraphs]-->id17[moment];id2[dygraphs]-->id18[moment-timezone];id3[networkD3]-->id19[d3];id3[networkD3]-->id20[sankey];id4[DT]-->id13[jquery];id4[DT]-->id21[datatables];id5[rthreejs]-->id19[d3];id5[rthreejs]-->id22[threejs];style id1 fill:#E41A1C;style id2 fill:#377EB8;style id3 fill:#4DAF4A;style id4 fill:#984EA3;style id5 fill:#FF7F00;" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -212,8 +212,8 @@ print( E(iG) ) %&gt;&gt;%
 ## [2] Tom  -&gt; Mary
 ## [3] Tom  -&gt; Jill
 ## [4] Jill -&gt; Tom</code></pre>
-<p><div id="htmlwidget-1410" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-1410">{ "x": {
+<p><div id="htmlwidget-4169" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-4169">{ "x": {
  "diagram": "graph LR;Mary-->Sam ;Tom-->Mary;Tom-->Jill;Jill-->Tom " 
 },"evals": [  ] }</script></p>
 <h4>
@@ -232,8 +232,8 @@ tagList(
   ,DiagrammeR()  # here just used to inject dependencies
 )</code></pre>
 <p><div class="mermaid">graph LR; tw[htmltools tag] --&gt; diagram</div>
-<div id="htmlwidget-5022" style="width:960px;height:500px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-5022">{ "x": {
+<div id="htmlwidget-7888" style="width:960px;height:500px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-7888">{ "x": {
  "diagram": "" 
 },"evals": [  ] }</script></p>
 <h4>
@@ -252,7 +252,7 @@ tagList(
   ,tags$script(sprintf(&quot;
     function makeAnimated (el){
       // get the stylesheet and add a rule for an animated path
-      var sty = document.styleSheets[4] //el.getElementsByTagName('style')[0];
+      var sty = document.styleSheets[0] //el.getElementsByTagName('style')[0];
       // http://davidwalsh.name/add-rules-stylesheets
       //   http://css-tricks.com/svg-line-animation-works/
       sty.insertRule('%s')
@@ -260,15 +260,15 @@ tagList(
     ,HTML( ' @keyframes dash { to { stroke-dashoffset: 20;  } } ' )
   ))
 )</code></pre>
-<p><div id="htmlwidget-6692" style="width:960px;height:500px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-6692">{ "x": {
+<p><div id="htmlwidget-1874" style="width:960px;height:500px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-1874">{ "x": {
  "diagram": "\n  graph LR; animA[A]; style animA stroke-dasharray: 10,  animation: dash 1s linear infinite; \n",
 "tasks": "makeAnimated" 
 },"evals": [ "tasks" ] }</script>
 <script>
     function makeAnimated (el){
       // get the stylesheet and add a rule for an animated path
-      var sty = document.styleSheets[4] //el.getElementsByTagName('style')[0];
+      var sty = document.styleSheets[0] //el.getElementsByTagName('style')[0];
       // http://davidwalsh.name/add-rules-stylesheets
       //   http://css-tricks.com/svg-line-animation-works/
       sty.insertRule(' @keyframes dash { to { stroke-dashoffset: 20;  } } ')
@@ -295,8 +295,8 @@ DiagrammeR(&quot;
       end
     end
 &quot;)</code></pre>
-<p><div id="htmlwidget-868" style="width:672px;height:480px;" class="DiagrammeR"></div>
-<script type="application/json" data-for="htmlwidget-868">{ "x": {
+<p><div id="htmlwidget-7088" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-7088">{ "x": {
  "diagram": "\n  sequenceDiagram;\n    participant R;\n    Note left of R: Get Data<br/>Do Calculations\n    htmlwidgets->>R: dependencies, binding \n    alt Static\n      R->>Browser: json;\n      Note right of Browser: User Interact\n    else Shiny\n      loop continuously in response to event\n        R-->>Browser: json over socket;\n        Browser-->>R: json over socket;\n        Note left of R: Get Data<br/>Do Calculations\n        Note right of Browser: User Interact\n      end\n    end\n" 
 },"evals": [  ] }</script></p>
 </div>
