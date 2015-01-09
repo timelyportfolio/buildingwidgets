@@ -201,7 +201,7 @@ tagList(
   ,tags$script(sprintf("
     function makeAnimated (el){
       // get the stylesheet and add a rule for an animated path
-      var sty = document.styleSheets[4] //el.getElementsByTagName('style')[0];
+      var sty = document.styleSheets[0] //el.getElementsByTagName('style')[0];
       // http://davidwalsh.name/add-rules-stylesheets
       //   http://css-tricks.com/svg-line-animation-works/
       sty.insertRule('%s')
