@@ -157,7 +157,7 @@ svgPanZoom(
         cos(r^2)*exp(-r/f)
         , drawlabels = FALSE
         , axes = FALSE
-        , frame = TRUE)
+        , frame = TRUE, col = 'cadetblue')
     }
   )
 )
@@ -175,7 +175,7 @@ svgPanZoom(
         cos(r^2)*exp(-r/f)
         , drawlabels = FALSE
         , axes = FALSE
-        , frame = TRUE)
+        , frame = TRUE, col = 'cadetblue')
     }
   ),height = 400, width = 400, controlIconsEnabled=T
 ) %>>%
@@ -188,4 +188,81 @@ svgPanZoom(
     , overflow = "hidden"
   )
   
+```
+
+For one more really nice example, see this [beautiful little Kohonen masterpiece](http://asbcllc.com/blog/2015/January/kohonen_panjs/) from volunteer tester and lover of interactive graphics [Alex Bresler](http://asbcllc.com/).
+
+
+<h4>Grid (lattice | ggplot2) + svgPanZoom</h4>
+`svgPanZoom` would be very incomplete if it did not also support the graphics libraries built on top of `grid`--`ggplot2` and `lattice`--that spoil us `R` users.  Before we start with the examples, I think I should explain the two choices we have to convert `grid` graphics to `SVG`.  `svgPlot` from `SVGAnnotation` wraps the `svg grDevice` (probably `Cairo`) to convert `R` plots to `SVG`.  Unfortunately, it often results in ugly `XML` that is difficult to customize or enhance.  However, it is much faster than the other choice `gridSVG` function `grid.export()`.  `gridSVG` though concentrates on clean, well-structured `XML` with `text` elements intact, unique identifiers, helpful `meta` information, and some helper Javascript.  `svgPanZoom` prefers `gridSVG`, but if you're looking for speed choose `svgPlot`.  I'll demonstrate both with the next example.  Let's go straight into a choropleth map in `ggplot2` using [Ari Lamstein](https://twitter.com/arilamstein)'s package [`choroplethr`](https://github.com/trulia/choroplethr).
+
+```{r "example04a", eval = F}
+library(choroplethr)
+library(ggplot2)
+
+# start with svgPlot
+#  and use example from ?state_choropleth
+data(df_pop_state)
+sc <- state_choropleth(
+  df_pop_state
+  , title="US 2012 State Population Estimates"
+  , legend="Population"
+)
+
+svgPanZoom(
+  svgPlot(
+    show(sc)
+    # will need to manually specify height/width
+    ,height = 9, width = 17
+  ), controlIconsEnabled = T
+)
+```
+
+```{r "example04a_run", echo = F, fig.keep="none"}
+library(choroplethr)
+library(ggplot2)
+
+# start with svgPlot
+#  and use example from ?state_choropleth
+data(df_pop_state)
+sc <- state_choropleth(
+  df_pop_state
+  , title="US 2012 State Population Estimates"
+  , legend="Population"
+)
+
+svgPanZoom(
+  svgPlot(
+    show(sc)
+    # will need to manually specify height/width
+    ,height = 9, width = 17
+  ), controlIconsEnabled = T, fit = F, height = 400, width = 700
+)%>>%
+  htmlwidgets:::as.iframe(
+    file="example04a.html"
+    , libdir = "lib"
+    , selfcontained=F
+    , width = 800
+    , height =500
+    , overflow = "hidden"
+  )
+```
+
+Now with gridSVG.  You'll probably notice it takes much longer.
+
+```{r "example04b", eval = F}
+# now with gridSVG
+svgPanZoom( sc, controlIconsEnabled = T)
+```
+
+```{r "example04b_run", echo= F, fig.keep="none", fig.width = 14, fig.height = 8}
+svgPanZoom( sc, controlIconsEnabled = T, fit = F, width = 700, height = 400 ) %>>%
+  htmlwidgets:::as.iframe(
+    file="example04b.html"
+    , libdir = "lib"
+    , selfcontained=F
+    , width = 800
+    , height =500
+    , overflow = "hidden"
+  )
 ```
