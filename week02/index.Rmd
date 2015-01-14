@@ -37,9 +37,13 @@ library(pipeR)
 - [`coffeewheel`](https://github.com/armish/coffeewheel) - [`coffeewheel` by Jason Davies](https://www.jasondavies.com/coffee-wheel/) wrapper
 - [`metabologram`](https://github.com/armish/metabologram) - a specialized form of `coffeewheel` mentioned above
 
+@lmullen
+
 Not launched last week, but a big miss by me is this `htmlwidget` for mapping from @lmullen.  It was one of the first `htmlwidgets` built after the Dec. 17 release announcement, and offers some nice functionality and interesting examples.
 
 - [`cartographer`](https://github.com/lmullen/cartographer) - [`d3.carto.map`](https://github.com/emeeks/d3-carto-map) wrapper by @lmullen
+
+@rich-iannone
 
 Also, be sure to check out the new `graphviz` functionality added to last week's widget of the week [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR).
 
@@ -47,7 +51,7 @@ Also, be sure to check out the new `graphviz` functionality added to last week's
 I wanted to head in a slightly different direction with this week's widget.  Instead of wrapping Javascript charting libraries as most `htmlwidgets` to date have done, I wanted to let `R` still do the plotting, since so many of us know and love base `graphics`, `ggplot2`, and `lattice`.  I hope nearly every `R` user can easily incorporate this little widget into their `R` graphical analysis and publishing workflow.
 
 ## What Does it Do?
-With lots of help from [`SVGAnnotation`](http://www.omegahat.org/SVGAnnotation/) or [`gridSVG`](https://sjp.co.nz/projects/gridsvg/), `svgPanZoom` will add pan and zoom functionality to nearly all `R` graphics using the [`svg-pan-zoom.js`](https://github.com/ariutta/svg-pan-zoom) tiny and dependency-free Javascript library.  Maybe a little graphic drawn from last week's `DiagrammeR` can help explain the process.
+With some help from [`SVGAnnotation`](http://www.omegahat.org/SVGAnnotation/) or [`gridSVG`](https://sjp.co.nz/projects/gridsvg/), `svgPanZoom` will add pan and zoom functionality to nearly all `R` graphics using the [`svg-pan-zoom.js`](https://github.com/ariutta/svg-pan-zoom), a tiny and dependency-free Javascript library.  Maybe a little graphic drawn from last week's `DiagrammeR` can help explain the process.
 
 ```{r}
 library(DiagrammeR)
@@ -66,12 +70,122 @@ DiagrammeR("
     ht-->rm[R Markdown]
     ht-->html[standalone HTML]
     ht-->iframe
-", height = 300, width = 500) %>>%
-      htmlwidgets:::as.iframe(
+    classDef default fill:none;
+", height = 300, width = 550) %>>%
+      htmlwidgets::as.iframe(
         file="diagram.html"
         , libdir = "lib"
         , selfcontained=F
-        , width = 600
+        , width = 650
         , height =400
         , overflow = "hidden"
       )
+```
+
+## Examples in `R`
+Let's start with the `base`-ics adding `svgPanZoom` to some plots created by the base `graphics` in `R`.  We'll need `svgPanZoom` and `SVGAnnotation` for this first set of examples.
+
+```{r "loadlibraries"}
+#devtools::install_github("timelyportfolio/svgPanZoom")
+library(svgPanZoom)
+library(SVGAnnotation)
+```
+
+<h4>Base Graphics + svgPanZoom</h4>
+
+Plots don't get much more basic than this, but starting simple is the best way to isolate what is happening.  When you run the example below, the Pan/zoom-able graph should appear in RStudio Viewer (if using RStudio) or show up in your browser of choice.
+
+```{r "example01", eval=F}
+# as simple as it gets
+svgPanZoom(
+  svgPlot(
+    plot(1:10)
+  )
+)
+```
+
+```{r "example01_run", echo=F}
+# as simple as it gets
+svgPanZoom(
+  svgPlot(
+    plot(1:10)
+  )
+)
+```
+
+It is hard to tell that our simple little graph now has special powers.  Some icons and hints might help.  I'm struggling with whether to make this behavior the default.  Let me know if you have an opinion.
+
+```{r "example02", eval = F}
+# as simple as it gets
+svgPanZoom(
+  svgPlot(
+    plot(1:10)
+  )
+  ,controlIconsEnabled=T
+) 
+```
+
+```{r "example02_run", echo = F}
+# as simple as it gets
+svgPanZoom(
+  svgPlot(
+    plot(1:10)
+  ),height =400, width = 400, controlIconsEnabled=T
+) %>>%
+  htmlwidgets:::as.iframe(
+    file="example02.html"
+    , libdir = "lib"
+    , selfcontained=F
+    , width = 500
+    , height =500
+    , overflow = "hidden"
+  )
+```
+
+Just to prove that it also works with more complicated plots, let's do one more example in base `graphics.  We'll pull this "persian rug art"  from `?contour`.
+
+```{r "example03", eval = F}
+svgPanZoom(
+  svgPlot(
+    {
+      x <- y <- seq(-4*pi, 4*pi, len = 27)
+      r <- sqrt(outer(x^2, y^2, "+"))
+      opar <- par(mfrow = c(2, 2), mar = rep(0, 4))
+      dev.new()
+      for(f in pi^(0:3))
+      contour(
+        cos(r^2)*exp(-r/f)
+        , drawlabels = FALSE
+        , axes = FALSE
+        , frame = TRUE)
+    }
+  )
+)
+```
+
+```{r "example03_run", echo=F}
+svgPanZoom(
+  svgPlot(
+    {
+      x <- y <- seq(-4*pi, 4*pi, len = 27)
+      r <- sqrt(outer(x^2, y^2, "+"))
+      opar <- par(mfrow = c(2, 2), mar = rep(0, 4))
+      for(f in pi^(0:3))
+      contour(
+        cos(r^2)*exp(-r/f)
+        , drawlabels = FALSE
+        , axes = FALSE
+        , frame = TRUE)
+    }
+  ),height = 400, width = 400, controlIconsEnabled=T
+) %>>%
+  htmlwidgets:::as.iframe(
+    file="example03.html"
+    , libdir = "lib"
+    , selfcontained=F
+    , width = 500
+    , height =500
+    , overflow = "hidden"
+  )
+  
+```
