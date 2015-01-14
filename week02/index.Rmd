@@ -1,5 +1,5 @@
 ---
-title: "Week02 - ??"
+title: "Week02 - Pan and Zoom Almost Any R Graph"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
@@ -19,3 +19,17 @@ knitr::opts_chunk$set(
   #, results = 'asis'
 )
 ```
+
+## Other Widgets This Week
+@yutannihiliation has been prolific this week with a couple new widget seeds and contributions to last week's widget [`metricsgraphics`](http://hrbrmstr.github.io/metricsgraphics/).
+
+- [`chartist`](https://github.com/yutannihilation/chartist) - [Chartist.js](http://gionkunz.github.io/chartist-js) wrapper
+- [`gneisschart`](https://github.com/yutannihilation/gneisschart) - Gneisschart/[Chartbuilder (Quartz)](http://quartz.github.io/Chartbuilder/) wrapper
+
+@dcenergy
+- [`rflot`](https://github.com/dcenergy/rflot) - [Flot](https://github.com/dcenergy/rflot) wrapper
+
+Not launched last week, but a big miss by me is this `htmlwidget` for mapping from @lmullen.  It was one of the first `htmlwidgets` built after the Dec. 17 release announcement, and offers some nice functionality and interesting examples.
+
+- [`cartographer`](https://github.com/lmullen/cartographer) - [`d3.carto.map`](https://github.com/emeeks/d3-carto-map) wrapper by @lmullen
+
