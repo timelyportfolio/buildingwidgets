@@ -51,7 +51,7 @@ Also, be sure to check out the new `graphviz` functionality added to last week's
 I wanted to head in a slightly different direction with this week's widget.  Instead of wrapping Javascript charting libraries as most `htmlwidgets` to date have done, I wanted to let `R` still do the plotting, since so many of us know and love base `graphics`, `ggplot2`, and `lattice`.  I hope nearly every `R` user can easily incorporate this little widget into their `R` graphical analysis and publishing workflow.
 
 ## What Does it Do?
-With some help from [`SVGAnnotation`](http://www.omegahat.org/SVGAnnotation/) or [`gridSVG`](https://sjp.co.nz/projects/gridsvg/), `svgPanZoom` will add pan and zoom functionality to nearly all `R` graphics using the [`svg-pan-zoom.js`](https://github.com/ariutta/svg-pan-zoom), a tiny and dependency-free Javascript library.  Maybe a little graphic drawn from last week's `DiagrammeR` can help explain the process.
+With some help from [`SVGAnnotation`](http://www.omegahat.org/SVGAnnotation/) or [`gridSVG`](https://sjp.co.nz/projects/gridsvg/), `svgPanZoom` will add pan and zoom functionality to nearly all `R` graphics using [`svg-pan-zoom.js`](https://github.com/ariutta/svg-pan-zoom), a tiny and dependency-free Javascript library.  Maybe a little graphic drawn from last week's `DiagrammeR` can help explain the process.
 
 ```{r}
 library(DiagrammeR)
@@ -63,8 +63,8 @@ DiagrammeR("
     la[<code>lattice/trellis</code>]-->gs[<code>gridSVG</code>]
     gg[<code>ggplot2</code>]-->sp
     gg[<code>ggplot2</code>]-->gs
-    sp-->|+svg-pan-zoom.js|ht[Interactive Graphic]
-    gs-->|+svg-pan-zoom.js|ht
+    sp-->|svg+js|ht[Interactive Graphic]
+    gs-->|svg+js|ht
     ht-->Shiny
     ht-->rs[RStudio Viewer]
     ht-->rm[R Markdown]
@@ -263,6 +263,39 @@ svgPanZoom( sc, controlIconsEnabled = T, fit = F, width = 700, height = 400 ) %>
     , selfcontained=F
     , width = 800
     , height =500
+    , overflow = "hidden"
+  )
+```
+
+Just in case you are thinking "maps are great, but what about my regular old `ggplot2`", let's do one from `?facet_wrap`.
+
+```{r "example05", eval=F }
+# example from ggplot2 facet_wrap documentation
+d <- ggplot(diamonds, aes(carat, price, fill = ..density..)) +
+  xlim(0, 2) + stat_binhex(na.rm = TRUE) + theme(aspect.ratio = 1)
+# to do with svgPlot 
+# svgPlot( { show( d + facet_wrap(~color) ) } )
+svgPanZoom(
+  (d + facet_wrap(~ color) )
+  , controlIconsEnabled = T
+)
+```
+
+```{r "example05_run", echo=F, fig.width = 7, fig.height = 7,fig.keep="none"}
+d <- ggplot(diamonds, aes(carat, price, fill = ..density..)) +
+  xlim(0, 2) + stat_binhex(na.rm = TRUE) + theme(aspect.ratio = 1)
+# to do with svgPlot 
+# svgPlot( { show( d + facet_wrap(~color) ) } )
+svgPanZoom(
+  { d + facet_wrap(~ color) }
+  , controlIconsEnabled = T, height = 500, width = 500
+) %>>%
+  htmlwidgets:::as.iframe(
+    file="example05.html"
+    , libdir = "lib"
+    , selfcontained=F
+    , width = 600
+    , height =600
     , overflow = "hidden"
   )
 ```
