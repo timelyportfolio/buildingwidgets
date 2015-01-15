@@ -299,3 +299,93 @@ svgPanZoom(
     , overflow = "hidden"
   )
 ```
+
+I still love `lattice` graphics.  Just in case you forgot about some of its functionality, I want to revive this example from `?wireframe`.
+
+```{r "example06", eval=F}
+library(lattice)
+m <- wireframe(volcano, shade = TRUE,
+           aspect = c(61/87, 0.4),
+           light.source = c(10,0,10))
+
+svgPanZoom(
+  svgPlot( {show(m)} )
+)
+# gridSVG will take a little too long, but feel free to try
+#   svgPanZoom(m)
+```
+
+
+```{r "example06_run", echo=F, fig.width = 10, fig.height=10}
+library(lattice)
+m <- wireframe(volcano, shade = TRUE,
+           aspect = c(61/87, 0.4),
+           light.source = c(10,0,10))
+
+svgPanZoom(
+  svgPlot( {show(m)} )
+  ,controlIconsEnabled = T, height = 500, width = 500
+) %>>%
+  htmlwidgets:::as.iframe(
+    file="example06.html"
+    , libdir = "lib"
+    , selfcontained=F
+    , width = 600
+    , height =600
+    , overflow = "hidden"
+  )
+```
+
+Then as with all `htmlwidgets`, we can pair them with `tags` from `htmltools`.  How about storytelling with our pan and zoom ?
+
+```{r "example07", eval=F}
+library(htmltools)
+
+spz = svgPanZoom(
+  svgPlot( {show(m)} )
+  ,controlIconsEnabled = T
+  , height = 500
+  , width = 500
+  , elementId = "story-volcano"
+)
+
+html_print(tagList(
+  "my favorite part of the volcano"
+  ,tags$button("click here", onclick="zoomFavorite()")
+  ,spz
+  ,tags$script("
+    function zoomFavorite (){
+      var z = document.getElementById('story-volcano').zoomWidget;
+      // programatically zoom to specified point
+      z.zoomAtPoint( 3, {x:200, y:200});
+    }
+  ")
+))
+
+```
+
+```{r "example07_run", echo=F}
+library(htmltools)
+
+spz = svgPanZoom(
+  svgPlot( {show(m)} )
+  ,controlIconsEnabled = T
+  , height = 500
+  , width = 500
+  , elementId = "story-volcano"
+)
+
+tagList(
+  "my favorite part of the volcano"
+  ,tags$button("click here", onclick="zoomFavorite()")
+  ,spz
+  ,tags$script("
+    function zoomFavorite (){
+      var z = document.getElementById('story-volcano').zoomWidget;
+      // programatically zoom to specified point
+      z.zoomAtPoint( 3, {x:200, y:200});
+    }
+  ")
+) %>>% save_html("example07.html","lib")
+```
+<iframe src="example07.html" width="600" height="600" style="border-width:0px;overflow:hidden ;"></iframe>
