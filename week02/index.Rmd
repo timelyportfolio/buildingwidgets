@@ -109,8 +109,16 @@ svgPanZoom(
 svgPanZoom(
   svgPlot(
     plot(1:10)
+  ), height = 400, width = 400
+) %>>%
+  htmlwidgets:::as.iframe(
+    file="example01.html"
+    , libdir = "lib"
+    , selfcontained=F
+    , width = 500
+    , height =500
+    , overflow = "hidden"
   )
-)
 ```
 
 It is hard to tell that our simple little graph now has special powers.  Some icons and hints might help.  I'm struggling with whether to make this behavior the default.  Let me know if you have an opinion.
@@ -389,3 +397,25 @@ tagList(
 ) %>>% save_html("example07.html","lib")
 ```
 <iframe src="example07.html" width="600" height="600" style="border-width:0px;overflow:hidden ;"></iframe>
+
+## Not Enough Examples
+
+Before the post gets too long and unwieldy, I'll stop here with the examples.  If you still want to see more, see a whole new batch of examples in the [Readme.md](https://github.com/timelyportfolio/svgPanZoom). So far I have not found a single plot that didn't work with `svgPanZoom`.  Anybody that reports a failure wins the grand prize of getting mentioned in next week's blog post.
+
+## Some Limitations
+
+I feel like I should mention some of the limitations of `svgPanZoom`.  As mentioned, it is aimed wholly at ease and simplicity with minimal dependencies, so things like an axis that stays put while the graph zooms are not currently possible.  Also, not really a fault of `svgPanZoom` more a weakness of the `svg grDevice`, the `SVG`s are not namespaced, so if you have more than one on a page, you'll notice some funky labels.  With `gridSVG` however, this is not a problem.  I'll try to demonstrate some solutions to this in the documentation or implement into the functionality of `svgPanZoom`.
+
+I have two killer features that I would like to implement, so stay tuned.
+
+
+## Thanks
+
+Thanks so much for the help from all the help from Twitter testers.
+
+- [abresler](https://twitter.com/abresler)
+- [riannone](https://twitter.com/riannone)
+- [cpsievert](https://twitter.com/cpsievert)
+- [jalapic](https://twitter.com/jalapic)
+- [kyle_e_walker](https://twitter.com/kyle_e_walker)
+- [sbarfort](https://twitter.com/sbarfort)
