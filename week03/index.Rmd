@@ -1,0 +1,140 @@
+---
+title: "Week03 - More Networks"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r "setup",echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+)
+
+library(pipeR)
+```
+
+## htmlwidgets News This Week
+@smartinsightsfromdata has started two new widgets over the past couple of weeks.
+
+-[`rd3pie`](https://github.com/smartinsightsfromdata/rd3pie) - [`d3pie`](http://d3pie.org/) wrapper.  This should make interactive pie charts much easier than [my experiment](http://timelyportfolio.blogspot.com/2014/07/beer-and-pie-rcharts-pie-charts-with.html) from a couple months ago with `d3pie` + `rCharts`.
+
+-[`rpivotTable`](https://github.com/smartinsightsfromdata/rpivotTable) - [`pivottable.js`](http://nicolas.kruchten.com/pivottable/examples/) wrapper.  `pivottable.js` from [\@nicolaskruchten](http://nicolas.kruchten.com/) is both nicely done and very active.  I had `pivottable.js` at the top of my list for a widget of the week.  I look forward to helping [\@smartinsightsfromdata](https://github.com/smartinsightsfromdata) push this into a full-fledged and documented `htmlwidget` assuming he accepts my offer.
+
+@rich-iannone
+
+[\@rich-iannone](https://github.com/rich-iannone) is unstoppable.  He continues to do amazing things with [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR).  Be sure to check out all the new documentaion, examples, and functionality.
+
+## This Week's Widget - `hierNetwork` for [`networkD3`](https://github.com/christophergandrud/networkD3)
+
+Unfortunately, this week's widget is still alpha.  `hierNetwork` is not a standalone widget.  Rather, it aims to add some new visualization types and interactivity to [`networkD3`](https://github.com/christophergandrud/networkD3).  Given the popularity of `htmlwidgets`, I think packaging/curating multiple widgets in a single R package will be very valuable.  These are my early thoughts on packaging `htmlwidgets`.
+
+
+1. type of visualization
+1. field of study or domain of application
+1. similar Javascript dependencies
+1. symbiotic features
+1. type of parameters/inputs, such as diagram in DiagrammeR for both mermaid and graphviz
+1. interest of the package author in support and ongoing maintenance
+
+
+[`networkD3`](https://github.com/christophergandrud/networkD3) from [\@christophergandrud](https://github.com/christophergandrud) and [\@jjallaire](https://github.com/jjallaire) started back in [August](https://github.com/christophergandrud/networkD3/commit/6dc73683a7370c7640520ae7778799d6735bc2fa) just one month after the first [commit](https://github.com/christophergandrud/networkD3/commit/6dc73683a7370c7640520ae7778799d6735bc2fa) of `htmlwidgets`.  It is clearly one of the first ever `htmlwidgets`.
+
+`hierNetwork` all started with this [issue](https://github.com/christophergandrud/networkD3/issues/14) requesting a phylogram implementation in `networkD3` from existing code.  I thought a phylogram would be fun, so I started down that path and got an early working [version](http://bl.ocks.org/timelyportfolio/raw/59acc3853b02e47e0dfc/).  However, a phylogram is really a specialized dendrogram, so I thought additional dendrogram-type functionality in `networkD3` might be more generally useful.
+
+I still plan to work on phylograms, so if anyone is interested, please let me know.  For now, let's have a quick look at `networkD3` and the new `hierNetwork()`.
+
+## What Does it Do?
+The [visualizations from `networkD3`](http://christophergandrud.github.io/networkD3/) offer some really beautiful chart options for all sorts of network data.  It even has a `as.treeNetwork` function for easy conversion of `hclust` and `dendrogram` class to the very un-R-like nested data structure preferred by `d3`.  I'll prove how easy it is with two lines of code.
+
+
+```{r "example01",eval = F}
+library(networkD3)
+
+# use this simple hclust example from
+#  http://rpubs.com/gaston/dendrograms
+hc = hclust(dist(mtcars))
+
+treeNetwork( 
+  as.treeNetwork(hc, "mtcars")
+)
+```
+```{r "example01_run",echo = F}
+library(networkD3)
+
+hc = hclust(dist(mtcars))
+
+treeNetwork( 
+  as.treeNetwork(hc, "mtcars")
+  , width = 750, height =750
+) %>>%
+      htmlwidgets::as.iframe(
+        file="example01.html"
+        , libdir = "lib"
+        , selfcontained=F
+        , width = 850
+        , height =900
+        , overflow = "hidden"
+      )
+```
+
+It doesn't get much easier than that, but `d3` provides multiple [hierarchical layout](https://github.com/mbostock/d3/wiki/Hierarchy-Layout), and I'm sure each of you has an opinion on which is your favorite.  Also, a little pan/zoom and collapse interactivity makes us happy.  Since the hard part of data conversion is mostly already done by `networkD3` I went to work and started building this from scratch (well copy/paste from basically everywhere).  Fortunately, before I got too far along, I discovered this reusable `d3.chart` hierarchy layout [`d3.chart.layout`](https://github.com/bansaghi/d3.chart.layout).  It is dang near perfect for this and gives us a whole lot.
+
+Let's take the same `hclust` that we named `hc` from above and look at each of the diagram types.
+
+```{r "example02", eval = F}
+library(htmltools) 
+
+tagList(
+  lapply(
+    c("tree.cartesian"
+      ,"tree.radial"
+      ,"cluster.cartesian"
+      ,"cluster.radial"
+    )
+    ,function(chartType){
+      hierNetwork( as.treeNetwork(hc), type = chartType, zoomable = T, collapsible = T )
+    }
+  )
+)
+```
+
+```{r "example02_run", echo = F}
+library(htmltools) 
+
+i = 1
+tagList(
+  lapply(
+    c("tree.cartesian"
+      ,"tree.radial"
+      ,"cluster.cartesian"
+      ,"cluster.radial"
+    )
+    ,function(chartType){
+      hn <- hierNetwork( as.treeNetwork(hc), type = chartType, zoomable = T, collapsible = T, margin = list(left=100), height = 750, width = 750 ) %>>%
+        htmlwidgets::as.iframe(
+        file=paste0("example02_",i,".html")
+        , libdir = "lib"
+        , selfcontained=F
+        , width = 850
+        , height =900
+        , overflow = "hidden"
+      )
+      i <<- i + 1
+      return(list(
+         tags$h4(chartType)
+         ,hn
+        )
+      )
+    }
+  )
+)
+```
