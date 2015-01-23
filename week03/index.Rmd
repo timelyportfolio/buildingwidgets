@@ -261,7 +261,7 @@ dat = sub (
 ```
 
 
-You can probably now see why data conversion might possibly be the most valuable part of an `htmlwidget`.  Now let's visualize with our other layouts from `d3.chart.layout`.  I intentionally did not use the common `flare.json` dataset that drives nearly all examples of this type.  If you want to see these layouts with this dataset, check out the `d3.chart.layout` [examples](http://bl.ocks.org/bansaghi).  Also, I intentionally left these charts in a raw form, so please don't dismiss these because the labelling isn't right.
+You can probably see **why data conversion might possibly be the most valuable part of an `htmlwidget`**.  Now let's visualize with our other layouts from `d3.chart.layout`.  I intentionally did not use the common `flare.json` dataset that drives nearly all examples of this type.  If you want to see these layouts with this dataset, check out the `d3.chart.layout` [examples](http://bl.ocks.org/bansaghi).  Also, I intentionally left these charts in a raw form, so please don't dismiss these because the labelling isn't right.
 
 
 ```{r "example_03", eval= F}

@@ -231,7 +231,7 @@ dat = sub (
   , replacement = rpk.text[1,4]
   , fixed = T
 )</code></pre>
-<p>You can probably now see why data conversion might possibly be the most valuable part of an <code>htmlwidget</code>. Now let’s visualize with our other layouts from <code>d3.chart.layout</code>. I intentionally did not use the common <code>flare.json</code> dataset that drives nearly all examples of this type. If you want to see these layouts with this dataset, check out the <code>d3.chart.layout</code> <a href="http://bl.ocks.org/bansaghi">examples</a>. Also, I intentionally left these charts in a raw form, so please don’t dismiss these because the labelling isn’t right.</p>
+<p>You can probably see <strong>why data conversion might possibly be the most valuable part of an <code>htmlwidget</code></strong>. Now let’s visualize with our other layouts from <code>d3.chart.layout</code>. I intentionally did not use the common <code>flare.json</code> dataset that drives nearly all examples of this type. If you want to see these layouts with this dataset, check out the <code>d3.chart.layout</code> <a href="http://bl.ocks.org/bansaghi">examples</a>. Also, I intentionally left these charts in a raw form, so please don’t dismiss these because the labelling isn’t right.</p>
 <pre class="r"><code>hN &lt;- hierNetwork( jsonlite::fromJSON(dat), zoomable = T, collapsible = T )
 # fromJSON does not translate well so manual override
 hN$x$root = dat
