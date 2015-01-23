@@ -93,6 +93,11 @@ Let's take the same `hclust` that we named `hc` from above and look at each of t
 
 ### More Layouts with hierNetwork
 
+Since this is not yet officially part of `networkD3`, to reproduce you will need to use `devtools::install_github`.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/networkD3@feature/d3.chart.layout")
+```
 
 ```{r "example02", eval = F}
 library(htmltools) 
