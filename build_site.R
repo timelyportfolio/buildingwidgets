@@ -4,11 +4,11 @@ library(xts)
 
 options("scipen"=100)
 
-Sys.Date():as.Date("2015-12-31") %>>%
+as.Date("2015-01-01"):as.Date("2015-12-31") %>>%
   (
     as.xts(
       # make programmatic
-      x = c(100,rep(NA,length(.)-1))
+      x = c(rep(NA,7),100,rep(NA,6),100,rep(NA,7),100,rep(NA,length(.)-23))
       ,order.by=as.Date(.)
     )
   ) %>>%
