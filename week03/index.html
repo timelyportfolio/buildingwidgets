@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2015-01-22" />
+<meta name="date" content="2015-01-23" />
 
 <title>Week03 - More Networks</title>
 
@@ -40,14 +40,20 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="header">
 <h1 class="title">Week03 - More Networks</h1>
-<h4 class="date"><em>January 22, 2015</em></h4>
+<h4 class="date"><em>January 23, 2015</em></h4>
 </div>
 
 <div id="TOC">
 <ul>
 <li><a href="#htmlwidgets-news-this-week">htmlwidgets News This Week</a></li>
 <li><a href="#this-weeks-widget---hiernetwork-for-networkd3">This Week’s Widget - <code>hierNetwork</code> for <a href="https://github.com/christophergandrud/networkD3"><code>networkD3</code></a></a></li>
-<li><a href="#what-does-it-do">What Does it Do?</a></li>
+<li><a href="#what-does-it-do">What Does it Do?</a><ul>
+<li><a href="#two-lines-of-code---existing-niceness">Two Lines of Code - Existing Niceness</a></li>
+<li><a href="#more-layouts-with-hiernetwork">More Layouts with hierNetwork</a></li>
+<li><a href="#glitzier-layouts">Glitzier Layouts</a></li>
+<li><a href="#direction-id-like-to-head">Direction I’d Like to Head</a></li>
+</ul></li>
+<li><a href="#thanks">Thanks</a></li>
 </ul>
 </div>
 
@@ -77,6 +83,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="what-does-it-do" class="section level2">
 <h2>What Does it Do?</h2>
 <p>The <a href="http://christophergandrud.github.io/networkD3/">visualizations from <code>networkD3</code></a> offer some really beautiful chart options for all sorts of network data. It even has a <code>as.treeNetwork</code> function for easy conversion of <code>hclust</code> and <code>dendrogram</code> class to the very un-R-like nested data structure preferred by <code>d3</code>. I’ll prove how easy it is with two lines of code.</p>
+<div id="two-lines-of-code---existing-niceness" class="section level3">
+<h3>Two Lines of Code - Existing Niceness</h3>
 <pre class="r"><code>library(networkD3)
 
 # use this simple hclust example from
@@ -89,6 +97,9 @@ treeNetwork(
 <p><iframe src="example01.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe></p>
 <p>It doesn’t get much easier than that, but <code>d3</code> provides multiple <a href="https://github.com/mbostock/d3/wiki/Hierarchy-Layout">hierarchical layout</a>, and I’m sure each of you has an opinion on which is your favorite. Also, a little pan/zoom and collapse interactivity makes us happy. Since the hard part of data conversion is mostly already done by <code>networkD3</code> I went to work and started building this from scratch (well copy/paste from basically everywhere). Fortunately, before I got too far along, I discovered this reusable <code>d3.chart</code> hierarchy layout <a href="https://github.com/bansaghi/d3.chart.layout"><code>d3.chart.layout</code></a>. It is dang near perfect for this and gives us a whole lot.</p>
 <p>Let’s take the same <code>hclust</code> that we named <code>hc</code> from above and look at each of the diagram types.</p>
+</div>
+<div id="more-layouts-with-hiernetwork" class="section level3">
+<h3>More Layouts with hierNetwork</h3>
 <pre class="r"><code>library(htmltools) 
 
 tagList(
@@ -111,7 +122,172 @@ tagList(
 <iframe src="example02_3.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe>
 <h4>cluster.radial</h4>
 <iframe src="example02_4.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe></p>
-<p>For those of you wondering if there is a difference between <code>cluster</code> and <code>tree</code>, collapse some of the nodes. If you still don’t see it, <code>cluster</code> extends to the outermost level ( much like <code>hang</code> in <code>R</code> when plotting dendrograms ) while <code>tree</code> does not.</p>
+<p>For those of you wondering if there is a difference between <code>cluster</code> and <code>tree</code>, collapse some of the nodes. If you still don’t see it, <code>cluster</code> extends to the outermost level ( much like <code>hang</code> in <code>R</code> when plotting dendrograms ) while <code>tree</code> does not. Also, I hope you enjoyed the pan/zoom functionality, which is enabled by <code>zoomable=T</code> and <code>collapsible=T</code>. I admit it is hard to know that this interaction is available.</p>
+</div>
+<div id="glitzier-layouts" class="section level3">
+<h3>Glitzier Layouts</h3>
+<p>Now on to some “glitzier” layouts that unlike the above layouts require a size or value. These layouts in <code>d3.chart.layout</code> hold the most promise, but also have the most room for improvement. I’ll increase the complexity of the code by visualizing a <code>rpart</code> on the <code>diamonds</code> dataset from <code>ggplot2</code>. If you only care about the visualizations, you can safely skip the data preparation below. If you <strong>care about the <code>rpart</code>/<code>partykit</code> piece</strong> of this, <strong>please let me know</strong> since I am very interested in testing, improving, and iterating this, but need some help.</p>
+<pre class="r"><code>library(rpart)
+library(partykit)
+library(rlist)
+library(pipeR)
+
+#set up a little rpart as an example
+# using data from ggplot2 diamonds dataset
+
+data(&quot;diamonds&quot;,package=&quot;ggplot2&quot;)
+
+rp &lt;- rpart(
+  price ~ carat + cut + color + clarity + depth + table + x + y + z
+  ,method = &quot;anova&quot;
+  ,data = diamonds
+  ,control = rpart.control(minsplit = 2)
+)
+
+rpk &lt;- as.party(rp)
+
+## get meta information
+rpk.text &lt;- capture.output( print(rpk) ) %&gt;&gt;%
+  ( .[grep( x = ., pattern = &quot;(\\[)([0-9]*)(\\])&quot;)] ) %&gt;&gt;%
+  strsplit( &quot;[\\[\\|\\]]&quot; , perl = T) %&gt;&gt;%
+  list.map(
+    tail(.,2) %&gt;&gt;%
+      (
+        data.frame(
+          &quot;id&quot; = as.numeric(.[1])
+          , description = .[2]
+          , stringsAsFactors = F )
+      )
+  ) %&gt;&gt;% list.stack
+
+# binding the node names from rpk with more of the relevant meta data from rp
+# i don't think that partykit imports this automatically for the inner nodes, so i did it manually
+rpk.text &lt;- cbind(rpk.text, rp$frame)
+
+# rounding the mean DV value
+rpk.text$yval &lt;- round(rpk.text$yval, 2)
+
+# terminal nodes have descriptive stats in their names, so I stripped these out
+# so the final plot wouldn't have duplicate data
+rpk.text$description &lt;- sapply(strsplit(rpk.text[,2], &quot;:&quot;), &quot;[&quot;, 1)
+
+
+dat = rapply(rpk$node,unclass,how=&quot;replace&quot;)
+#fill in information at the root level for now
+#that might be nice to provide to our interactive graph
+dat$info = rapply(
+  unclass(rpk$data)[-1]
+  ,function(l){
+    l = unclass(l)
+    if( class(l) %in% c(&quot;terms&quot;,&quot;formula&quot;,&quot;call&quot;)) {
+      l = paste0(as.character(l)[-1],collapse=as.character(l)[1])
+    }          
+    attributes(l) &lt;- NULL
+    return(l)
+  }
+  ,how=&quot;replace&quot;
+)
+
+dat = jsonlite::toJSON(
+  dat
+  ,auto_unbox = T
+)
+
+# replace kids with children to ease d3
+dat = gsub( x=dat, pattern = &quot;kids&quot;, replacement=&quot;children&quot;)
+# change id to node to ease d3; will replace with name later
+dat = gsub ( x=dat, pattern = '&quot;id&quot;:([0-9]*)', replacement = '&quot;name&quot;:&quot;node\\1&quot;,&quot;size&quot;:nodesize\\1' )
+# calling the root node by the dataset name, but it might make more sense to call it
+# &quot;root&quot; so that the code can be generalized
+dat = sub (x = dat, pattern = &quot;node1&quot;, replacement = &quot;diamonds&quot;)
+# replacing the node names from node1, node2, etc., with the extracted node names and metadata from
+# rpk.text, and rp$table. 
+for (i in 2:nrow(rpk.text)) {
+  dat = sub (
+    x = dat
+    , pattern = paste(&quot;node&quot;, i, sep = &quot;&quot;)
+    , replacement = paste(
+      rpk.text[i,2]
+      , &quot;, mean = &quot;, rpk.text[i,7]
+      , &quot;, n = &quot;, rpk.text[i,4]
+      , sep = &quot;&quot;
+    )
+    , fixed = T
+  )
+  dat = sub (
+    x = dat
+    , pattern = paste(&quot;nodesize&quot;, i, sep = &quot;&quot;)
+    , replacement = rpk.text[i,4]
+    , fixed = T
+  )
+}
+
+# replace size of root or node1
+dat = sub (
+  x = dat
+  , pattern = &quot;nodesize1&quot;
+  , replacement = rpk.text[1,4]
+  , fixed = T
+)</code></pre>
+<p>You can probably now see why data conversion might possibly be the most valuable part of an <code>htmlwidget</code>. Now let’s visualize with our other layouts from <code>d3.chart.layout</code>. I intentionally did not use the common <code>flare.json</code> dataset that drives nearly all examples of this type. If you want to see these layouts with this dataset, check out the <code>d3.chart.layout</code> <a href="http://bl.ocks.org/bansaghi">examples</a>. Also, I intentionally left these charts in a raw form, so please don’t dismiss these because the labelling isn’t right.</p>
+<pre class="r"><code>hN &lt;- hierNetwork( jsonlite::fromJSON(dat), zoomable = T, collapsible = T )
+# fromJSON does not translate well so manual override
+hN$x$root = dat
+lapply(
+  c(&quot;pack.nested&quot;
+    ,&quot;pack.flattened&quot;
+    ,&quot;partition.arc&quot;
+    ,&quot;partition.rectangle&quot;
+    ,&quot;treemap&quot;
+  )
+  ,function(chartType){
+    hN$x$options$type = chartType
+    return(hN) 
+  }
+)</code></pre>
+<p><h4>pack.nested</h4>
+<iframe src="example03_1.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe>
+<h4>pack.flattened</h4>
+<iframe src="example03_2.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe>
+<h4>partition.arc</h4>
+<iframe src="example03_3.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe>
+<h4>partition.rectangle</h4>
+<iframe src="example03_4.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe>
+<h4>treemap</h4>
+<iframe src="example03_5.html" width="850" height="900" style="border-width:0px;overflow:hidden ;"></iframe></p>
+</div>
+<div id="direction-id-like-to-head" class="section level3">
+<h3>Direction I’d Like to Head</h3>
+<p>As a demonstration of what we can achieve with these type layouts with a little more work, please see these examples.</p>
+<ol style="list-style-type: decimal">
+<li><code>pack.nested</code> from Bill White <a href="http://www.billdwhite.com/wordpress/2013/10/28/circle-pack-label-truncation/">example</a></li>
+</ol>
+<iframe src="http://bl.ocks.org/billdwhite/raw/7207695/" overflow="hidden" height="700" width="900" "seamless">
+</iframe>
+<ol start="2" style="list-style-type: decimal">
+<li><code>pack.flattened</code> from Mike Bostock <a href="http://bl.ocks.org/mbostock/7882658">example</a></li>
+</ol>
+<iframe src="http://bl.ocks.org/mbostock/raw/7882658" overflow="hidden" height="700" width="900" "seamless">
+</iframe>
+<ol start="3" style="list-style-type: decimal">
+<li><code>partition.arc</code> from Kerry Rodden <a href="http://bl.ocks.org/kerryrodden/7090426">example</a></li>
+</ol>
+<iframe src="http://bl.ocks.org/kerryrodden/raw/7090426/" overflow="hidden" height="700" width="900" "seamless">
+</iframe>
+<ol start="4" style="list-style-type: decimal">
+<li><code>treemap</code> from Solomon Kahn on the U.S. budget <a href="http://solomonkahn.com/us_budget/">example</a></li>
+</ol>
+</div>
+</div>
+<div id="thanks" class="section level2">
+<h2>Thanks</h2>
+<p>Thanks so much for all the work by</p>
+<ul>
+<li><a href="http://bost.ocks.org/mike/">Mike Bostock</a></li>
+<li><a href="https://github.com/bansaghi/d3.chart.layout">Anna Bansaghi</a></li>
+<li>Irene Ros &amp; Mike Pennisi for <a href="https://github.com/misoproject/d3.chart">d3.chart</a></li>
+<li>Christopher Gandrud &amp; JJ Allaire for <a href="https://github.com/christophergandrud/networkD3">networkD3</a></li>
+</ul>
 </div>
 
 

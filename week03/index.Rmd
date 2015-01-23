@@ -55,6 +55,7 @@ I still plan to work on phylograms, so if anyone is interested, please let me kn
 ## What Does it Do?
 The [visualizations from `networkD3`](http://christophergandrud.github.io/networkD3/) offer some really beautiful chart options for all sorts of network data.  It even has a `as.treeNetwork` function for easy conversion of `hclust` and `dendrogram` class to the very un-R-like nested data structure preferred by `d3`.  I'll prove how easy it is with two lines of code.
 
+### Two Lines of Code - Existing Niceness
 
 ```{r "example01",eval = F}
 library(networkD3)
@@ -89,6 +90,9 @@ treeNetwork(
 It doesn't get much easier than that, but `d3` provides multiple [hierarchical layout](https://github.com/mbostock/d3/wiki/Hierarchy-Layout), and I'm sure each of you has an opinion on which is your favorite.  Also, a little pan/zoom and collapse interactivity makes us happy.  Since the hard part of data conversion is mostly already done by `networkD3` I went to work and started building this from scratch (well copy/paste from basically everywhere).  Fortunately, before I got too far along, I discovered this reusable `d3.chart` hierarchy layout [`d3.chart.layout`](https://github.com/bansaghi/d3.chart.layout).  It is dang near perfect for this and gives us a whole lot.
 
 Let's take the same `hclust` that we named `hc` from above and look at each of the diagram types.
+
+### More Layouts with hierNetwork
+
 
 ```{r "example02", eval = F}
 library(htmltools) 
@@ -139,25 +143,30 @@ tagList(
 )
 ```
 
-For those of you wondering if there is a difference between `cluster` and `tree`, collapse some of the nodes.  If you still don't see it, `cluster` extends to the outermost level ( much like `hang` in `R` when plotting dendrograms ) while `tree` does not.  Also, I hope you enjoyed the pan/zoom functionality, which is enabled by `zoomable=T` and `collapsible=T`.
+For those of you wondering if there is a difference between `cluster` and `tree`, collapse some of the nodes.  If you still don't see it, `cluster` extends to the outermost level ( much like `hang` in `R` when plotting dendrograms ) while `tree` does not.  Also, I hope you enjoyed the pan/zoom functionality, which is enabled by `zoomable=T` and `collapsible=T`.  I admit it is hard to know that this interaction is available.
+
+### Glitzier Layouts
+
+Now on to some "glitzier" layouts that unlike the above layouts require a size or value.  These layouts in `d3.chart.layout` hold the most promise, but also have the most room for improvement.  I'll increase the complexity of the code by visualizing a `rpart` on the `diamonds` dataset from `ggplot2`.  If you only care about the visualizations, you can safely skip the data preparation below.  If you **care about the `rpart`/`partykit` piece** of this, **please let me know** since I am very interested in testing, improving, and iterating this, but need some help.
 
 
-```{r}
+```{r "example02_data", results = F}
 library(rpart)
 library(partykit)
-library(rCharts)
 library(rlist)
 library(pipeR)
 
 #set up a little rpart as an example
-rp <- rpart(
-  hp ~ cyl + disp + mpg + drat + wt + qsec + vs + am + gear + carb,
-  method = "anova",
-  data = mtcars,
-  control = rpart.control(minsplit = 4)
-)
+# using data from ggplot2 diamonds dataset
 
-str(rp)
+data("diamonds",package="ggplot2")
+
+rp <- rpart(
+  price ~ carat + cut + color + clarity + depth + table + x + y + z
+  ,method = "anova"
+  ,data = diamonds
+  ,control = rpart.control(minsplit = 2)
+)
 
 rpk <- as.party(rp)
 
@@ -202,17 +211,19 @@ dat$info = rapply(
   }
   ,how="replace"
 )
+
 dat = jsonlite::toJSON(
   dat
   ,auto_unbox = T
 )
+
 # replace kids with children to ease d3
 dat = gsub( x=dat, pattern = "kids", replacement="children")
 # change id to node to ease d3; will replace with name later
 dat = gsub ( x=dat, pattern = '"id":([0-9]*)', replacement = '"name":"node\\1","size":nodesize\\1' )
 # calling the root node by the dataset name, but it might make more sense to call it
 # "root" so that the code can be generalized
-dat = sub (x = dat, pattern = "node1", replacement = "mtcars")
+dat = sub (x = dat, pattern = "node1", replacement = "diamonds")
 # replacing the node names from node1, node2, etc., with the extracted node names and metadata from
 # rpk.text, and rp$table. 
 for (i in 2:nrow(rpk.text)) {
@@ -242,8 +253,14 @@ dat = sub (
   , replacement = rpk.text[1,4]
   , fixed = T
 )
+```
 
-hN <- hierNetwork( jsonlite::fromJSON(dat), collapsible = T )
+
+You can probably now see why data conversion might possibly be the most valuable part of an `htmlwidget`.  Now let's visualize with our other layouts from `d3.chart.layout`.  I intentionally did not use the common `flare.json` dataset that drives nearly all examples of this type.  If you want to see these layouts with this dataset, check out the `d3.chart.layout` [examples](http://bl.ocks.org/bansaghi).  Also, I intentionally left these charts in a raw form, so please don't dismiss these because the labelling isn't right.
+
+
+```{r "example_03", eval= F}
+hN <- hierNetwork( jsonlite::fromJSON(dat), zoomable = T, collapsible = T )
 # fromJSON does not translate well so manual override
 hN$x$root = dat
 lapply(
@@ -258,5 +275,72 @@ lapply(
     return(hN) 
   }
 )
+```
+
+```{r "example03_run", echo = F}
+hN <- hierNetwork( jsonlite::fromJSON(dat), zoomable = T, collapsible = T )
+# fromJSON does not translate well so manual override
+hN$x$root = dat
+i = 1
+tagList(
+  lapply(
+    c("pack.nested"
+        ,"pack.flattened"
+        ,"partition.arc"
+        ,"partition.rectangle"
+        ,"treemap"
+    )
+    ,function(chartType){
+      hN$x$options$type = chartType
+
+      hN %>>%
+        htmlwidgets::as.iframe(
+        file=paste0("example03_",i,".html")
+        , libdir = "lib"
+        , selfcontained=F
+        , width = 850
+        , height =900
+        , overflow = "hidden"
+      ) -> iframe
+      i <<- i + 1
+      return(list(
+         tags$h4(chartType)
+         ,iframe
+        )
+      )
+    }
+  )
+)
 
 ```
+
+### Direction I'd Like to Head
+
+As a demonstration of what we can achieve with these type layouts with a little more work, please see these examples.
+
+
+1. `pack.nested` from Bill White [example](http://www.billdwhite.com/wordpress/2013/10/28/circle-pack-label-truncation/)
+
+<iframe src = "http://bl.ocks.org/billdwhite/raw/7207695/" overflow = "hidden" height = 700 width = 900 "seamless"></iframe>
+
+2.  `pack.flattened` from Mike Bostock [example](http://bl.ocks.org/mbostock/7882658)
+
+<iframe src = "http://bl.ocks.org/mbostock/raw/7882658" overflow = "hidden" height = 700 width = 900 "seamless"></iframe>
+
+3.  `partition.arc` from Kerry Rodden [example](http://bl.ocks.org/kerryrodden/7090426)
+
+<iframe src = "http://bl.ocks.org/kerryrodden/raw/7090426/" overflow = "hidden" height = 700 width = 900 "seamless"></iframe>
+
+4.  `treemap` from Solomon Kahn on the U.S. budget [example](http://solomonkahn.com/us_budget/)
+
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [Mike Bostock](http://bost.ocks.org/mike/)
+- [Anna Bansaghi](https://github.com/bansaghi/d3.chart.layout)
+- Irene Ros & Mike Pennisi for [d3.chart](https://github.com/misoproject/d3.chart)
+- Christopher Gandrud & JJ Allaire for [networkD3](https://github.com/christophergandrud/networkD3)
+
