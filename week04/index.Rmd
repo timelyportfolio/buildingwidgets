@@ -1,0 +1,333 @@
+---
+title: "Week04 - Interactive and Configurable Parallel Coordinates"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r "setup",echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+)
+
+library(pipeR)
+```
+
+## htmlwidgets News This Week
+@kbroman looks like he is exploring converting his `qtlcharts` to `htmlwidgets`.
+
+-[\@kbroman](https://github.com/kbroman/testjs) - test `htmlwidgets` conversion of the scatterplot from his [`qtlcharts`](http://kbroman.org/qtlcharts/)
+
+@rich-iannone
+
+[\@rich-iannone] - [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) hits version 0.4 with full shiny support and `graphviz`, gets a [webpage](http://rich-iannone.github.io/DiagrammeR/) (thanks JJ Allaire), and becomes the first `htmlwidget` to surpass 100 stars on Github.
+
+## This Week's Widget - `parcoords` for Interactive d3.js Parallel Coordinates
+
+Unfortunately, this week's widget is still alpha.
+
+
+## What Does it Do?
+The [visualizations from `networkD3`](http://christophergandrud.github.io/networkD3/) offer some really beautiful chart options for all sorts of network data. 
+
+Link to parallel coordinates [paper](http://www.cs.tufts.edu/~remco/publications/2014/InfoVis2014-JND.pdf)
+
+### Two Lines of Code - Existing Niceness
+
+```{r "example01",eval = F}
+library(networkD3)
+
+# use this simple hclust example from
+#  http://rpubs.com/gaston/dendrograms
+hc = hclust(dist(mtcars))
+
+treeNetwork( 
+  as.treeNetwork(hc, "mtcars")
+)
+```
+```{r "example01_run",echo = F}
+library(networkD3)
+
+hc = hclust(dist(mtcars))
+
+treeNetwork( 
+  as.treeNetwork(hc, "mtcars")
+  , width = 750, height =750
+) %>>%
+      htmlwidgets::as.iframe(
+        file="example01.html"
+        , libdir = "lib"
+        , selfcontained=F
+        , width = 850
+        , height =900
+        , overflow = "hidden"
+      )
+```
+
+
+
+### More Layouts with hierNetwork
+
+Since this is not yet officially part of `networkD3`, to reproduce you will need to use `devtools::install_github`.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/networkD3@feature/d3.chart.layout")
+```
+
+```{r "example02", eval = F}
+library(htmltools) 
+
+tagList(
+  lapply(
+    c("tree.cartesian"
+      ,"tree.radial"
+      ,"cluster.cartesian"
+      ,"cluster.radial"
+    )
+    ,function(chartType){
+      hierNetwork( as.treeNetwork(hc), type = chartType, zoomable = T, collapsible = T )
+    }
+  )
+)
+```
+
+```{r "example02_run", echo = F}
+library(htmltools) 
+
+i = 1
+tagList(
+  lapply(
+    c("tree.cartesian"
+      ,"tree.radial"
+      ,"cluster.cartesian"
+      ,"cluster.radial"
+    )
+    ,function(chartType){
+      hn <- hierNetwork( as.treeNetwork(hc), type = chartType, zoomable = T, collapsible = T, margin = list(left=100), height = 750, width = 750 ) %>>%
+        htmlwidgets::as.iframe(
+        file=paste0("example02_",i,".html")
+        , libdir = "lib"
+        , selfcontained=F
+        , width = 850
+        , height =900
+        , overflow = "hidden"
+      )
+      i <<- i + 1
+      return(list(
+         tags$h4(chartType)
+         ,hn
+        )
+      )
+    }
+  )
+)
+```
+
+For those of you wondering if there is a difference between `cluster` and `tree`, collapse some of the nodes.  If you still don't see it, `cluster` extends to the outermost level ( much like `hang` in `R` when plotting dendrograms ) while `tree` does not.  Also, I hope you enjoyed the pan/zoom functionality, which is enabled by `zoomable=T` and `collapsible=T`.  I admit it is hard to know that this interaction is available.
+
+### Glitzier Layouts
+
+Now on to some "glitzier" layouts that unlike the above layouts require a size or value.  These layouts in `d3.chart.layout` hold the most promise, but also have the most room for improvement.  I'll increase the complexity of the code by visualizing a `rpart` on the `diamonds` dataset from `ggplot2`.  If you only care about the visualizations, you can safely skip the data preparation below.  If you **care about the `rpart`/`partykit` piece** of this, **please let me know** since I am very interested in testing, improving, and iterating this, but need some help.
+
+
+```{r "example02_data", results = F}
+library(rpart)
+library(partykit)
+library(rlist)
+library(pipeR)
+
+#set up a little rpart as an example
+# using data from ggplot2 diamonds dataset
+
+data("diamonds",package="ggplot2")
+
+rp <- rpart(
+  price ~ carat + cut + color + clarity + depth + table + x + y + z
+  ,method = "anova"
+  ,data = diamonds
+  ,control = rpart.control(minsplit = 2)
+)
+
+rpk <- as.party(rp)
+
+## get meta information
+rpk.text <- capture.output( print(rpk) ) %>>%
+  ( .[grep( x = ., pattern = "(\\[)([0-9]*)(\\])")] ) %>>%
+  strsplit( "[\\[\\|\\]]" , perl = T) %>>%
+  list.map(
+    tail(.,2) %>>%
+      (
+        data.frame(
+          "id" = as.numeric(.[1])
+          , description = .[2]
+          , stringsAsFactors = F )
+      )
+  ) %>>% list.stack
+
+# binding the node names from rpk with more of the relevant meta data from rp
+# i don't think that partykit imports this automatically for the inner nodes, so i did it manually
+rpk.text <- cbind(rpk.text, rp$frame)
+
+# rounding the mean DV value
+rpk.text$yval <- round(rpk.text$yval, 2)
+
+# terminal nodes have descriptive stats in their names, so I stripped these out
+# so the final plot wouldn't have duplicate data
+rpk.text$description <- sapply(strsplit(rpk.text[,2], ":"), "[", 1)
+
+
+dat = rapply(rpk$node,unclass,how="replace")
+#fill in information at the root level for now
+#that might be nice to provide to our interactive graph
+dat$info = rapply(
+  unclass(rpk$data)[-1]
+  ,function(l){
+    l = unclass(l)
+    if( class(l) %in% c("terms","formula","call")) {
+      l = paste0(as.character(l)[-1],collapse=as.character(l)[1])
+    }          
+    attributes(l) <- NULL
+    return(l)
+  }
+  ,how="replace"
+)
+
+dat = jsonlite::toJSON(
+  dat
+  ,auto_unbox = T
+)
+
+# replace kids with children to ease d3
+dat = gsub( x=dat, pattern = "kids", replacement="children")
+# change id to node to ease d3; will replace with name later
+dat = gsub ( x=dat, pattern = '"id":([0-9]*)', replacement = '"name":"node\\1","size":nodesize\\1' )
+# calling the root node by the dataset name, but it might make more sense to call it
+# "root" so that the code can be generalized
+dat = sub (x = dat, pattern = "node1", replacement = "diamonds")
+# replacing the node names from node1, node2, etc., with the extracted node names and metadata from
+# rpk.text, and rp$table. 
+for (i in 2:nrow(rpk.text)) {
+  dat = sub (
+    x = dat
+    , pattern = paste("node", i, sep = "")
+    , replacement = paste(
+      rpk.text[i,2]
+      , ", mean = ", rpk.text[i,7]
+      , ", n = ", rpk.text[i,4]
+      , sep = ""
+    )
+    , fixed = T
+  )
+  dat = sub (
+    x = dat
+    , pattern = paste("nodesize", i, sep = "")
+    , replacement = rpk.text[i,4]
+    , fixed = T
+  )
+}
+
+# replace size of root or node1
+dat = sub (
+  x = dat
+  , pattern = "nodesize1"
+  , replacement = rpk.text[1,4]
+  , fixed = T
+)
+```
+
+
+You can probably see **why data conversion might possibly be the most valuable part of an `htmlwidget`**.  Now let's visualize with our other layouts from `d3.chart.layout`.  I intentionally did not use the common `flare.json` dataset that drives nearly all examples of this type.  If you want to see these layouts with this dataset, check out the `d3.chart.layout` [examples](http://bl.ocks.org/bansaghi).  Also, I intentionally left these charts in a raw form, so please don't dismiss these because the labelling isn't right.
+
+
+```{r "example_03", eval= F}
+hN <- hierNetwork( jsonlite::fromJSON(dat), zoomable = T, collapsible = T )
+# fromJSON does not translate well so manual override
+hN$x$root = dat
+lapply(
+  c("pack.nested"
+    ,"pack.flattened"
+    ,"partition.arc"
+    ,"partition.rectangle"
+    ,"treemap"
+  )
+  ,function(chartType){
+    hN$x$options$type = chartType
+    return(hN) 
+  }
+)
+```
+
+```{r "example03_run", echo = F}
+hN <- hierNetwork( jsonlite::fromJSON(dat), zoomable = T, collapsible = T )
+# fromJSON does not translate well so manual override
+hN$x$root = dat
+i = 1
+tagList(
+  lapply(
+    c("pack.nested"
+        ,"pack.flattened"
+        ,"partition.arc"
+        ,"partition.rectangle"
+        ,"treemap"
+    )
+    ,function(chartType){
+      hN$x$options$type = chartType
+
+      hN %>>%
+        htmlwidgets::as.iframe(
+        file=paste0("example03_",i,".html")
+        , libdir = "lib"
+        , selfcontained=F
+        , width = 850
+        , height =900
+        , overflow = "hidden"
+      ) -> iframe
+      i <<- i + 1
+      return(list(
+         tags$h4(chartType)
+         ,iframe
+        )
+      )
+    }
+  )
+)
+
+```
+
+### Direction I'd Like to Head
+
+As a demonstration of what we can achieve with these type layouts with a little more work, please see these examples.
+
+
+1. `pack.nested` from Bill White [example](http://www.billdwhite.com/wordpress/2013/10/28/circle-pack-label-truncation/)
+
+<iframe src = "http://bl.ocks.org/billdwhite/raw/7207695/" overflow = "hidden" height = 700 width = 900 "seamless"></iframe>
+
+2.  `pack.flattened` from Mike Bostock [example](http://bl.ocks.org/mbostock/7882658)
+
+<iframe src = "http://bl.ocks.org/mbostock/raw/7882658" overflow = "hidden" height = 700 width = 900 "seamless"></iframe>
+
+3.  `partition.arc` from Kerry Rodden [example](http://bl.ocks.org/kerryrodden/7090426)
+
+<iframe src = "http://bl.ocks.org/kerryrodden/raw/7090426/" overflow = "hidden" height = 700 width = 900 "seamless"></iframe>
+
+4.  `treemap` from Solomon Kahn on the U.S. budget [example](http://solomonkahn.com/us_budget/)
+
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [Mike Bostock](http://bost.ocks.org/mike/)
+- [Kai Chang](https://github.com/syntagmatic)
+
