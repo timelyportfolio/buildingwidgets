@@ -23,7 +23,7 @@ library(pipeR)
 ```
 
 ## htmlwidgets News This Week
-@kbroman looks like he is exploring converting his `qtlcharts` to `htmlwidgets`.
+@kbroman is exploring `htmlwidgets`.
 
 -[\@kbroman](https://github.com/kbroman/testjs) - test `htmlwidgets` conversion of the scatterplot from his [`qtlcharts`](http://kbroman.org/qtlcharts/)
 
@@ -31,17 +31,19 @@ library(pipeR)
 
 [\@rich-iannone] - [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) hits version 0.4 with full shiny support and `graphviz`, gets a [webpage](http://rich-iannone.github.io/DiagrammeR/) (thanks JJ Allaire), and becomes the first `htmlwidget` to surpass 100 stars on Github.
 
-## This Week's Widget - `parcoords` for Interactive d3.js Parallel Coordinates
+## This Week's Widget - `parcoords` | Interactive d3.js Parallel Coordinates
 
-Unfortunately, this week's widget is still alpha.
-
+By far, one of my favorite reusable `d3` charts is the [parallel-coordinates](https://github.com/syntagmatic/parallel-coordinates) project by [\@syntagmatic](https://github.com/syntagmatic).  Its unique combination of `SVG` and `canvas` quickly digests even large (big for me) datasets while still maintaining easy but powerful interactivity for exploring the data at a high level, inspecting more granular visible features, and determining additional areas for inquiry.  I also just think there is something really cool and compelling about it.
 
 ## What Does it Do?
-The [visualizations from `networkD3`](http://christophergandrud.github.io/networkD3/) offer some really beautiful chart options for all sorts of network data. 
 
-Link to parallel coordinates [paper](http://www.cs.tufts.edu/~remco/publications/2014/InfoVis2014-JND.pdf)
+This paper [*Ranking Visualization of Correlation using Weber's Law*](http://www.cs.tufts.edu/~remco/publications/2014/InfoVis2014-JND.pdf) presented at InfoVis 2014 compares multiple chart types for their effectiveness in conveying correlation.  As seen in the image from the paper below, parallel coordinates charts rate very highly especially in negative correlation relationships.
 
-### Two Lines of Code - Existing Niceness
+[](image from paper on parallel coordinates)
+
+Ok, enough discussion let's move on to the examples, since I think most speak for themselves.
+
+### Simple Example
 
 ```{r "example01",eval = F}
 library(networkD3)
