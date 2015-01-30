@@ -109,24 +109,6 @@ parcoords(
   , queue = T
   , color = RColorBrewer::brewer.pal(4,&quot;BuPu&quot;)[4]
 )</code></pre>
-<pre class="r"><code>data( diamonds, package = &quot;ggplot2&quot; )
-parcoords(
-  diamonds[sample(1:nrow(diamonds),1000),]
-  , rownames = F # turn off rownames from the data.frame
-  , brushMode = &quot;2D-strums&quot;
-  , reorderable = T
-  , queue = T
-  , color = RColorBrewer::brewer.pal(4,&quot;BuPu&quot;)[4]
-  , height = 400, width = 800
-) %&gt;&gt;%
-   htmlwidgets::as.iframe(
-      file=&quot;example03.html&quot;
-      , libdir = &quot;lib&quot;
-      , selfcontained=F
-      , width = 900
-      , height =500
-      , overflow = &quot;hidden&quot;
-   )</code></pre>
 <p><iframe src="example03.html" width="900" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
 <p>I hope you noticed the fancy new brush type. I would improve the chart by using color to represent the data. Let’s try a little more complicated color specification using the color helper from <code>d3.scale.category10()</code>. For even more fun let’s put it in a <code>dplyr</code> chain.</p>
 <pre class="r"><code>library(dplyr)

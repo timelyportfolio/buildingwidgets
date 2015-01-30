@@ -120,7 +120,7 @@ parcoords(
 )
 ```
 
-```{r "example03_run", echo = T}
+```{r "example03_run", echo = F}
 data( diamonds, package = "ggplot2" )
 parcoords(
   diamonds[sample(1:nrow(diamonds),1000),]
