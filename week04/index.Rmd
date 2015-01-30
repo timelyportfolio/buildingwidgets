@@ -253,4 +253,5 @@ Thanks so much for all the work by
 
 - [Mike Bostock](http://bost.ocks.org/mike/)
 - [Kai Chang](https://github.com/syntagmatic)
-
+- [Hadley Wickham](https://github.com/hadley) for `testthat`
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
