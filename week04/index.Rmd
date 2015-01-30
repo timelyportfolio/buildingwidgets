@@ -33,7 +33,9 @@ library(pipeR)
 
 ## This Week's Widget - `parcoords` | Interactive d3.js Parallel Coordinates
 
+<hr/>
 Real quickly before I get to this week's widget, I would like to strongly encourage anyone who likes any of the widgets to let me know through stars/forks on Github, [twitter](http://twitter.com/timelyportfolio), comments on blog, or posts/examples/rpubs using the widget.  It helps me prioritize which to keep alive and improve and also motivates me to continue building more.
+<hr/>
 
 By far, one of my favorite reusable `d3` charts is the [parallel-coordinates](https://github.com/syntagmatic/parallel-coordinates) project by [\@syntagmatic](https://github.com/syntagmatic).  Its unique combination of `SVG` and `canvas` quickly digests even large (big for me) datasets while still maintaining easy but powerful interactivity for exploring the data at a high level, inspecting more granular visible features, and determining additional areas for inquiry.  I also just think there is something really cool and compelling about it.
 
@@ -106,7 +108,7 @@ parcoords(
 
 ### Queue Render for Bigger Data and Some Color
 
-`parallel-coordinates` handles bigger data well since the lines are drawn on the `canvas`.  Set `queue = T` to progressively render the chart on build and interaction.  Here is one [example](http://syntagmatic.github.io/parallel-coordinates/index.html#example-progressive) and [another](http://syntagmatic.github.io/parallel-coordinates/examples/slickgrid.html) from the `parallel-coordinates` site.    The `diamonds` dataset from `ggplot2` will give us big enough data to test and prove that we are in `R`.  I'll sample the `diamonds` to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on your local machine.
+`parallel-coordinates` handles bigger data well since the lines are drawn on the `canvas`.  Set `queue = T` to progressively render the chart on build and interaction.  Here is one [example](http://syntagmatic.github.io/parallel-coordinates/index.html#example-progressive) and [another](http://syntagmatic.github.io/parallel-coordinates/examples/slickgrid.html) from the `parallel-coordinates` site.    The `diamonds` dataset from `ggplot2` will give us big enough data to test the progressive render and prove that we are in `R`.  I'll sample the `diamonds` to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on your local machine.
 
 ```{r "example03", eval = F}
 data( diamonds, package = "ggplot2" )
@@ -185,6 +187,65 @@ diamonds[sample(1:nrow(diamonds),1000),] %>%
       , overflow = "hidden"
    )
 ```
+
+While we are on the topic of color, I wanted to highlight the fine work by Gregor Aisch with [chroma.js](https://github.com/gka/chroma.js) and [palettes](https://github.com/gka/palettes).  We could use Jeroen Oom's new `V8` for this, but for now, let's stick with what we have in `R` and `d3.js` using a `d3.scale.threshold` with colors supplied by `RColorBrewer::brewer.pal`.
+
+```{r "example05", eval = F}
+diamonds[sample(1:nrow(diamonds),1000),] %>%
+  select( carat, color, cut, clarity, depth, table, price,  x, y, z) %>%
+  parcoords(
+    rownames = F # turn off rownames from the data.frame
+    , brushMode = "2D-strums"
+    , reorderable = T
+    , queue = T
+    , color = list(
+      colorBy = "carat"
+      ,colorScale = htmlwidgets::JS(sprintf('
+        d3.scale.threshold()
+          .domain(%s)
+          .range(%s)
+        '
+        ,jsonlite::toJSON(seq(0,round(max(diamonds$carat))))
+        ,jsonlite::toJSON(RColorBrewer::brewer.pal(6,"PuBuGn"))
+      ))
+    )
+  )
+```
+
+```{r "example05_run", echo=F}
+diamonds[sample(1:nrow(diamonds),1000),] %>%
+  select( carat, color, cut, clarity, depth, table, price,  x, y, z) %>%
+  parcoords(
+    rownames = F # turn off rownames from the data.frame
+    , brushMode = "2D-strums"
+    , reorderable = T
+    , queue = T
+    , color = list(
+      colorBy = "carat"
+      ,colorScale = htmlwidgets::JS(sprintf('
+        d3.scale.threshold()
+          .domain(%s)
+          .range(%s)
+        '
+        ,jsonlite::toJSON(seq(0,round(max(diamonds$carat))))
+        ,jsonlite::toJSON(RColorBrewer::brewer.pal(6,"PuBuGn"))
+      ))
+    ) , height = 400, width = 800
+  ) %>>%
+   htmlwidgets::as.iframe(
+      file="example05.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 900
+      , height =500
+      , overflow = "hidden"
+   )
+```
+
+
+## Unfinished
+Well, I hope that gives you enough to get started and gauge your interest.  **This is unfinished with lots of potential for helpful refinements.  Please let me know if you would like me to push ahead.**
+
 
 ## Thanks
 

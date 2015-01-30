@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2015-01-29" />
+<meta name="date" content="2015-01-30" />
 
 <title>Week04 - Interactive and Configurable Parallel Coordinates</title>
 
@@ -40,7 +40,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="header">
 <h1 class="title">Week04 - Interactive and Configurable Parallel Coordinates</h1>
-<h4 class="date"><em>January 29, 2015</em></h4>
+<h4 class="date"><em>January 30, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -52,6 +52,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#brush-on-and-reorder">Brush On and Reorder</a></li>
 <li><a href="#queue-render-for-bigger-data-and-some-color">Queue Render for Bigger Data and Some Color</a></li>
 </ul></li>
+<li><a href="#unfinished">Unfinished</a></li>
 <li><a href="#thanks">Thanks</a></li>
 </ul>
 </div>
@@ -65,7 +66,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="this-weeks-widget---parcoords-interactive-d3.js-parallel-coordinates" class="section level2">
 <h2>This Week’s Widget - <code>parcoords</code> | Interactive d3.js Parallel Coordinates</h2>
-<p>Real quickly before I get to this week’s widget, I would like to strongly encourage anyone who likes any of the widgets to let me know through stars/forks on Github, <a href="http://twitter.com/timelyportfolio">twitter</a>, comments on blog, or posts/examples/rpubs using the widget. It helps me prioritize which to keep alive and improve and also motivates me to continue building more.</p>
+<hr />
+Real quickly before I get to this week’s widget, I would like to strongly encourage anyone who likes any of the widgets to let me know through stars/forks on Github, <a href="http://twitter.com/timelyportfolio">twitter</a>, comments on blog, or posts/examples/rpubs using the widget. It helps me prioritize which to keep alive and improve and also motivates me to continue building more.
+<hr />
 <p>By far, one of my favorite reusable <code>d3</code> charts is the <a href="https://github.com/syntagmatic/parallel-coordinates">parallel-coordinates</a> project by <a href="https://github.com/syntagmatic">@syntagmatic</a>. Its unique combination of <code>SVG</code> and <code>canvas</code> quickly digests even large (big for me) datasets while still maintaining easy but powerful interactivity for exploring the data at a high level, inspecting more granular visible features, and determining additional areas for inquiry. I also just think there is something really cool and compelling about it.</p>
 </div>
 <div id="what-does-it-do" class="section level2">
@@ -99,7 +102,7 @@ parcoords( mtcars )</code></pre>
 </div>
 <div id="queue-render-for-bigger-data-and-some-color" class="section level3">
 <h3>Queue Render for Bigger Data and Some Color</h3>
-<p><code>parallel-coordinates</code> handles bigger data well since the lines are drawn on the <code>canvas</code>. Set <code>queue = T</code> to progressively render the chart on build and interaction. Here is one <a href="http://syntagmatic.github.io/parallel-coordinates/index.html#example-progressive">example</a> and <a href="http://syntagmatic.github.io/parallel-coordinates/examples/slickgrid.html">another</a> from the <code>parallel-coordinates</code> site. The <code>diamonds</code> dataset from <code>ggplot2</code> will give us big enough data to test and prove that we are in <code>R</code>. I’ll sample the <code>diamonds</code> to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on your local machine.</p>
+<p><code>parallel-coordinates</code> handles bigger data well since the lines are drawn on the <code>canvas</code>. Set <code>queue = T</code> to progressively render the chart on build and interaction. Here is one <a href="http://syntagmatic.github.io/parallel-coordinates/index.html#example-progressive">example</a> and <a href="http://syntagmatic.github.io/parallel-coordinates/examples/slickgrid.html">another</a> from the <code>parallel-coordinates</code> site. The <code>diamonds</code> dataset from <code>ggplot2</code> will give us big enough data to test the progressive render and prove that we are in <code>R</code>. I’ll sample the <code>diamonds</code> to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on your local machine.</p>
 <pre class="r"><code>data( diamonds, package = &quot;ggplot2&quot; )
 parcoords(
   diamonds[sample(1:nrow(diamonds),1000),]
@@ -126,7 +129,32 @@ diamonds[sample(1:nrow(diamonds),1000),] %&gt;%
     )    
   )</code></pre>
 <p><iframe src="example04.html" width="900" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>While we are on the topic of color, I wanted to highlight the fine work by Gregor Aisch with <a href="https://github.com/gka/chroma.js">chroma.js</a> and <a href="https://github.com/gka/palettes">palettes</a>. We could use Jeroen Oom’s new <code>V8</code> for this, but for now, let’s stick with what we have in <code>R</code> and <code>d3.js</code> using a <code>d3.scale.threshold</code> with colors supplied by <code>RColorBrewer::brewer.pal</code>.</p>
+<pre class="r"><code>diamonds[sample(1:nrow(diamonds),1000),] %&gt;%
+  select( carat, color, cut, clarity, depth, table, price,  x, y, z) %&gt;%
+  parcoords(
+    rownames = F # turn off rownames from the data.frame
+    , brushMode = &quot;2D-strums&quot;
+    , reorderable = T
+    , queue = T
+    , color = list(
+      colorBy = &quot;carat&quot;
+      ,colorScale = htmlwidgets::JS(sprintf('
+        d3.scale.threshold()
+          .domain(%s)
+          .range(%s)
+        '
+        ,jsonlite::toJSON(seq(0,round(max(diamonds$carat))))
+        ,jsonlite::toJSON(RColorBrewer::brewer.pal(6,&quot;PuBuGn&quot;))
+      ))
+    )
+  )</code></pre>
+<p><iframe src="example05.html" width="900" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
 </div>
+</div>
+<div id="unfinished" class="section level2">
+<h2>Unfinished</h2>
+<p>Well, I hope that gives you enough to get started and gauge your interest. <strong>This is unfinished with lots of potential for helpful refinements. Please let me know if you would like me to push ahead.</strong></p>
 </div>
 <div id="thanks" class="section level2">
 <h2>Thanks</h2>
