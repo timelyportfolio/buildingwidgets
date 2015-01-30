@@ -29,7 +29,7 @@ library(pipeR)
 
 @rich-iannone
 
-[\@rich-iannone] - [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) hits version 0.4 with full shiny support and `graphviz`, gets a [webpage](http://rich-iannone.github.io/DiagrammeR/) (thanks JJ Allaire), and becomes the first `htmlwidget` to surpass 100 stars on Github.
+[\@rich-iannone](https://github.com/rich-iannone) - [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) hits version 0.4 with full shiny support and `graphviz`, gets a [webpage](http://rich-iannone.github.io/DiagrammeR/) (thanks JJ Allaire), and becomes the first `htmlwidget` to surpass 100 stars on Github.
 
 ## This Week's Widget - `parcoords` | Interactive d3.js Parallel Coordinates
 
