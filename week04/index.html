@@ -99,7 +99,7 @@ parcoords( mtcars )</code></pre>
 </div>
 <div id="queue-render-for-bigger-data-and-some-color" class="section level3">
 <h3>Queue Render for Bigger Data and Some Color</h3>
-<p><code>parallel-coordinates</code> handles bigger data well since the lines are drawn on the <code>canvas</code>. The <code>diamonds</code> dataset from <code>ggplot2</code> will give us big enough data to test. Set <code>queue = T</code> to progressively render the chart on build and interaction. I’ll sample the <code>diamonds</code> to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on you local machine.</p>
+<p><code>parallel-coordinates</code> handles bigger data well since the lines are drawn on the <code>canvas</code>. Set <code>queue = T</code> to progressively render the chart on build and interaction. Here is one <a href="http://syntagmatic.github.io/parallel-coordinates/index.html#example-progressive">example</a> and <a href="http://syntagmatic.github.io/parallel-coordinates/examples/slickgrid.html">another</a> from the <code>parallel-coordinates</code> site. The <code>diamonds</code> dataset from <code>ggplot2</code> will give us big enough data to test and prove that we are in <code>R</code>. I’ll sample the <code>diamonds</code> to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on your local machine.</p>
 <pre class="r"><code>data( diamonds, package = &quot;ggplot2&quot; )
 parcoords(
   diamonds[sample(1:nrow(diamonds),1000),]

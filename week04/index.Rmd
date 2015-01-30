@@ -106,7 +106,7 @@ parcoords(
 
 ### Queue Render for Bigger Data and Some Color
 
-`parallel-coordinates` handles bigger data well since the lines are drawn on the `canvas`.  The `diamonds` dataset from `ggplot2` will give us big enough data to test.  Set `queue = T` to progressively render the chart on build and interaction.  I'll sample the `diamonds` to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on you local machine.
+`parallel-coordinates` handles bigger data well since the lines are drawn on the `canvas`.  Set `queue = T` to progressively render the chart on build and interaction.  Here is one [example](http://syntagmatic.github.io/parallel-coordinates/index.html#example-progressive) and [another](http://syntagmatic.github.io/parallel-coordinates/examples/slickgrid.html) from the `parallel-coordinates` site.    The `diamonds` dataset from `ggplot2` will give us big enough data to test and prove that we are in `R`.  I'll sample the `diamonds` to reduce the size of the HTML, but feel free to remove the sample and use the entire dataset on your local machine.
 
 ```{r "example03", eval = F}
 data( diamonds, package = "ggplot2" )
