@@ -87,7 +87,7 @@ katexR("P(E) = {n \\choose k} p^k (1-p)^{ n-k}")
 
 I imagine that if you start using `katexR` you'll most likely want to use it in a `rmarkdown` context for publication of research or presentations.  I have embedded the rendered `katexR` [example](https://github.com/timelyportfolio/katexR/blob/master/inst/examples/examples.Rmd) below to prove that `katexR` works just fine in `rmarkdown`.
 
-<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week05/examples.html" seamless height = 500px width = 100%></iframe>
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week05/examples.html" seamless height = 500px width = 100% style = "border:none;"></iframe>
 
 ## Thanks
 
