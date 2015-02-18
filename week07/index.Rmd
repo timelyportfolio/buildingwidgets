@@ -1,0 +1,57 @@
+---
+title: "Week06 - bokeh now for R"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r "setup",echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+)
+
+library(pipeR)
+```
+
+## htmlwidgets News This Week
+-[\@hrbrmstr](https://github.com/hrbrmstr) - d3 streamgraph layout [`streamgraph`](https://github.com/hrbrmstr/streamgraph).  Bob Rudis builds on his list of authored widgets with this very nice `htmlwidget` for streamgraphs.  See the [announcement](http://hrbrmstr.github.io/streamgraph/) for a through discussion.
+
+-[\@smartinsightsfromdata](https://github.com/smartinsightsfromdata) - [`rpivotTable`](https://github.com/smartinsightsfromdata/rpivotTable) provides a `htmlwidget` for the very well done [PivotTable.js](http://nicolas.kruchten.com/pivottable/examples/) by [Nicholas Krutchen](http://nicolas.kruchten.com/).  Not only will Excel users feel more at home now, but also there are lots of very interesting views, such as treemaps and heatmaps.  If you still like old-fashioned `tables` and their derivatives in R like I do, please let me know, and maybe we can convince the author to add the couple lines to support these very handy and far-from-obsolete beauties.
+
+
+## This Week's Widget - `rbokeh` | bokeh for R
+
+Python and even Scala and Julia have [`Bokeh`](http://bokeh.pydata.org/en/latest/), so R should too.  Fortunately, [Ryan Hafen](https://twitter.com/hafenstats) from Purdue and [Tessara](http://tessera.io/) has been applying his very thorough R skills to make [`rbokeh`](http://hafen.github.io/rbokeh), a professionally built `htmlwidget` for `Bokeh`.  Just look at that site and the documentation, and I think you'll quickly get as excited as I am for the potential of `rbokeh`.
+
+I should **note that Ryan deserves all the credit for `rbokeh`**.  I simply chipped in with some additional examples, testing, lots of questions, and minor pull requests.  I hope I can also help implement a bar chart and full seamless shiny integration.  Feel free to contribute any way you can.  Every little bit helps.
+
+## Examples
+
+I understand how hard it is to motivate R users spoiled by `ggplot2`, `lattice`, and even base `graphics`.  Borrowing from these great libraries, Ryan has integrated many good bits into `rbokeh`.  Enough writing, let's see some examples.  You'll notice `rbokeh` loves modern R pipes.
+
+```{r "example_01", eval = F}
+# devtools::install("hafen/rbokeh")
+
+library(rbokeh)
+
+
+```
+
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [Ryan Hafen](https://github.com/hafen) for `rbokeh`
+- team at [Continuum Analytics](http://continuum.io/)
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
