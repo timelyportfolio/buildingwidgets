@@ -38,14 +38,147 @@ I should **note that Ryan deserves all the credit for `rbokeh`**.  I simply chip
 
 I understand how hard it is to motivate R users spoiled by `ggplot2`, `lattice`, and even base `graphics`.  Borrowing from these great libraries, Ryan has integrated many good bits into `rbokeh`.  Enough writing, let's see some examples.  You'll notice `rbokeh` loves modern R pipes.
 
-```{r "example_01", eval = F}
+```{r "example01", eval = F}
 # devtools::install("hafen/rbokeh")
 
 library(rbokeh)
+# basic pipes built in but I love pipeR
+library(pipeR)
 
+# diamonds is always my goto for kind of big data
+data(diamonds, package="ggplot2")
 
+figure( width = 600, height = 600, title = "Diamonds from ggplot2" ) %>>%
+  ly_hexbin(
+    carat
+    ,log(price)
+    ,data = diamonds
+  )
 ```
 
+
+```{r "example01_run", eval = F}
+# devtools::install("hafen/rbokeh")
+
+library(rbokeh)
+# basic pipes built in but I love pipeR
+library(pipeR)
+
+# diamonds is always my goto for kind of big data
+data(diamonds, package="ggplot2")
+
+figure( width = 600, height = 600, title = "Diamonds from ggplot2" ) %>>%
+  ly_hexbin(
+    carat
+    ,log(price)
+    ,data = diamonds
+  )
+```
+
+`Bokeh` renders to canvas, so it can handle lots of points.
+
+```{r "example02", eval = F}
+figure( width = 700, height = 400, title = "Diamonds from ggplot2" ) %>>%
+  ly_points(
+    x = carat
+    , y = price
+    , data = diamonds
+    , color = color
+    , size = 2
+  )
+```
+
+```{r "example02_run", eval = F}
+figure( width = 700, height = 400, title = "Diamonds from ggplot2" ) %>>%
+  ly_points(
+    x = carat
+    , y = price
+    , data = diamonds
+    , color = color
+    , size = 2
+  )
+```
+
+`lm` plugs right into `rbokeh`.
+
+```{r "example03", eval = F}
+figure( width = 700, height = 400, title = "Diamonds lm with rbokeh" ) %>>%
+  ly_points(
+    x = carat
+    , y = price
+    , data = diamonds
+    , color = color
+    , size = 2
+  ) %>>%
+  ly_abline(
+    lm( price ~ carat, diamonds )
+    ,type = 2
+    ,width = 3
+  )
+```
+```{r "example03_run", eval = F}
+figure( width = 700, height = 400, title = "Diamonds lm with rbokeh" ) %>>%
+  ly_points(
+    x = carat
+    , y = price
+    , data = diamonds
+    , color = color
+    , size = 2
+  ) %>>%
+  ly_abline(
+    lm( price ~ carat, diamonds )
+    ,type = 2
+    ,width = 3
+  )
+```
+
+Now would be a great time to show `facets` with `rbokeh`.  `grid_plot` gives us a way to achieve these, but `facets` require a little extra effort.  But hey, we all need to know `*apply` anyways.  Let's split the plot above by clarity.
+
+```{r "example04", eval = F}
+lapply(
+  levels(diamonds$clarity)
+  ,function(clar){
+    figure( width = 300, height = 300, title = paste0("Clarity: ",clar )) %>>%
+      ly_points(
+        x = carat
+        , y = price
+        , data = subset(diamonds,clarity==clar)
+        , color = color
+        , size = 2
+      ) %>>%
+      ly_abline(
+        lm( price ~ carat, subset(diamonds,clarity==clar) )
+        ,type = 2
+        ,width = 3
+      )    
+  }
+) %>>%
+  ( grid_plot( ., nrow = 2, ncol = 4, same_axes = T ) )
+```
+```{r "example04_run", eval = F}
+lapply(
+  levels(diamonds$clarity)
+  ,function(clar){
+    figure( width = 300, height = 300, title = paste0("Clarity: ",clar )) %>>%
+      ly_points(
+        x = carat
+        , y = price
+        , data = subset(diamonds,clarity==clar)
+        , color = color
+        , size = 2
+      ) %>>%
+      ly_abline(
+        lm( price ~ carat, subset(diamonds,clarity==clar) )
+        ,type = 2
+        ,width = 3
+      )    
+  }
+) %>>%
+  ( grid_plot( ., nrow = 2, ncol = 4, same_axes = T ) )
+```
+
+### Examples from `ggplot2` & `lattice` books
+`rbokeh` can do so much that we could write an entire book.  I'll start by replicating many of the examples from `ggplot2` and `lattice` books in this [Gist](https://gist.github.com/timelyportfolio/8300c43ac43d772600df).
 
 
 ## Thanks
