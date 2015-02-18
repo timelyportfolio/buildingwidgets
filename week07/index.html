@@ -82,23 +82,9 @@ figure( width = 600, height = 600, title = &quot;Diamonds from ggplot2&quot; ) %
     ,log(price)
     ,data = diamonds
   )</code></pre>
-<pre class="r"><code># devtools::install(&quot;hafen/rbokeh&quot;)
-
-library(rbokeh)
-# basic pipes built in but I love pipeR
-library(pipeR)
-
-# diamonds is always my goto for kind of big data
-data(diamonds, package=&quot;ggplot2&quot;)
-
-figure( width = 600, height = 600, title = &quot;Diamonds from ggplot2&quot; ) %&gt;&gt;%
-  ly_hexbin(
-    carat
-    ,log(price)
-    ,data = diamonds
-  )</code></pre>
+<p><iframe src="example01.html" width="750" height="750" style="border-width:0px;overflow:hidden ;"></iframe></p>
 <p><code>Bokeh</code> renders to canvas, so it can handle lots of points.</p>
-<pre class="r"><code>figure( width = 700, height = 400, title = &quot;Diamonds from ggplot2&quot; ) %&gt;&gt;%
+<pre class="r"><code>figure( width = 600, height = 400, title = &quot;Diamonds from ggplot2&quot; ) %&gt;&gt;%
   ly_points(
     x = carat
     , y = price
@@ -106,14 +92,7 @@ figure( width = 600, height = 600, title = &quot;Diamonds from ggplot2&quot; ) %
     , color = color
     , size = 2
   )</code></pre>
-<pre class="r"><code>figure( width = 700, height = 400, title = &quot;Diamonds from ggplot2&quot; ) %&gt;&gt;%
-  ly_points(
-    x = carat
-    , y = price
-    , data = diamonds
-    , color = color
-    , size = 2
-  )</code></pre>
+<p><iframe src="example02.html" width="750" height="550" style="border-width:0px;overflow:hidden ;"></iframe></p>
 <p><code>lm</code> plugs right into <code>rbokeh</code>.</p>
 <pre class="r"><code>figure( width = 700, height = 400, title = &quot;Diamonds lm with rbokeh&quot; ) %&gt;&gt;%
   ly_points(
@@ -128,19 +107,7 @@ figure( width = 600, height = 600, title = &quot;Diamonds from ggplot2&quot; ) %
     ,type = 2
     ,width = 3
   )</code></pre>
-<pre class="r"><code>figure( width = 700, height = 400, title = &quot;Diamonds lm with rbokeh&quot; ) %&gt;&gt;%
-  ly_points(
-    x = carat
-    , y = price
-    , data = diamonds
-    , color = color
-    , size = 2
-  ) %&gt;&gt;%
-  ly_abline(
-    lm( price ~ carat, diamonds )
-    ,type = 2
-    ,width = 3
-  )</code></pre>
+<p><iframe src="example03.html" width="750" height="550" style="border-width:0px;overflow:hidden ;"></iframe></p>
 <p>Now would be a great time to show <code>facets</code> with <code>rbokeh</code>. <code>grid_plot</code> gives us a way to achieve these, but <code>facets</code> require a little extra effort. But hey, we all need to know <code>*apply</code> anyways. Let’s split the plot above by clarity.</p>
 <pre class="r"><code>lapply(
   levels(diamonds$clarity)
@@ -161,28 +128,10 @@ figure( width = 600, height = 600, title = &quot;Diamonds from ggplot2&quot; ) %
   }
 ) %&gt;&gt;%
   ( grid_plot( ., nrow = 2, ncol = 4, same_axes = T ) )</code></pre>
-<pre class="r"><code>lapply(
-  levels(diamonds$clarity)
-  ,function(clar){
-    figure( width = 300, height = 300, title = paste0(&quot;Clarity: &quot;,clar )) %&gt;&gt;%
-      ly_points(
-        x = carat
-        , y = price
-        , data = subset(diamonds,clarity==clar)
-        , color = color
-        , size = 2
-      ) %&gt;&gt;%
-      ly_abline(
-        lm( price ~ carat, subset(diamonds,clarity==clar) )
-        ,type = 2
-        ,width = 3
-      )    
-  }
-) %&gt;&gt;%
-  ( grid_plot( ., nrow = 2, ncol = 4, same_axes = T ) )</code></pre>
+<p><iframe src="example04.html" width="750" height="750" style="border-width:0px;overflow:hidden ;"></iframe></p>
 <div id="examples-from-ggplot2-lattice-books" class="section level3">
 <h3>Examples from <code>ggplot2</code> &amp; <code>lattice</code> books</h3>
-<p><code>rbokeh</code> can do so much that we could write an entire book. I’ll start by replicating many of the examples from <code>ggplot2</code> and <code>lattice</code> books in this <a href="https://gist.github.com/timelyportfolio/8300c43ac43d772600df">Gist</a>.</p>
+<p><code>rbokeh</code> can do so much that I could write an entire book. I have started by replicating many of the examples from <code>ggplot2</code> and <code>lattice</code> books in this <a href="https://gist.github.com/timelyportfolio/8300c43ac43d772600df">Gist</a>.</p>
 </div>
 </div>
 <div id="thanks" class="section level2">

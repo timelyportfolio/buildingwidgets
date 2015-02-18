@@ -57,7 +57,7 @@ figure( width = 600, height = 600, title = "Diamonds from ggplot2" ) %>>%
 ```
 
 
-```{r "example01_run", eval = F}
+```{r "example01_run", echo = F}
 # devtools::install("hafen/rbokeh")
 
 library(rbokeh)
@@ -72,13 +72,23 @@ figure( width = 600, height = 600, title = "Diamonds from ggplot2" ) %>>%
     carat
     ,log(price)
     ,data = diamonds
-  )
+  ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      rbokeh:::plot.BokehFigure(.)
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 750
+      , overflow = "hidden"
+   ))
 ```
 
 `Bokeh` renders to canvas, so it can handle lots of points.
 
 ```{r "example02", eval = F}
-figure( width = 700, height = 400, title = "Diamonds from ggplot2" ) %>>%
+figure( width = 600, height = 400, title = "Diamonds from ggplot2" ) %>>%
   ly_points(
     x = carat
     , y = price
@@ -88,15 +98,25 @@ figure( width = 700, height = 400, title = "Diamonds from ggplot2" ) %>>%
   )
 ```
 
-```{r "example02_run", eval = F}
-figure( width = 700, height = 400, title = "Diamonds from ggplot2" ) %>>%
+```{r "example02_run", echo = F}
+figure( width = 600, height = 400, title = "Diamonds from ggplot2" ) %>>%
   ly_points(
     x = carat
     , y = price
     , data = diamonds
     , color = color
     , size = 2
-  )
+  ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      rbokeh:::plot.BokehFigure(.)
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 550
+      , overflow = "hidden"
+   ))
 ```
 
 `lm` plugs right into `rbokeh`.
@@ -116,8 +136,8 @@ figure( width = 700, height = 400, title = "Diamonds lm with rbokeh" ) %>>%
     ,width = 3
   )
 ```
-```{r "example03_run", eval = F}
-figure( width = 700, height = 400, title = "Diamonds lm with rbokeh" ) %>>%
+```{r "example03_run", echo = F}
+figure( width = 600, height = 400, title = "Diamonds lm with rbokeh" ) %>>%
   ly_points(
     x = carat
     , y = price
@@ -129,7 +149,17 @@ figure( width = 700, height = 400, title = "Diamonds lm with rbokeh" ) %>>%
     lm( price ~ carat, diamonds )
     ,type = 2
     ,width = 3
-  )
+  ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      rbokeh:::plot.BokehFigure(.)
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 550
+      , overflow = "hidden"
+   ))
 ```
 
 Now would be a great time to show `facets` with `rbokeh`.  `grid_plot` gives us a way to achieve these, but `facets` require a little extra effort.  But hey, we all need to know `*apply` anyways.  Let's split the plot above by clarity.
@@ -155,7 +185,7 @@ lapply(
 ) %>>%
   ( grid_plot( ., nrow = 2, ncol = 4, same_axes = T ) )
 ```
-```{r "example04_run", eval = F}
+```{r "example04_run", echo = F}
 lapply(
   levels(diamonds$clarity)
   ,function(clar){
@@ -174,11 +204,21 @@ lapply(
       )    
   }
 ) %>>%
-  ( grid_plot( ., nrow = 2, ncol = 4, same_axes = T ) )
+  ( grid_plot( ., nrow = 2, ncol = 4, same_axes = T ) ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      rbokeh:::plot.BokehGridPlot(.)
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 750
+      , overflow = "hidden"
+   ))
 ```
 
 ### Examples from `ggplot2` & `lattice` books
-`rbokeh` can do so much that we could write an entire book.  I'll start by replicating many of the examples from `ggplot2` and `lattice` books in this [Gist](https://gist.github.com/timelyportfolio/8300c43ac43d772600df).
+`rbokeh` can do so much that I could write an entire book.  I have started by replicating many of the examples from `ggplot2` and `lattice` books in this [Gist](https://gist.github.com/timelyportfolio/8300c43ac43d772600df).
 
 
 ## Thanks
