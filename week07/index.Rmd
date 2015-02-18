@@ -1,5 +1,5 @@
 ---
-title: "Week06 - bokeh now for R"
+title: "Week07 - bokeh now for R"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
@@ -216,6 +216,8 @@ lapply(
       , overflow = "hidden"
    ))
 ```
+
+I hope this along with Ryan's site and documentation will be enough for you to get excited and get started.  It is an amazing package with immense functionality.  Just look at this [periodic table](http://hafen.github.io/rbokeh/#htmlwidget-6405) and this [baseball hexbin](http://hafen.github.io/rbokeh/#htmlwidget-427).
 
 ### Examples from `ggplot2` & `lattice` books
 `rbokeh` can do so much that I could write an entire book.  I have started by replicating many of the examples from `ggplot2` and `lattice` books in this [Gist](https://gist.github.com/timelyportfolio/8300c43ac43d772600df).
