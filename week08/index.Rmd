@@ -1,0 +1,131 @@
+---
+title: "Week08 - Interactive Phylogeny"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r "setup",echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+)
+
+library(pipeR)
+```
+
+## htmlwidgets News This Week
+-[\@HarlanH](https://github.com/HarlanH) - c3 `htmlwidget` [`c3r`](https://github.com/HarlanH/c3r).  [c3](http://c3js.org/) is a really nice reusable `d3.js` charting library that will make for a very powerful `htmlwidget`.  Be sure to check out the `c3.js` demo and all of the [examples](http://c3js.org/examples.html).
+
+-[\@yutannihilation](https://github.com/yutannihilation) - two more from this prolific `htmlwidget`-er
+
+1. [`highstockR`](https://github.com/yutannihilation/highstockR) provides a `htmlwidget` for [Highstock](http://www.highcharts.com/products/highstock), but be careful of Highcharts [licensing](http://shop.highsoft.com/highstock.html).
+2. [`dcStockR`](https://github.com/yutannihilation/dcStockR) will attempt to do what has baffled me for a long time which is to build a `htmlwidget` for [`dc.js`](http://dc-js.github.io/dc.js/).  I hope he can pull it off.
+
+
+## This Week's Widget - `treewidget` | Interactive Phylogeny + Tree
+
+Once again, this week I can only claim contributions, and most of the credit goes to [sdwfrost](https://github.com/sdwfrost) and [Hackout2](https://github.com/Hackout2/wiki) on the R side.  For the all important JavaScript, we can thank [Sergei Pond](https://github.com/spond) and [Steven Weaver](https://github.com/stevenweaver) from [UCSD Viral Evolution Group](https://github.com/veg) for some brilliant work on [phylotree.js](https://github.com/veg/phylotree.js).  I mentioned in this post [*Week03  | More Network Layouts*](http://www.buildingwidgets.com/blog/2015/1/23/week-03-more-network-layouts) that a phylogeny viewer has been the most requested `htmlwidget` on Github and Twitter.  As a nice coincidence, I spotted on Github the beginning of this widget and consequently discovered `phylotree.js`.  Now I know nothing about phylogeny, but I couldn't resist getting this thing to work.  What I have since discovered is that this **little beauty works well for `hclust` and `dendrograms` also**.
+
+## Examples
+
+Since it was designed for phylogeny, let's start with an example in this field.  We can use "some cytochrome b sequences" data on some North American snakes from this [example](http://bl.ocks.org/kueda/1036776) from [\@kueda](https://github.com/kueda).  I **highly encourage you to click on nodes, reroot, tag, and just play a lot with this widget to see all that it offers**.
+
+```{r "example01", eval = F}
+# devtools::install("sdwfrost/epiwidgets")
+
+library(epiwidgets)
+
+treewidget(
+"(((Crotalus_oreganus_oreganus_cytochrome_b:0.00800,Crotalus_horridus_cytochrome_b:0.05866):0.04732,(Thamnophis_elegans_terrestris_cytochrome_b:0.00366,Thamnophis_atratus_cytochrome_b:0.00172):0.06255):0.00555,(Pituophis_catenifer_vertebralis_cytochrome_b:0.00552,Lampropeltis_getula_cytochrome_b:0.02035):0.05762,((Diadophis_punctatus_cytochrome_b:0.06486,Contia_tenuis_cytochrome_b:0.05342):0.01037,Hypsiglena_torquata_cytochrome_b:0.05346):0.00779);"
+)
+```
+
+
+```{r "example01_run", echo = F}
+library(epiwidgets)
+
+treewidget(
+"(((Crotalus_oreganus_oreganus_cytochrome_b:0.00800,Crotalus_horridus_cytochrome_b:0.05866):0.04732,(Thamnophis_elegans_terrestris_cytochrome_b:0.00366,Thamnophis_atratus_cytochrome_b:0.00172):0.06255):0.00555,(Pituophis_catenifer_vertebralis_cytochrome_b:0.00552,Lampropeltis_getula_cytochrome_b:0.02035):0.05762,((Diadophis_punctatus_cytochrome_b:0.06486,Contia_tenuis_cytochrome_b:0.05342):0.01037,Hypsiglena_torquata_cytochrome_b:0.05346):0.00779);"
+,height = 500, width = 600) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 750
+      , overflow = "hidden"
+   ))
+
+```
+
+You might have noticed that the [Newick](format) was used in this example.  `treewidget` also accepts `phylo` data from the `ape` package.  Let's have a look using `?ape::bird.orders`.
+
+```{r "example02", eval = F}
+library(ape)
+data(bird.orders)
+treewidget(bird.orders)
+```
+
+```{r "example02_run", echo = F, warning = F}
+library(ape)
+data(bird.orders)
+treewidget(bird.orders
+  ,height = 500, width = 600) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 750
+      , overflow = "hidden"
+   ))
+```
+
+I enjoy the phylogeny stuff, but in finance, I don't think I have ever encountered a phylogenetic tree.  I don't want anyone to feel left out.  With the magic of `?ape::as.phylo`, we can use this really powerful interactivity on `hclust` and `dendrograms`.  Let's use the `?hclust` example.
+
+```{r "example03", eval = F}
+treewidget(
+  as.phylo(hclust(dist(USArrests), "ave"))
+)
+```
+
+
+```{r "example03_run", echo = F}
+treewidget(
+  as.phylo(hclust(dist(USArrests), "ave"))
+  ,height = 500, width = 600
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 550
+      , overflow = "hidden"
+   ))
+```
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [sdwfrost](https://github.com/sdwfrost)
+- [Hackout2](https://github.com/Hackout2/wiki)
+- [Sergei Pond](https://github.com/spond) and [Steven Weaver](https://github.com/stevenweaver) from [UCSD Viral Evolution Group](https://github.com/veg) for [phylotree.js](https://github.com/veg/phylotree.js)
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
