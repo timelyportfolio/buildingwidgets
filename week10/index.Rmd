@@ -1,0 +1,474 @@
+---
+title: "Week10 - Responsive Toolbars"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r "setup",echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+)
+
+library(pipeR)
+
+save_tags <- function (tags, file, selfcontained = F, libdir = "./lib") 
+{
+    if (is.null(libdir)) {
+        libdir <- paste(tools::file_path_sans_ext(basename(file)), 
+            "_files", sep = "")
+    }
+    htmltools::save_html(tags, file = file, libdir = libdir)
+    if (selfcontained) {
+        if (!htmlwidgets:::pandoc_available()) {
+            stop("Saving a widget with selfcontained = TRUE requires pandoc. For details see:\n", 
+                "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
+        }
+        htmlwidgets:::pandoc_self_contained_html(file, file)
+        unlink(libdir, recursive = TRUE)
+    }
+    invisible(NULL)
+}
+```
+
+## htmlwidgets News This Week
+
+`htmlwidgets` are getting so popular that it is very difficult to keep up with them.  Hopefully, we'll soon have a gallery of built and in-process `htmlwidgets`, since it now seems beyond my ability to keep up with all the developments.  I'll give away one little hint for those who want to be on the cutting edge.  Just do this [Github search](https://github.com/search?o=desc&p=35&q=htmlwidgets&s=indexed&type=Code), and you'll likely see all the newest and latest.
+
+### `htmlwidgets` Iteration
+
+I have noticed some interesting things being done over at [DiagrammeR](http://rich-iannone.github.io/DiagrammeR) with `exportSVG`, [qtlcharts](https://github.com/kwbroman/qtlcharts), and [DT](http://rstudio.github.io/DT/shiny.html) with some revolutionary Shiny integration.
+
+### Videos
+
+So far, videos on `htmlwidgets` have been limited, but that changed this week with three new videos from very credible sources (except for one).
+
+1.  rOpenSci [call](https://vimeo.com/121720465) with Ramnath Vaidyanathan
+1.  RStudio [webinar](http://www.rstudio.com/resources/webinars/) on `htmlwidgets` with Yihui Xie
+1.  useR Birmigham, Alabama [Presentation](https://youtu.be/b8PClzD-CXE) by me
+
+
+## This Week's Widget - `navr` | Responsive Toolbars and Nav
+
+### Getting Started
+`navr` has not achieved CRAN status yet, so for now we will install with `devtools::install_github` as shown in the code below.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/navr")
+```
+
+### Simple Example
+
+```{r "example01", eval=F}
+library(navr)
+library(htmltools)
+
+# navr loves htmltools::tags, and I do too
+#   so let's use them
+
+tagList(
+  tags$div(
+    id = "simple-toolbar"
+    ,style="width:100%;height:300px;border: dashed 0.2em lightgray;"
+    ,tags$h1( "Div in Need of Toolbar" )
+    ,tags$p( "If all goes well, you should see something that resembles a toolbar.
+      This toolbar is built in R using the htmlwidget "
+      , tags$a(tags$code("navr"),href = "https://github.com/timelyportfolio/navr")
+      ," which wraps the tiny, dependency-free powerhouse "
+      ,tags$a(tags$code("responsive-nav.js"),href = "http://responsive-nav.com/")
+      ,".  Isn't open source great?  For bonus points, open this in a mobile device"
+      ,"or make your screen small enough to see the hamburger icon"
+      , tags$span( class="fa fa-bars" )
+      ,"."
+    )
+  )
+  ,navr(
+    "#simple-toolbar"  # id of selector for the div above
+    ,tagList(
+      tags$ul(style = "float:left;"
+        ,tags$li(tags$a("worthless1"),href="")  # for now just text
+        ,tags$li(tags$a("worthless2"),href="") # for now just text
+      )
+    )
+    , options = list( insert = "after" )
+  )
+)
+
+```
+
+```{r "example01_run", eval=T, echo=F}
+library(navr)
+library(htmltools)
+
+# navr loves htmltools::tags, and I do too
+#   so let's use them
+
+tagList(
+  tags$div(
+    id = "simple-toolbar"
+    ,style="width:100%;height:300px;border: dashed 0.2em lightgray;"
+    ,tags$h1( "Div in Need of Toolbar" )
+    ,tags$p( "If all goes well, you should see something that resembles a toolbar.
+      This toolbar is built in R using the htmlwidget "
+      , tags$a(tags$code("navr"),href = "https://github.com/timelyportfolio/navr")
+      ," which wraps the tiny, dependency-free powerhouse "
+      ,tags$a(tags$code("responsive-nav.js"),href = "http://responsive-nav.com/")
+      ,".  Isn't open source great?  For bonus points, open this in a mobile device"
+      ,"or make your screen small enough to see the hamburger icon"
+      , tags$span( class="fa fa-bars" )
+      ,"."
+    )
+  )
+  ,navr(
+    "#simple-toolbar"  # id of selector for the div above
+    ,tagList(
+      tags$ul(style = "float:left;"
+        ,tags$li(tags$a("worthless1"),href="")  # for now just text
+        ,tags$li(tags$a("worthless2"),href="") # for now just text
+      )
+    )
+    , options = list( insert = "after" )
+  )
+) %>>% save_tags("example01.html")
+```
+
+### `htmlwidget` Example
+
+I can imagine a scenario where one of our `htmlwidget` friends might need a toolbar.  Let's say a
+`DiagrammeR` diagram wants to add a toolbar for exporting the rendered SVG.  We could do something like this.
+
+```{r "example02", eval=F}
+library(DiagrammeR)
+
+gV <- grViz(
+  "digraph{ DiagrammeR -> HTML; navr -> HTML; HTML -> beautiful; }"
+  , height = 400, width = 600
+)
+
+tagList(
+  # wrap diagram in a div since a lot of htmlwidgets clear contents
+  tags$div(id = "diagram-needs-toolbar"
+    ,gV
+  )
+  ,navr(
+    selector = "#diagram-needs-toolbar"
+    # use HTML instead of tags
+    ,taglist = HTML("
+      <ul>
+        <li><a onclick = 'exportSVG()' href = '#diagram-needs-toolbar'>Export to SVG</a></li>
+      </ul>
+    "
+    )
+  )
+  ,tags$script("
+    function exportSVG(){
+      window.open(
+        [
+          'data:;base64,',
+          window.btoa((new XMLSerializer()).serializeToString(
+              document.getElementById('diagram-needs-toolbar')
+                .getElementsByTagName('svg')[0]
+          ))
+        ].join('')
+      )
+    }
+  ")
+)
+```
+
+```{r "example02_run", eval=T, echo=F}
+library(DiagrammeR)
+
+gV <- grViz(
+  "digraph{ DiagrammeR -> HTML; navr -> HTML; HTML -> beautiful; }"
+  , height = 400, width = 600
+)
+
+tagList(
+  # wrap diagram in a div since a lot of htmlwidgets clear contents
+  tags$div(id = "diagram-needs-toolbar"
+    ,gV
+  )
+  ,navr(
+    selector = "#diagram-needs-toolbar"
+    # use HTML instead of tags
+    ,taglist = HTML("
+      <ul>
+        <li><a onclick = 'exportSVG()' href = '#diagram-needs-toolbar'>Export to SVG</a></li>
+      </ul>
+    "
+    )
+  )
+  ,tags$script("
+    function exportSVG(){
+      window.open(
+        [
+          'data:;base64,',
+          window.btoa((new XMLSerializer()).serializeToString(
+              document.getElementById('diagram-needs-toolbar')
+                .getElementsByTagName('svg')[0]
+          ))
+        ].join('')
+      )
+    }
+  ")
+) %>>% save_tags("example_02.html")
+```
+
+### Stylish Hover Effects
+We can apply these stylish [hover effects](http://ianlunn.github.io/Hover/) from [Ian Lunn](https://github.com/IanLunn) with the helper function `add_hover`.  There are lots of different effects.  Let's try `pop` and `float`.
+
+```{r "example03", eval=F}
+library(htmltools)
+library(navr)
+
+# build a simple nav
+n1 <- navr(
+  selector = "#pop-toolbar"
+  ,taglist = tagList(
+    tags$ul(
+      tags$li(style="border: solid 0.1em white;","Popper")
+      ,tags$li(style="border: solid 0.1em white;","Popping")
+    )
+  )
+)
+# make a copy to show another effect
+n2 <- n1
+n2$x$taglist = tagList(
+  tags$ul(
+    tags$li(style="border: solid 0.1em white;","Floater")
+    ,tags$li(style="border: solid 0.1em white;","Floating")
+  )
+)
+
+
+tagList(
+  tags$div(
+    id = "pop-toolbar"
+    ,style="width:300px;height:300px;border: dashed 0.2em lightgray;"
+    ,tags$h3("Hover Effects")
+    ,"Hover effects are nice and let our users know that our
+      navr actually does something.  Just wait until you see our navr with icons."
+  )
+  ,add_hover(n1,"pop")
+  ,add_hover(n2,"float")
+)
+```
+
+```{r "example03_run", eval=T, echo=F}
+library(htmltools)
+library(navr)
+
+# build a simple nav
+n1 <- navr(
+  selector = "#pop-toolbar"
+  ,taglist = tagList(
+    tags$ul(
+      tags$li(style="border: solid 0.1em white;","Popper")
+      ,tags$li(style="border: solid 0.1em white;","Popping")
+    )
+  )
+)
+# make a copy to show another effect
+n2 <- n1
+n2$x$taglist = tagList(
+  tags$ul(
+    tags$li(style="border: solid 0.1em white;","Floater")
+    ,tags$li(style="border: solid 0.1em white;","Floating")
+  )
+)
+
+
+tagList(
+  tags$div(
+    id = "pop-toolbar"
+    ,style="width:300px;height:300px;border: dashed 0.2em lightgray;"
+    ,tags$h3("Hover Effects")
+    ,"Hover effects are nice and let our users know that our
+      navr actually does something.  Just wait until you see our navr with icons."
+  )
+  ,add_hover(n1,"pop")
+  ,add_hover(n2,"float")
+) %>>% save_tags("example_03.html")
+```
+
+### Awesome Font-Awesome Icons
+
+Font-Awesome are the nice open-source MIT-licensed icons in Bootstrap.  `add_font` makes it easy to use these icons in our toolbar.  Even neater, the hover effects shown below play very nicely with Font-Awesome, so I would encourage `add_hover` + `add_font_awesome`.  *If you're in shiny, no need to use `add_font_awesome` since Bootstrap already gives you these icons.*
+
+```{r "example04", eval=F}
+library(htmltools)
+library(navr)
+
+# build a simple nav
+n1 <- navr(
+  selector = "#icon-toolbar"
+  ,taglist = tagList(
+    tags$ul(style="line-height:120px; text-align:center; vertical-align:middle;"
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-beer fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-bell fa-4x"
+      )
+    )
+  )
+)
+
+tagList(
+  tags$div(
+    id = "icon-toolbar"
+    ,style="width:300px;height:300px;border: dashed 0.2em lightgray; float:left;"
+    ,tags$h3("Icon with Hover Effects")
+    ,"Hover effects are even nicer when they work with icons, especially our easy
+    to add Font-Awesome icons."
+  )
+  ,add_hover(add_font_awesome(n1),"fade")
+)
+```
+
+```{r "example04_run", eval=T, echo = F}
+library(htmltools)
+library(navr)
+
+# build a simple nav
+n1 <- navr(
+  selector = "#icon-toolbar"
+  ,taglist = tagList(
+    tags$ul(style="line-height:120px; text-align:center; vertical-align:middle;"
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-beer fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-bell fa-4x"
+      )
+    )
+  )
+)
+
+tagList(
+  tags$div(
+    id = "icon-toolbar"
+    ,style="width:300px;height:300px;border: dashed 0.2em lightgray; float:left;"
+    ,tags$h3("Icon with Hover Effects")
+    ,"Hover effects are even nicer when they work with icons, especially our easy
+    to add Font-Awesome icons."
+  )
+  ,add_hover(add_font_awesome(n1),"fade")
+) %>>% save_tags("example_04.html")
+```
+
+### navr + sortableR
+
+I bet last week's widget `sortableR` will also work with `navr`.
+
+```{r "example05", eval=F}
+library(navr)
+library(sortableR)
+library(htmltools)
+
+# build a simple nav
+n1 <- navr(
+  selector = "#sortableR-toolbar"
+  ,taglist = tagList(
+    tags$ul(id = "sort-navr"
+      ,style="line-height:120px; text-align:center; vertical-align:middle;"
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-bug fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-binoculars fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-camera fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-briefcase fa-4x"
+      )
+    )
+  )
+)
+
+tagList(
+  tags$div(
+    id = "sortableR-toolbar"
+    ,style="width:300px;border: dashed 0.2em lightgray; float:left;"
+    ,tags$h3("sortableR Icons")
+    ,"If you don't like the order of these icons, change them by drag and dropping."
+  )
+  ,add_font_awesome(n1)
+  ,sortableR("sort-navr")
+)
+```
+
+```{r "example05_run", eval=T, echo=F}
+library(navr)
+library(sortableR)
+library(htmltools)
+
+# build a simple nav
+n1 <- navr(
+  selector = "#sortableR-toolbar"
+  ,taglist = tagList(
+    tags$ul(id = "sort-navr"
+      ,style="line-height:120px; text-align:center; vertical-align:middle;"
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-bug fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-binoculars fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-camera fa-4x"
+      )
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-briefcase fa-4x"
+      )
+    )
+  )
+)
+
+tagList(
+  tags$div(
+    id = "sortableR-toolbar"
+    ,style="width:300px;border: dashed 0.2em lightgray; float:left;"
+    ,tags$h3("sortableR Icons")
+    ,"If you don't like the order of these icons, change them by drag and dropping."
+  )
+  ,add_font_awesome(n1)
+  ,sortableR("sort-navr")
+) %>>% save_tags("example05.html")
+```
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [Viljami](http://viljamis.com/) for Responsive-Nav
+- [IanLunn](https://github.com/IanLunn) for Hover.css
+- [Dave Gundy](https://twitter.com/davegandy) for Font-Awesome
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R`
+
