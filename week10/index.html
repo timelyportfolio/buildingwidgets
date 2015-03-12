@@ -80,6 +80,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="this-weeks-widget---navr-responsive-toolbars-and-nav" class="section level2">
 <h2>This Week’s Widget - <code>navr</code> | Responsive Toolbars and Nav</h2>
+<p><a href="http://responsive-nav.com"><code>Responsive-Nav</code></a> is a delightfully tiny and dependency-free JavaScript library for reponsive nav toolbars. Much like last’s week widget <code>sortableR</code>, this week’s widget should fit in nicely nearly anywhere. The only reason you might choose not to use would be if you have decided to include the much heavier Bootstrap. Otherwise, this little powerhouse can serve you in all sorts of helpful and pretty ways.</p>
 <div id="getting-started" class="section level3">
 <h3>Getting Started</h3>
 <p><code>navr</code> has not achieved CRAN status yet, so for now we will install with <code>devtools::install_github</code> as shown in the code below.</p>
@@ -120,6 +121,7 @@ tagList(
     , options = list( insert = &quot;after&quot; )
   )
 )</code></pre>
+<p><iframe src="example_01.html" height="400px" width="100%" style="border:0;"></iframe></p>
 </div>
 <div id="htmlwidget-example" class="section level3">
 <h3><code>htmlwidget</code> Example</h3>
@@ -128,7 +130,7 @@ tagList(
 
 gV &lt;- grViz(
   &quot;digraph{ DiagrammeR -&gt; HTML; navr -&gt; HTML; HTML -&gt; beautiful; }&quot;
-  , height = 400, width = 600
+  , height = 300, width = 600
 )
 
 tagList(
@@ -160,6 +162,7 @@ tagList(
     }
   &quot;)
 )</code></pre>
+<p><iframe src="example_02.html" height="400px" width="100%" style="border:0;"></iframe></p>
 </div>
 <div id="stylish-hover-effects" class="section level3">
 <h3>Stylish Hover Effects</h3>
@@ -198,6 +201,7 @@ tagList(
   ,add_hover(n1,&quot;pop&quot;)
   ,add_hover(n2,&quot;float&quot;)
 )</code></pre>
+<p><iframe src="example_03.html" height="400px" width="100%" style="border:0;"></iframe></p>
 </div>
 <div id="awesome-font-awesome-icons" class="section level3">
 <h3>Awesome Font-Awesome Icons</h3>
@@ -232,6 +236,7 @@ tagList(
   )
   ,add_hover(add_font_awesome(n1),&quot;fade&quot;)
 )</code></pre>
+<p><iframe src="example_04.html" height="400px" width="100%" style="border:0;"></iframe></p>
 </div>
 <div id="navr-sortabler" class="section level3">
 <h3>navr + sortableR</h3>
@@ -276,6 +281,7 @@ tagList(
   ,add_font_awesome(n1)
   ,sortableR(&quot;sort-navr&quot;)
 )</code></pre>
+<p><iframe src="example05.html" height="400px" width="100%" style="border:0;"></iframe></p>
 </div>
 </div>
 <div id="thanks" class="section level2">

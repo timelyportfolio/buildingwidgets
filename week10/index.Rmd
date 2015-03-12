@@ -36,7 +36,7 @@ save_tags <- function (tags, file, selfcontained = F, libdir = "./lib")
         htmlwidgets:::pandoc_self_contained_html(file, file)
         unlink(libdir, recursive = TRUE)
     }
-    invisible(NULL)
+    return(htmltools::tags$iframe(src= file, height = "400px", width = "100%", style="border:0;"))
 }
 ```
 
@@ -58,6 +58,8 @@ So far, videos on `htmlwidgets` have been limited, but that changed this week wi
 
 
 ## This Week's Widget - `navr` | Responsive Toolbars and Nav
+
+[`Responsive-Nav`](http://responsive-nav.com) is a delightfully tiny and dependency-free JavaScript library for reponsive nav toolbars.  Much like last's week widget `sortableR`, this week's widget should fit in nicely nearly anywhere.  The only reason you might choose not to use would be if you have decided to include the much heavier Bootstrap.   Otherwise, this little powerhouse can serve you in all sorts of helpful and pretty ways.
 
 ### Getting Started
 `navr` has not achieved CRAN status yet, so for now we will install with `devtools::install_github` as shown in the code below.
@@ -138,7 +140,7 @@ tagList(
     )
     , options = list( insert = "after" )
   )
-) %>>% save_tags("example01.html")
+) %>>% save_tags("example_01.html")
 ```
 
 ### `htmlwidget` Example
@@ -151,7 +153,7 @@ library(DiagrammeR)
 
 gV <- grViz(
   "digraph{ DiagrammeR -> HTML; navr -> HTML; HTML -> beautiful; }"
-  , height = 400, width = 600
+  , height = 300, width = 600
 )
 
 tagList(
@@ -190,7 +192,7 @@ library(DiagrammeR)
 
 gV <- grViz(
   "digraph{ DiagrammeR -> HTML; navr -> HTML; HTML -> beautiful; }"
-  , height = 400, width = 600
+  , height = 300, width = 600
 )
 
 tagList(
