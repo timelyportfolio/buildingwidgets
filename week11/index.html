@@ -51,7 +51,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </ul></li>
 <li><a href="#vignette-examples">Vignette Examples</a><ul>
 <li><a href="#introduction-to-rcdimple">Introduction to <code>rcdimple</code></a></li>
-<li><a href="#examples-with-r-graph-gallery">Examples with r-graph-gallery</a></li>
+<li><a href="#examples-with-r-graph-catalog">Examples with r-graph-catalog</a></li>
 </ul></li>
 <li><a href="#thanks">Thanks</a></li>
 </ul>
@@ -67,20 +67,25 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="this-weeks-widget---rcdimple-rcharts-dimple" class="section level2">
 <h2>This Week’s Widget - <code>rcdimple</code> | rCharts dimple</h2>
+<p>I fell in love with <a href="http://dimplejs.org">dimple</a> the moment I saw it (not long after its May 21, 2013 initial commit). So, way, way back on June 19, 2013 I added dimple to <code>rCharts</code> in this <a href="https://github.com/ramnathv/rCharts/commit/408bebc60eb2649baea16c73ce40fd444bcf0acb">commit</a>. Since then, my love for dimple is as strong as the day of first sight. I think some folks know, but Ramnath Vaidyanathan has big plans for an <code>htmlwidgets</code> version of <code>rCharts</code> called <code>rCharts2</code>. I just couldn’t wait any longer to make this little <code>rcdimple</code> part public.</p>
+<p>For those who might not like my implementation of dimple, please see this other version <a href="https://github.com/jpmarindiaz/dimpler"><code>dimpler</code></a> and also let me know what part you don’t like about <code>rcdimple</code>.</p>
 <div id="getting-started" class="section level3">
 <h3>Getting Started</h3>
-<p><code>rcdimple</code> has not achieved CRAN status yet, so for now we will install with <code>devtools::install_github</code> as shown in the code below.</p>
-<pre class="r"><code>devtools::install_github(&quot;timelyportfolio/rcdimple&quot;)</code></pre>
+<p><code>rcdimple</code> has not achieved CRAN status yet, so for now we will install with <code>devtools::install_github</code> as shown in the code below. Lots and lots of demos are in the package.</p>
+<pre class="r"><code>devtools::install_github(&quot;timelyportfolio/rcdimple&quot;)
+library(rcdimple)
+demo(dimple)</code></pre>
 </div>
 </div>
 <div id="vignette-examples" class="section level2">
 <h2>Vignette Examples</h2>
+<p>Every package needs a vignette, so I will make this the first <code>rcdimple</code> vignette.</p>
 <div id="introduction-to-rcdimple" class="section level3">
 <h3>Introduction to <code>rcdimple</code></h3>
 <p><code>rcdimple</code> is an <code>htmlwidget</code> that leverages the upcoming common methods and conventions of <code>rCharts2</code> to make interactive plotting easy and consistent. Many of these ideas evolve from lessons learned with the <a href="https://github.com/ramnathv/rCharts"><code>rCharts</code></a> package from <a href="https://github.com/ramnathv">Ramnath Vaidyanathan</a> who also authored much of the <code>htmlwidgets</code> package. Also, you might notice some bits and pieces of goodness from <code>lattice</code>, <code>ggplot2</code>, and base <code>graphics</code>. For a nearly complete set of examples from the <a href="http://dimplejs.org/examples_index.html">dimple examples</a>, do <code>demo(dimple)</code>.</p>
 </div>
-<div id="examples-with-r-graph-gallery" class="section level3">
-<h3>Examples with r-graph-gallery</h3>
+<div id="examples-with-r-graph-catalog" class="section level3">
+<h3>Examples with r-graph-catalog</h3>
 <p>As a quick introduction to <code>rcdimple</code>, let’s use <code>rcdimple</code> to make some of the plots from <a href="http://shinyapps.stat.ubc.ca/r-graph-catalog/">r-graph-catalog</a> by Joanna Zhao and <a href="http://www.stat.ubc.ca/~jenny/">Jennifer Bryan</a> which recreates most of the plots in <a href="http://www.amazon.com/Creating-Effective-Graphs-Naomi-Robbins/dp/0985911123">“Creating More Effective Graphs”</a> by <a href="http://www.nbr-graphs.com/">Naomi Robbins</a>. Yes, this is a reproduction of a reproduction, but it should be insightful. We’ll concentrate on those graphs tagged as “good graphs”, and if successful lines of code to create these interactive versions will be &lt;= lines of code to make the <code>ggplot2</code> versions.</p>
 <pre class="r"><code># try to do some examples with rcdimple
 #   use
@@ -281,8 +286,8 @@ tagList(
 <p>Thanks so much for all the work by</p>
 <ul>
 <li><a href="https://twitter.com/jkiernander">John Kiernander</a> &amp; PMSI-Analytics for dimple</li>
-<li>Joanna Zhao and Jennifer Bryan for r-graph-gallery</li>
-<li>Naomi Robbins for <em>Creating More Effective Graphs</em> that inspired r-graph-gallery</li>
+<li>Joanna Zhao and Jennifer Bryan for r-graph-catalog</li>
+<li>Naomi Robbins for <em>Creating More Effective Graphs</em> that inspired r-graph-catalog</li>
 <li>Ramnath Vaidyanathan and RStudio for <code>htmlwidgets</code></li>
 <li>all the contributors to <code>R</code></li>
 </ul>

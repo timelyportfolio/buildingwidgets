@@ -50,23 +50,29 @@ Just do this [Github search](https://github.com/search?o=desc&p=35&q=htmlwidgets
 It is well-documented and full of nice `Shiny` examples, so I encourage you to check it out.
 
 ## This Week's Widget - `rcdimple` | rCharts dimple
+I fell in love with [dimple](http://dimplejs.org) the moment I saw it (not long after its May 21, 2013 initial commit).  So, way, way back on June 19, 2013 I added dimple to `rCharts` in this [commit](https://github.com/ramnathv/rCharts/commit/408bebc60eb2649baea16c73ce40fd444bcf0acb).  Since then, my love for dimple is as strong as the day of first sight.  I think some folks know, but Ramnath Vaidyanathan has big plans for an `htmlwidgets` version of `rCharts` called `rCharts2`.  I just couldn't wait any longer to make this little `rcdimple` part public.
 
+For those who might not like my implementation of dimple, please see this other version  [`dimpler`](https://github.com/jpmarindiaz/dimpler) and also let me know what part you don't like about `rcdimple`.
 
 ### Getting Started
-`rcdimple` has not achieved CRAN status yet, so for now we will install with `devtools::install_github` as shown in the code below.
+`rcdimple` has not achieved CRAN status yet, so for now we will install with `devtools::install_github` as shown in the code below.  Lots and lots of demos are in the package.
 
 ```{r eval = F}
 devtools::install_github("timelyportfolio/rcdimple")
+library(rcdimple)
+demo(dimple)
 ```
 
 
 ## Vignette Examples
 
+Every package needs a vignette, so I will make this the first `rcdimple` vignette.
+
 ### Introduction to `rcdimple`
 `rcdimple` is an `htmlwidget` that leverages the upcoming common methods and conventions of `rCharts2` to make interactive plotting easy and consistent.  Many of these ideas evolve from lessons learned with the [`rCharts`](https://github.com/ramnathv/rCharts) package from [Ramnath Vaidyanathan](https://github.com/ramnathv) who also authored much of the `htmlwidgets` package.  Also, you might notice some bits and pieces of goodness from `lattice`, `ggplot2`, and base `graphics`.  For a nearly complete set of examples from the [dimple examples](http://dimplejs.org/examples_index.html), do `demo(dimple)`.
 
 
-### Examples with r-graph-gallery
+### Examples with r-graph-catalog
 
 As a quick introduction to `rcdimple`, let's use `rcdimple` to make some of the plots from [r-graph-catalog](http://shinyapps.stat.ubc.ca/r-graph-catalog/) by Joanna Zhao and [Jennifer Bryan](http://www.stat.ubc.ca/~jenny/) which recreates most of the plots in  [“Creating More Effective Graphs”](http://www.amazon.com/Creating-Effective-Graphs-Naomi-Robbins/dp/0985911123) by [Naomi Robbins](http://www.nbr-graphs.com/).  Yes, this is a reproduction of a reproduction, but it should be insightful.  We'll concentrate on those graphs tagged as "good graphs", and if successful lines of code to create these interactive versions will be <= lines of code to make the `ggplot2` versions.
 
@@ -544,8 +550,8 @@ tagList(
 Thanks so much for all the work by
 
 - [John Kiernander](https://twitter.com/jkiernander) & PMSI-Analytics for dimple
-- Joanna Zhao and Jennifer Bryan for r-graph-gallery
-- Naomi Robbins for *Creating More Effective Graphs* that inspired r-graph-gallery
+- Joanna Zhao and Jennifer Bryan for r-graph-catalog
+- Naomi Robbins for *Creating More Effective Graphs* that inspired r-graph-catalog
 - Ramnath Vaidyanathan and RStudio for `htmlwidgets`
 - all the contributors to `R`
 
