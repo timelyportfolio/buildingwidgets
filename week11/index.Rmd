@@ -1,0 +1,551 @@
+---
+title: "Week11 - dimple as htmlwidget"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+  , fig.width = 8
+  , fig.height = 4
+)
+
+
+save_tags <- function (tags, file, selfcontained = F, libdir = "./lib") 
+{
+    if (is.null(libdir)) {
+        libdir <- paste(tools::file_path_sans_ext(basename(file)), 
+            "_files", sep = "")
+    }
+    htmltools::save_html(tags, file = file, libdir = libdir)
+    if (selfcontained) {
+        if (!htmlwidgets:::pandoc_available()) {
+            stop("Saving a widget with selfcontained = TRUE requires pandoc. For details see:\n", 
+                "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
+        }
+        htmlwidgets:::pandoc_self_contained_html(file, file)
+        unlink(libdir, recursive = TRUE)
+    }
+    return(htmltools::tags$iframe(src= file, height = "800px", width = "100%", style="border:0;"))
+}
+```
+
+## htmlwidgets News This Week
+
+Just do this [Github search](https://github.com/search?o=desc&p=35&q=htmlwidgets&s=indexed&type=Code), and you'll likely see all the newest and latest.   I would like to highlight the very thorough work by 
+
+> Thomas Siegmund on [D3TableFilter](https://github.com/ThomasSiegmund/D3TableFilter)
+
+It is well-documented and full of nice `Shiny` examples, so I encourage you to check it out.
+
+## This Week's Widget - `rcdimple` | rCharts dimple
+
+
+### Getting Started
+`rcdimple` has not achieved CRAN status yet, so for now we will install with `devtools::install_github` as shown in the code below.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/rcdimple")
+```
+
+
+## Vignette Examples
+
+### Introduction to `rcdimple`
+`rcdimple` is an `htmlwidget` that leverages the upcoming common methods and conventions of `rCharts2` to make interactive plotting easy and consistent.  Many of these ideas evolve from lessons learned with the [`rCharts`](https://github.com/ramnathv/rCharts) package from [Ramnath Vaidyanathan](https://github.com/ramnathv) who also authored much of the `htmlwidgets` package.  Also, you might notice some bits and pieces of goodness from `lattice`, `ggplot2`, and base `graphics`.  For a nearly complete set of examples from the [dimple examples](http://dimplejs.org/examples_index.html), do `demo(dimple)`.
+
+
+### Examples with r-graph-gallery
+
+As a quick introduction to `rcdimple`, let's use `rcdimple` to make some of the plots from [r-graph-catalog](http://shinyapps.stat.ubc.ca/r-graph-catalog/) by Joanna Zhao and [Jennifer Bryan](http://www.stat.ubc.ca/~jenny/) which recreates most of the plots in  [“Creating More Effective Graphs”](http://www.amazon.com/Creating-Effective-Graphs-Naomi-Robbins/dp/0985911123) by [Naomi Robbins](http://www.nbr-graphs.com/).  Yes, this is a reproduction of a reproduction, but it should be insightful.  We'll concentrate on those graphs tagged as "good graphs", and if successful lines of code to create these interactive versions will be <= lines of code to make the `ggplot2` versions.
+
+```{r}
+# try to do some examples with rcdimple
+#   use
+#    http://shinyapps.stat.ubc.ca/r-graph-catalog/
+#    https://github.com/jennybc/r-graph-catalog
+
+#devtools::install_github("timelyportfolio/rcdimple")
+
+library(rcdimple)
+library(pipeR)  #could use magrittr if you like that better
+```
+
+```{r "example01", eval = F}
+####figure1.2####
+my_data <- data.frame(
+  variable = c("A", "B", "C", "D", "E"),
+  value = c(23, 22, 19.5, 18.5, 17))
+
+my_data %>>%
+  dimple( variable ~ value, type = "bubble" ) %>>%
+  xAxis( type = "addMeasureAxis", hidden = TRUE, ticks = 1, title = ""  ) %>>%
+  yAxis(
+    type = "addCategoryAxis"
+    , orderRule = rev(as.character( my_data$variable ) )
+    , showGridlines = T
+  ) %>>%
+  default_colors( gray.colors(2) ) %>>%
+  add_title( "Fig 1.2 Similar Pie Wedges: Dot Plot")
+```
+
+
+```{r "example01_run", eval = T, echo=F}
+####figure1.2####
+my_data <- data.frame(
+  variable = c("A", "B", "C", "D", "E"),
+  value = c(23, 22, 19.5, 18.5, 17))
+
+my_data %>>%
+  dimple( variable ~ value, type = "bubble", width = 700, height = 400 ) %>>%
+  xAxis( type = "addMeasureAxis", hidden = TRUE, ticks = 1, title = ""  ) %>>%
+  yAxis(
+    type = "addCategoryAxis"
+    , orderRule = rev(as.character( my_data$variable ) )
+    , showGridlines = T
+  ) %>>%
+  default_colors( gray.colors(2) ) %>>%
+  add_title( "Fig 1.2 Similar Pie Wedges: Dot Plot") %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 500
+      , overflow = "hidden"
+   ))
+```
+
+
+```{r "example02", eval = F}
+####figure2.2####
+my_data <- data.frame(
+  variable = factor(paste("Item", 1:10), levels = paste("Item", 1:10)),
+  value = c(7.0, 12.0, 8.0, 13.0, 7.5, 12.5, 8.5, 13.5, 6.5, 11.5)/100)
+
+my_data %>>%
+  dimple( variable ~ value, type = "bubble" ) %>>%
+  xAxis( type = "addMeasureAxis", title = "" ) %>>%
+  yAxis(
+    type = "addCategoryAxis"
+    , title = ""
+    , orderRule = levels(my_data$variable)
+    , showGridlines = T
+  ) %>>%
+  default_colors( gray.colors(2) ) %>>%
+  add_title( "Fig 2.2 Structured Data Set: Dot Plot" )
+```
+
+```{r "example02_run", eval = T, echo = F}
+####figure2.2####
+my_data <- data.frame(
+  variable = factor(paste("Item", 1:10), levels = paste("Item", 1:10)),
+  value = c(7.0, 12.0, 8.0, 13.0, 7.5, 12.5, 8.5, 13.5, 6.5, 11.5)/100)
+
+my_data %>>%
+  dimple( variable ~ value, type = "bubble", width = 700, height = 400 ) %>>%
+  xAxis( type = "addMeasureAxis", title = "" ) %>>%
+  yAxis(
+    type = "addCategoryAxis"
+    , title = ""
+    , orderRule = levels(my_data$variable)
+    , showGridlines = T
+  ) %>>%
+  default_colors( gray.colors(2) ) %>>%
+  add_title( "Fig 2.2 Structured Data Set: Dot Plot" ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 500
+      , overflow = "hidden"
+   ))
+```
+
+```{r "example03", eval = F}
+####figure2.4####
+my_data <- data.frame(
+  variable = c("A", "B", "C", "D"),
+  value = c(0.2, 0.2, 0.2, 0.4))
+
+my_data %>>%
+  dimple( x = "variable", y = "value", type = "bar"  ) %>>%
+  xAxis( orderRule = "variable" ) %>>%
+  default_colors( gray.colors(4)[2:3] ) %>>%
+  add_title( html =
+   "<div style='text-align:center;width:100%'>
+      <b style = 'font-size:130%;'>Fig 2.4 Three Dimensinal Pie Data:<br/>
+        Two Dimensional Bar Chart
+      </b>
+    </div>"
+  )
+```
+
+```{r "example03_run", eval = T, echo = F}
+####figure2.4####
+my_data <- data.frame(
+  variable = c("A", "B", "C", "D"),
+  value = c(0.2, 0.2, 0.2, 0.4))
+
+my_data %>>%
+  dimple( x = "variable", y = "value", type = "bar", height = 400, width = 700 ) %>>%
+  xAxis( orderRule = "variable" ) %>>%
+  default_colors( gray.colors(4)[2:3] ) %>>%
+  add_title( html =
+   "<div style='text-align:center;width:100%'>
+      <b style = 'font-size:130%;'>Fig 2.4 Three Dimensinal Pie Data:<br/>
+        Two Dimensional Bar Chart
+      </b>
+    </div>"
+  )%>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 500
+      , overflow = "hidden"
+   ))
+```
+
+```{r "example04", eval = F}
+####figure2.12####
+my_data <- data.frame(
+  year = factor(77:86),
+  us = c(1320, 1280, 1350, 1400, 1470, 1420, 1440, 1580, 1520, 1610),
+  japan = c(405, 405, 480, 500, 490, 495, 480, 480, 500, 530),
+  germany = c(220, 225, 290, 320, 300, 280, 260, 240, 220, 225),
+  other = c(1280, 1195, 1310, 1390, 1270, 1200, 1100, 1100, 1040, 1080))
+
+my_data %>>%
+  dimple( other~year, type = "bar" ) %>>%
+  xAxis( title = "Year" ) %>>%
+  yAxis( outputFormat = ",.0f", title = "Millions of Gallons" ) %>>%
+  default_colors( gray.colors(4)[2:3] ) %>>%
+  add_title( "Fig 2.12 Energy Data: All Other OECD" )
+```
+
+```{r "example04_run", eval = T, echo = F}
+####figure2.12####
+my_data <- data.frame(
+  year = factor(77:86),
+  us = c(1320, 1280, 1350, 1400, 1470, 1420, 1440, 1580, 1520, 1610),
+  japan = c(405, 405, 480, 500, 490, 495, 480, 480, 500, 530),
+  germany = c(220, 225, 290, 320, 300, 280, 260, 240, 220, 225),
+  other = c(1280, 1195, 1310, 1390, 1270, 1200, 1100, 1100, 1040, 1080))
+
+my_data %>>%
+  dimple( other~year, type = "bar", width = 700, height = 400 ) %>>%
+  xAxis( title = "Year" ) %>>%
+  yAxis( outputFormat = ",.0f", title = "Millions of Gallons" ) %>>%
+  default_colors( gray.colors(4)[2:3] ) %>>%
+  add_title( "Fig 2.12 Energy Data: All Other OECD" ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 500
+      , overflow = "hidden"
+   ))
+```
+
+```{r "example05", eval = F}
+####figure2.14####
+library(curl)
+library(reshape2)
+my_data_wide <- read.delim(
+  curl(paste0(
+    "https://raw.githubusercontent.com/jennybc/"
+    ,"r-graph-catalog/master/figures/"
+    ,"fig02-14_playfair-s-balance-of-trade-data/"
+    ,"fig02-14_playfair-s-balance-of-trade-data.tsv"
+  ))
+)
+
+# convert my_data into long format
+my_data_long <- melt(
+  my_data_wide
+  , id.vars = "year"
+  , measure.vars = c("exports", "imports")
+  , variable.name = "type"
+  , value.name = "pounds"
+)
+
+my_data_long$year <- paste0(my_data_long$year,"-01-01")
+
+my_data_long %>>%
+  dimple( pounds ~ year, groups = "type", type = "line", width = 768 ) %>>%
+  xAxis(
+    type = "addTimeAxis"
+    , inputFormat = "%Y-%m-%d"
+    , tickFormat = "%Y"
+    , timePeriod = htmlwidgets::JS('d3.time.years')
+    , timeInterval = 20
+    , title = "Year"
+    , showGridlines = TRUE
+    , fontFamily = "monospace"
+    , fontSize = "100%"
+  ) %>>%
+  yAxis(
+    ticks = 4
+    ,title = "Millions of Pounds"
+    , fontFamily = "monospace"
+    , fontSize = "100%"    
+  ) %>>%
+  set_bounds( x = "10%", y = "10%", width = "80%", height = "75%") %>>%
+  default_colors( list("black") ) %>>%
+  add_title("Fig 2.14 Playfair's Balance-of-Trade Data") %>>%
+(~d2_14)
+```
+
+```{r "example05_run", eval = T, echo = F}
+####figure2.14####
+library(curl)
+library(reshape2)
+my_data_wide <- read.delim(
+  curl(paste0(
+    "https://raw.githubusercontent.com/jennybc/"
+    ,"r-graph-catalog/master/figures/"
+    ,"fig02-14_playfair-s-balance-of-trade-data/"
+    ,"fig02-14_playfair-s-balance-of-trade-data.tsv"
+  ))
+)
+
+# convert my_data into long format
+my_data_long <- melt(
+  my_data_wide
+  , id.vars = "year"
+  , measure.vars = c("exports", "imports")
+  , variable.name = "type"
+  , value.name = "pounds"
+)
+
+my_data_long$year <- paste0(my_data_long$year,"-01-01")
+
+my_data_long %>>%
+  dimple( pounds ~ year, groups = "type", type = "line", width = 768 ) %>>%
+  xAxis(
+    type = "addTimeAxis"
+    , inputFormat = "%Y-%m-%d"
+    , tickFormat = "%Y"
+    , timePeriod = htmlwidgets::JS('d3.time.years')
+    , timeInterval = 20
+    , title = "Year"
+    , showGridlines = TRUE
+    , fontFamily = "monospace"
+    , fontSize = "100%"
+  ) %>>%
+  yAxis(
+    ticks = 4
+    ,title = "Millions of Pounds"
+    , fontFamily = "monospace"
+    , fontSize = "100%"    
+  ) %>>%
+  set_bounds( x = "10%", y = "10%", width = "80%", height = "75%") %>>%
+  default_colors( list("black") ) %>>%
+  add_title("Fig 2.14 Playfair's Balance-of-Trade Data") %>>%
+(~d2_14)  %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example05.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 840
+      , height = 600
+      , overflow = "hidden"
+   ))
+```
+
+Now, you might notice no labels and arrows.  While it is possible, I'll separate it out since it is not nearly as clean and easy as it should be.  Hopefully, this will get easier and easier.
+
+```{r "example06", eval = F}
+d2_14$x$options$tasks <- list(htmlwidgets::JS('
+  function(){
+    //this.widgetDimple should hold our chart
+    var chart = this.widgetDimple[0];
+    chart.svg.append("line")
+      .attr("x1",chart.axes[0]._scale(new Date("1720-01-01")))
+      .attr("x2",chart.axes[0]._scale(new Date("1730-01-01")))
+      .attr("y1",chart.axes[1]._scale(1.05))
+      .attr("y2",chart.axes[1]._scale(1))
+      .style("stroke","black")
+    chart.svg.append("text")
+      .attr("x", chart.axes[0]._scale(new Date("1720-01-01")) )
+      .attr("y", chart.axes[1]._scale(1.1) )
+      .attr("text-anchor", "middle")
+      .text("Imports to England")
+    chart.svg.append("line")
+      .attr("x1",chart.axes[0]._scale(new Date("1750-01-01")))
+      .attr("x2",chart.axes[0]._scale(new Date("1760-01-01")))
+      .attr("y1",chart.axes[1]._scale(.65))
+      .attr("y2",chart.axes[1]._scale(.4))
+      .style("stroke","black")
+    chart.svg.append("text")
+      .attr("x", chart.axes[0]._scale(new Date("1760-01-01")) )
+      .attr("y", chart.axes[1]._scale(0.35) )
+      .attr("dy", "0.6em")
+      .attr("text-anchor", "middle")
+      .text("Exports to England")
+  }
+'))
+d2_14
+```
+
+```{r "example06_run", eval = T, echo = F}
+d2_14$x$options$tasks <- list(htmlwidgets::JS('
+  function(){
+    //this.widgetDimple should hold our chart
+    var chart = this.widgetDimple[0];
+    chart.svg.append("line")
+      .attr("x1",chart.axes[0]._scale(new Date("1720-01-01")))
+      .attr("x2",chart.axes[0]._scale(new Date("1730-01-01")))
+      .attr("y1",chart.axes[1]._scale(1.05))
+      .attr("y2",chart.axes[1]._scale(1))
+      .style("stroke","black")
+    chart.svg.append("text")
+      .attr("x", chart.axes[0]._scale(new Date("1720-01-01")) )
+      .attr("y", chart.axes[1]._scale(1.1) )
+      .attr("text-anchor", "middle")
+      .text("Imports to England")
+    chart.svg.append("line")
+      .attr("x1",chart.axes[0]._scale(new Date("1750-01-01")))
+      .attr("x2",chart.axes[0]._scale(new Date("1760-01-01")))
+      .attr("y1",chart.axes[1]._scale(.65))
+      .attr("y2",chart.axes[1]._scale(.4))
+      .style("stroke","black")
+    chart.svg.append("text")
+      .attr("x", chart.axes[0]._scale(new Date("1760-01-01")) )
+      .attr("y", chart.axes[1]._scale(0.35) )
+      .attr("dy", "0.6em")
+      .attr("text-anchor", "middle")
+      .text("Exports to England")
+  }
+'))
+d2_14  %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example06.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 840
+      , height = 600
+      , overflow = "hidden"
+   ))
+```
+
+`htmlwidgets` are composeable, so we can make fig2.15 fairly easily with some help from [`htmltools`](https://github.com/rstudio/htmltools).
+
+```{r "example07", eval = F}
+####fig2.15####
+library(htmltools)
+library(dplyr)
+
+tagList(
+  tags$div(
+    d2_14
+    ,dimple(
+      imports_minus_exports ~ year
+      , data = my_data_long %>>%
+        group_by( year ) %>>%
+        mutate( imports_minus_exports = diff( pounds ))
+      , type = "line"
+      , height = "250px"
+      , width = 768
+    ) %>>%
+      xAxis(
+        type = "addTimeAxis"
+        , inputFormat = "%Y-%m-%d"
+        , tickFormat = "%Y"
+        , timePeriod = htmlwidgets::JS('d3.time.years')
+        , timeInterval = 20
+        , title = "Year"
+        , showGridlines = TRUE
+        , fontFamily = "monospace"
+        , fontSize = "100%"
+      ) %>>%
+      yAxis(
+        ticks = 4
+        ,title = "Millions of Pounds"
+        , fontFamily = "monospace"
+        , fontSize = "100%"    
+      ) %>>%
+      set_bounds( x = "10%", y = "5%", width = "80%", height = "60%") %>>%
+      default_colors( list("black") )
+  )
+)
+```
+
+```{r "example07_run", eval = T, echo = F}
+####fig2.15####
+library(htmltools)
+library(dplyr)
+
+tagList(
+  tags$div(
+    d2_14
+    ,dimple(
+      imports_minus_exports ~ year
+      , data = my_data_long %>>%
+        group_by( year ) %>>%
+        mutate( imports_minus_exports = diff( pounds ))
+      , type = "line"
+      , height = "250px"
+      , width = 768
+    ) %>>%
+      xAxis(
+        type = "addTimeAxis"
+        , inputFormat = "%Y-%m-%d"
+        , tickFormat = "%Y"
+        , timePeriod = htmlwidgets::JS('d3.time.years')
+        , timeInterval = 20
+        , title = "Year"
+        , showGridlines = TRUE
+        , fontFamily = "monospace"
+        , fontSize = "100%"
+      ) %>>%
+      yAxis(
+        ticks = 4
+        ,title = "Millions of Pounds"
+        , fontFamily = "monospace"
+        , fontSize = "100%"    
+      ) %>>%
+      set_bounds( x = "10%", y = "5%", width = "80%", height = "60%") %>>%
+      default_colors( list("black") )
+  )
+) %>>% save_tags("example_07.html")
+```
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [John Kiernander](https://twitter.com/jkiernander) & PMSI-Analytics for dimple
+- Joanna Zhao and Jennifer Bryan for r-graph-gallery
+- Naomi Robbins for *Creating More Effective Graphs* that inspired r-graph-gallery
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R`
+
