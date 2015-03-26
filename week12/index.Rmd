@@ -1,0 +1,434 @@
+---
+title: "Week12 - Intense Image Viewer"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+  #, results = 'asis'
+  , fig.width = 8
+  , fig.height = 4
+)
+
+
+save_tags <- function (tags, file, selfcontained = F, libdir = "./lib") 
+{
+    if (is.null(libdir)) {
+        libdir <- paste(tools::file_path_sans_ext(basename(file)), 
+            "_files", sep = "")
+    }
+    htmltools::save_html(tags, file = file, libdir = libdir)
+    if (selfcontained) {
+        if (!htmlwidgets:::pandoc_available()) {
+            stop("Saving a widget with selfcontained = TRUE requires pandoc. For details see:\n", 
+                "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
+        }
+        htmlwidgets:::pandoc_self_contained_html(file, file)
+        unlink(libdir, recursive = TRUE)
+    }
+    return(htmltools::tags$iframe(src= file, height = "400px", width = "100%", style="border:0;"))
+}
+
+library(pipeR)
+```
+
+## htmlwidgets News This Week
+
+Just do this [Github search](https://github.com/search?o=desc&p=35&q=htmlwidgets&s=indexed&type=Code), and you'll likely see all the newest and latest.
+
+## This Week's Widget - `imageR` | Image Viewing
+While I consider [`svgPanZoom`](http://www.buildingwidgets.com/blog/2015/1/15/week-02-) as one of the most universally applicable `htmlwidgets`, sometimes non-svg images are just easier and more comfortable.  I spotted Tim Holman's [Intense Image Viewer](http://tholman.com/intense-images), and I thought it would be a nice start to an `htmlwidget` that eventually offers multiple viewing experiences for images and plots from R.  I very creatively called it `imageR`.
+
+> **I'm bummed that I have to use iframes with this blog, so the expanded view is contained by the iframe size**.
+
+To see the full effect, run `imageR` locally, or see the very nice examples from [Intense Image Viewer](http://tholman.com/intense-images).
+
+
+### Quick Installation
+
+`imageR` has not stabilized enough for CRAN, so for now please install with `devtools::install_github`.
+
+```{r eval = F}
+devtools::intall_github("timelyportfolio/imageR")
+```
+
+
+### Simple Example
+
+I say this is simple, but getting the image right will require use of `base64` encoding, which might be new to you.  `base64` might sound hard, but fortunately, two packages `base64enc` (which we'll use) and `base64` make it easy.
+
+```{r "example01", eval = FALSE}
+library(imageR)
+library(htmltools)
+library(base64enc)
+
+# make a tempfile to hold our chart  
+tf <- tempfile()
+# delete our tempfile on exit
+on.exit(unlink(tf))
+
+# save our chart as a big png; exaggerate the width
+png( tf, height = 800, width = 1600 )
+  # make a kind of pretty chart
+  plot(sin(0:90),cos(seq(0,360,by=4)),type="l", col= topo.colors(4))
+  lines(sin(0:90),cos(0:90),type="l",col=topo.colors(4)[3])
+dev.off()
+
+intense(
+  tags$img(
+    style="height:200px;"
+    ,src = dataURI(file=tf,mime="image/png")
+  )
+  ,height = 200
+)
+```
+
+```{r "example01_run", eval = TRUE, echo = FALSE}
+library(imageR)
+library(htmltools)
+library(base64enc)
+
+# ignore the local if it confuses you
+# only use it to delete the tempfile on exit
+local({
+  # make a tempfile to hold our chart  
+  tf <- tempfile()
+  # delete our tempfile on exit
+  on.exit(unlink(tf))
+  
+  # save our chart as a big png; exaggerate the width
+  png( tf, height = 800, width = 1600 )
+    # make a kind of pretty chart
+    plot(sin(0:90),cos(seq(0,360,by=4)),type="l", col= topo.colors(4))
+    lines(sin(0:90),cos(0:90),type="l",col=topo.colors(4)[3])
+  dev.off()
+  
+  intense(
+    tags$img(
+      style="height:200px;"
+      ,src = dataURI(file=tf,mime="image/png")
+    )
+    ,height = 200
+  )  %>>% htmlwidgets::as.iframe(
+      file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , height = 400
+      , overflow = "hidden"
+   )
+})
+```
+
+
+### Example with Pairs to Show Auto
+
+In the first example, we exaggerated the width so you could see how the image pans from right to left based on your mouse or touch movement.  `intense-images` automatically decides to pan.  To see how it adjusts resize your window when in full-screen display mode.
+
+```{r "example02", eval = FALSE}
+library(imageR)
+library(htmltools)
+library(base64enc)
+
+# make a tempfile to hold our chart  
+tf <- tempfile()
+# delete our tempfile on exit
+on.exit(unlink(tf))
+
+# save our chart as a big png
+png( tf, height = 1200, width = 1200 )
+  # make a kind of pretty chart
+  pairs(USJudgeRatings, main="Example from ?pairs")
+dev.off()
+
+intense(
+  tags$img(
+    style="height:400px;overflow:hidden;"
+    ,src = dataURI(file=tf,mime="image/png")
+  )
+  ,height = 400
+)
+```
+
+
+```{r "example02_run", eval = T, echo = F}
+library(imageR)
+library(htmltools)
+library(base64enc)
+
+# ignore the local if it confuses you
+# only use it to delete the tempfile on exit
+local({
+  # make a tempfile to hold our chart  
+  tf <- tempfile()
+  # delete our tempfile on exit
+  on.exit(unlink(tf))
+  
+  # save our chart as a big png
+  png( tf, height = 1200, width = 1200 )
+    # make a kind of pretty chart
+    pairs(USJudgeRatings, main="Example from ?pairs")
+  dev.off()
+  
+  intense(
+    tags$img(
+      style="height:400px;overflow:hidden;"
+      ,src = dataURI(file=tf,mime="image/png")
+    )
+    ,height = 400
+  )  %>>% htmlwidgets::as.iframe(
+      file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , height = 450
+      , overflow = "hidden"
+   )
+})
+```
+
+### Example with a Non-`img`
+
+`intense-images` also works with non-`img` elements, such as a `div`.  To make it work correctly, we'll use some extra tag attributes `data-image`, `data-title`, and `data-caption` on our non-`img`.  I bet you can guess what these attributes mean.  We'll use the same plot with some different colors as above to illustrate the difference.
+
+```{r "example03", eval = FALSE}
+library(imageR)
+library(htmltools)
+library(base64enc)
+
+# make a tempfile to hold our chart  
+tf <- tempfile()
+tf2 <- tempfile()
+# delete our tempfile on exit
+on.exit({unlink(tf);unlink(tf2)})
+
+png( tf, height = 1200, width = 1200 )
+  # make a kind of pretty chart
+  pairs(USJudgeRatings, main="Example from ?pairs")
+dev.off()
+
+# save our chart as a smaller png than above for demo
+png( tf2, height = 800, width = 800 )
+  # make a kind of pretty chart
+  pairs(USJudgeRatings, main="Example from ?pairs",
+    pch = 4, col="blue", cex = 0.5
+  )
+dev.off()
+
+tagList(
+  intense(
+    # method already shown
+    tags$img(
+      style="height:200px;width:200px;overflow:hidden"
+      ,src = dataURI(file=tf,mime="image/png")
+    )
+    ,height=250, width = 400
+  )
+  , intense(
+    tags$div(
+      "data-image" = dataURI(file=tf2,mime="image/png")
+      ,"data-title" = "?pairs example"
+      ,"data-caption" = "neat things happen with extra attributes"
+      ,style = "height:50px;width:250px;border: dashed 0.2em lightgray;"
+      ,"not an img but still intense; click me"
+    )
+    ,height = 250, width = 50
+  )
+)
+```
+
+```{r "example03_run", eval = T, echo = F}
+library(imageR)
+library(htmltools)
+library(base64enc)
+
+# ignore the local if it confuses you
+# only use it to delete the tempfile on exit
+local({
+  # make a tempfile to hold our chart  
+  tf <- tempfile()
+  tf2 <- tempfile()
+  # delete our tempfile on exit
+  on.exit({unlink(tf);unlink(tf2)})
+
+  png( tf, height = 1200, width = 1200 )
+    # make a kind of pretty chart
+    pairs(USJudgeRatings, main="Example from ?pairs")
+  dev.off()
+  
+  # save our chart as a smaller png than above for demo
+  png( tf2, height = 800, width = 800 )
+    # make a kind of pretty chart
+    pairs(USJudgeRatings, main="Example from ?pairs",
+      pch = 4, col="blue", cex = 0.5
+    )
+  dev.off()
+  
+  tagList(
+    intense(
+      # method already shown
+      tags$img(
+        style="height:200px;width:200px;overflow:hidden"
+        ,src = dataURI(file=tf,mime="image/png")
+      )
+      ,height=250, width = 400
+    )
+    , intense(
+      tags$div(
+        "data-image" = dataURI(file=tf2,mime="image/png")
+        ,"data-title" = "?pairs example"
+        ,"data-caption" = "neat things happen with extra attributes"
+        ,style = "height:50px;width:250px;border: dashed 0.2em lightgray;"
+        ,"not an img but still intense; click me"
+      )
+      ,height = 250, width = 50
+    )
+  )  %>>% save_tags("example03.html")
+})
+```
+
+### With Other htmlwidgets and Flickr
+
+htmlwidgets are composeable.  Let's add `intense-images` to an example from [Week 10 | Responsive Toolbars](http://www.buildingwidgets.com/blog/2015/3/11/week-10-responsive-toolbars) with `navr` and `sortableR`.  You might say this is more like publishing with HTML, and you are right.  R is really not necessary for this example, but when you are in a context, it is often much more efficient to stay in that context.  Thanks
+
+```{r "example04", eval = FALSE}
+library(htmltools)
+library(curl)
+library(navr)
+library(sortableR)
+library(imageR)
+
+n1 <- navr(
+  selector = "#sortableR-toolbar"
+  ,taglist = tagList(
+    tags$ul(id = "sort-navr"
+      ,style="line-height:120px; text-align:center; vertical-align:middle;"
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-binoculars fa-4x"
+        #  attribution everywhere Creative Commons Flickr
+        #  awesome picture by https://www.flickr.com/photos/12859033@N00/2288766662/
+        , "data-image" = paste0(
+          "data:image/jpg;base64,"
+          ,base64enc::base64encode(
+            curl("https://farm4.staticflickr.com/3133/2288766662_c40c168b76_o.jpg","rb")
+          )
+        )
+        , "data-title" = "Binoculars, a working collection"
+        , "data-caption" = "awesome picture courtesy Flickr Creative Commons
+            <a href = 'https://www.flickr.com/photos/12859033@N00/2288766662/'>jlcwalker</a>"
+      )        
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-camera fa-4x"
+        #  attribution everywhere Creative Commons Flickr
+        #  awesome picture by https://www.flickr.com/photos/s58y/5607717791
+        , "data-image" = paste0(
+          "data:image/jpg;base64,"
+          ,base64enc::base64encode(
+            curl("https://farm6.staticflickr.com/5309/5607717791_b030229247_o.jpg","rb")
+          )
+        )
+        , "data-title" = "Leica IIIc converted to IIIf BD ST"
+        , "data-caption" = "awesome picture courtesy Flickr Creative Commons
+            <a href = 'https://www.flickr.com/photos/s58y/5607717791'>s58y</a>"
+      )
+    )
+  )
+)
+
+tagList(
+  tags$div(
+    id = "sortableR-toolbar"
+    ,style="width:300px;border: dashed 0.2em lightgray; float:left;"
+    ,tags$h3("sortableR Icons for Intense Images")
+    ,"These icons drag and drop. Click on them for an"
+    ,tags$strong("intense")
+    ,"result."
+  )
+  ,add_font_awesome(n1)
+  ,sortableR("sort-navr")
+  ,intense( selector = "#sort-navr li" )
+)
+```
+
+```{r "example04_run", eval = T, echo = F}
+library(htmltools)
+library(curl)
+library(navr)
+library(sortableR)
+library(imageR)
+
+n1 <- navr(
+  selector = "#sortableR-toolbar"
+  ,taglist = tagList(
+    tags$ul(id = "sort-navr"
+      ,style="line-height:120px; text-align:center; vertical-align:middle;"
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-binoculars fa-4x"
+        #  attribution everywhere Creative Commons Flickr
+        #  awesome picture by https://www.flickr.com/photos/12859033@N00/2288766662/
+        , "data-image" = paste0(
+          "data:image/jpg;base64,"
+          ,base64enc::base64encode(
+            curl("https://farm4.staticflickr.com/3133/2288766662_c40c168b76_o.jpg","rb")
+          )
+        )
+        , "data-title" = "Binoculars, a working collection"
+        , "data-caption" = "awesome picture courtesy Flickr Creative Commons
+            <a href = 'https://www.flickr.com/photos/12859033@N00/2288766662/'>jlcwalker</a>"
+      )        
+      ,tags$li(
+        style="border: solid 0.1em white;border-radius:100%;line-height:inherit;width:130px;height:130px;"
+        , class="fa fa-camera fa-4x"
+        #  attribution everywhere Creative Commons Flickr
+        #  awesome picture by https://www.flickr.com/photos/s58y/5607717791
+        , "data-image" = paste0(
+          "data:image/jpg;base64,"
+          ,base64enc::base64encode(
+            curl("https://farm6.staticflickr.com/5309/5607717791_b030229247_o.jpg","rb")
+          )
+        )
+        , "data-title" = "Leica IIIc converted to IIIf BD ST"
+        , "data-caption" = "awesome picture courtesy Flickr Creative Commons
+            <a href = 'https://www.flickr.com/photos/s58y/5607717791'>s58y</a>"
+      )
+    )
+  )
+)
+
+tagList(
+  tags$div(
+    id = "sortableR-toolbar"
+    ,style="width:300px;border: dashed 0.2em lightgray; float:left;"
+    ,tags$h3("sortableR Icons for Intense Images")
+    ,"These icons drag and drop. Click on them for an"
+    ,tags$strong("intense")
+    ,"result."
+  )
+  ,add_font_awesome(n1)
+  ,sortableR("sort-navr")
+  ,intense( selector = "#sort-navr li" )
+) %>>% save_tags("example_04.html")
+```
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [Tim Holman](http://tholman.com) for intense-images and his other experiments
+- Flickr users [s58y](https://www.flickr.com/photos/s58y) and [jlcwalker](https://www.flickr.com/photos/12859033@N00) for the photos used in the last example
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R`
+
