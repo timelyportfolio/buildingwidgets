@@ -8,7 +8,21 @@ as.Date("2015-01-01"):as.Date("2015-12-31") %>>%
   (
     as.xts(
       # make programmatic
-      x = c(rep(NA,7),100,rep(NA,6),100,rep(NA,7),100,rep(NA,length(.)-23))
+      x = c(
+        rep(NA,7),100
+        ,rep(NA,7),100
+        ,rep(NA,7),100
+        ,rep(NA,7),100
+        ,rep(NA,7),100
+        ,rep(NA,5),100
+        ,rep(NA,7),100
+        ,rep(NA,5),100
+        ,rep(NA,7),100
+        ,rep(NA,5),100
+        ,rep(NA,7),100
+        ,rep(NA,5),100
+        ,rep(NA,length(.)-88)
+      )
       ,order.by=as.Date(.)
     )
   ) %>>%
