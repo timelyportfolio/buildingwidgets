@@ -29,6 +29,8 @@ Just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=in
 
 I get sad when I see a really great R package that generates `HTML/JS` that does not use `htmlwidgets`, but it is entirely understandable since `htmlwidgets` is so new.  This happened a couple days ago when I spotted a tweet announcing [`stmBrowser`](https://github.com/mroberts/stmBrowser) which pairs with [`stm`](http://structuraltopicmodel.com/) and [`stmCorrViz`](https://github.com/AntonioCoppola/stmCorrViz).  These related projects had already aroused my interest when I saw them appear on CRAN.  I felt like I should intervene early, so I asked for permission to convert, and the authors very generously responded with a "Yes. How can we help?"  Heartened by the quick positive response and the very nice `d3.js` code, I started banging away, and I think I'm close to an acceptable first iteration.
 
+**Please note that any screwups or malfunctions are mine and not the original authors.**
+
 ### Quick Installation
 
 The `htmlwidget` version of `stmBrowser` currently exists as a fork with a different branch on Github.  For now please install with `devtools::install_github`.  Also, you'll need [`stm`](http://cran.r-project.org/web/packages/stm/index.html) from CRAN.
