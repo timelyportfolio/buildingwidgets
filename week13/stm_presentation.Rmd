@@ -1,6 +1,6 @@
 ---
 title: "stm in a htmlwidget"
-author: "Kent Russell"
+author: ""
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   revealjs::revealjs_presentation:
