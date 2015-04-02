@@ -43,14 +43,14 @@ devtools::install_github("timelyportfolio/stmBrowser@htmlwidget")
 
 If I don't talk about Structural Topic Models (stm), maybe no one will discover that I don't have a clue.  Because of my ignorance, I'll use one of the examples from `?stm::stm`.  I'll slap it in a `rmarkdown` presentation to prove that it really is an `htmlwidget`.  This will also demonstrate one of the many benefits of `htmlwidgets`.
 
-<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week13/stm_presentation.html" style = "height: 70%; width:100%; border: " seamless></iframe>
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week13/stm_presentation.html" style = "height: 600px; width:100%; border: " seamless></iframe>
 
 
 ## Thanks
 
 Thanks so much for all the work by
 
-- [Michael Freeman](http://mfviz.com), [Jason Chuang](http://jason.chuang.info), [Molly Roberts](http://margaretroberts.net), [Brandon Stewart](http://scholar.harvard.edu/bstewart) and [Dustin Tingley](http://scholar.harvard.edu/dtingley) for letting me barge in on their great work and mess it up in who knows how many ways.
+- [Michael Freeman](http://mfviz.com), [Jason Chuang](http://jason.chuang.info), [Molly Roberts](http://margaretroberts.net), [Brandon Stewart](http://scholar.harvard.edu/bstewart) and [Dustin Tingley](http://scholar.harvard.edu/dtingley) for letting me barge in on their great work and mess it up in who knows how many ways
 - Ramnath Vaidyanathan and RStudio for `htmlwidgets`
 - all the contributors to `R`
 
