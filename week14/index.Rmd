@@ -1,5 +1,5 @@
 ---
-title: "Week13 - Exporting Widgets"
+title: "Week14 - Exporting Widgets"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
@@ -63,7 +63,7 @@ devtools::install_github("timelyportfolio/exportwidget")
 ```
 
 
-### Example With SVG
+### Example With SVG + Custom Font
 
 I'll start with what I think is the least likely use case of this widget but a demanding case that eliminates many of the `SVG` exporting JavaScript libraries.  To conduct the test and as an extra benefit and proof of functionality, I'll add a custom font from Google Fonts with `htmlDependency` from `htmltools`.  External fonts cause trouble in some of the other libraries I evaluated.
 
@@ -115,6 +115,40 @@ tagList(
   ))  %>>% save_tags("example01.html", height = "270px", width = "470px")
 ```
 
+### Example with another widget `streamgraph`
+
+[Alex Bresler](https://twitter.com/abresler/status/583050042099007489) assures me that streamgraphs are art, and thanks to [Bob Rudis \@hrbrmstr](http://rud.is/), there is an `htmlwidget` for that [`streamgraph`](http://rud.is/b/2015/03/12/streamgraph-htmlwidget-version-0-7-released-adds-support-for-markers-annotations/).  Let's see how we can use `exportwidget` to show somebody our "art".
+
+```{r "example2", echo = T, eval = F}
+library(dplyr)
+library(streamgraph)
+library(htmltools)
+
+# use the built in ChickWeight data set; not ideal but built-in
+ChickWeight %>%
+  group_by( Diet, Time ) %>%
+  summarise( MeanWeight = mean(weight) ) %>%
+  streamgraph( "Diet", "MeanWeight", "Time", scale = "continuous" ) %>%
+  sg_legend( show = TRUE ) %>%
+  tagList(
+    export_widget( )
+  )
+```
+```{r "example2_run", echo = F, eval = T}
+library(dplyr)
+library(streamgraph)
+library(htmltools)
+
+# use the built in ChickWeight data set; not ideal but built-in
+ChickWeight %>%
+  group_by( Diet, Time ) %>%
+  summarise( MeanWeight = mean(weight) ) %>%
+  streamgraph( "Diet", "MeanWeight", "Time", scale = "continuous", height = 400, width = 600 ) %>%
+  sg_legend( show = TRUE ) %>%
+  tagList(
+    export_widget( )
+  ) %>>% save_tags("example02.html", height = "500px", width = "700px")
+```
 
 ## Thanks
 

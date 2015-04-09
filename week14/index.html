@@ -48,7 +48,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#htmlwidgets-news-this-week">htmlwidgets News This Week</a></li>
 <li><a href="#this-weeks-widget---exportwidget">This Week’s Widget - <code>exportwidget</code></a><ul>
 <li><a href="#quick-installation">Quick Installation</a></li>
-<li><a href="#example-with-svg">Example With SVG</a></li>
+<li><a href="#example-with-svg-custom-font">Example With SVG + Custom Font</a></li>
+<li><a href="#example-with-another-widget-streamgraph">Example with another widget <code>streamgraph</code></a></li>
 </ul></li>
 <li><a href="#thanks">Thanks</a></li>
 </ul>
@@ -72,8 +73,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>As with almost all widgets posted here, <code>exportwidget</code> is not on CRAN, so for now please install with <code>devtools::install_github</code>. Given enough interest, I’m happy to put in the effort to make this or any others CRAN-worthy. Just let me know.</p>
 <pre class="r"><code>devtools::install_github(&quot;timelyportfolio/exportwidget&quot;)</code></pre>
 </div>
-<div id="example-with-svg" class="section level3">
-<h3>Example With SVG</h3>
+<div id="example-with-svg-custom-font" class="section level3">
+<h3>Example With SVG + Custom Font</h3>
 <p>I’ll start with what I think is the least likely use case of this widget but a demanding case that eliminates many of the <code>SVG</code> exporting JavaScript libraries. To conduct the test and as an extra benefit and proof of functionality, I’ll add a custom font from Google Fonts with <code>htmlDependency</code> from <code>htmltools</code>. External fonts cause trouble in some of the other libraries I evaluated.</p>
 <pre class="r"><code>library(exportwidget)
 library(htmltools)
@@ -97,6 +98,24 @@ tagList(
     )
   ))</code></pre>
 <p><iframe src="example01.html" height="270px" width="470px" style="border:0;"></iframe></p>
+</div>
+<div id="example-with-another-widget-streamgraph" class="section level3">
+<h3>Example with another widget <code>streamgraph</code></h3>
+<p><a href="https://twitter.com/abresler/status/583050042099007489">Alex Bresler</a> assures me that streamgraphs are art, and thanks to <a href="http://rud.is/">Bob Rudis @hrbrmstr</a>, there is an <code>htmlwidget</code> for that <a href="http://rud.is/b/2015/03/12/streamgraph-htmlwidget-version-0-7-released-adds-support-for-markers-annotations/"><code>streamgraph</code></a>. Let’s see how we can use <code>exportwidget</code> to show somebody our “art”.</p>
+<pre class="r"><code>library(dplyr)
+library(streamgraph)
+library(htmltools)
+
+# use the built in ChickWeight data set; not ideal but built-in
+ChickWeight %&gt;%
+  group_by( Diet, Time ) %&gt;%
+  summarise( MeanWeight = mean(weight) ) %&gt;%
+  streamgraph( &quot;Diet&quot;, &quot;MeanWeight&quot;, &quot;Time&quot;, scale = &quot;continuous&quot; ) %&gt;%
+  sg_legend( show = TRUE ) %&gt;%
+  tagList(
+    export_widget( )
+  )</code></pre>
+<p><iframe src="example02.html" height="500px" width="700px" style="border:0;"></iframe></p>
 </div>
 </div>
 <div id="thanks" class="section level2">
