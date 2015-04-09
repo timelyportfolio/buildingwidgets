@@ -1,0 +1,127 @@
+---
+title: "Week13 - Exporting Widgets"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+save_tags <- function (tags, file, selfcontained = F, libdir = "./lib", height="400px", width="100%") 
+{
+    if (is.null(libdir)) {
+        libdir <- paste(tools::file_path_sans_ext(basename(file)), 
+            "_files", sep = "")
+    }
+    htmltools::save_html(tags, file = file, libdir = libdir)
+    if (selfcontained) {
+        if (!htmlwidgets:::pandoc_available()) {
+            stop("Saving a widget with selfcontained = TRUE requires pandoc. For details see:\n", 
+                "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
+        }
+        htmlwidgets:::pandoc_self_contained_html(file, file)
+        unlink(libdir, recursive = TRUE)
+    }
+    return(htmltools::tags$iframe(src= file, height = height, width = width, style="border:0;"))
+}
+```
+
+## htmlwidgets News This Week
+
+Just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll likely see all the newest and latest.  As a follow-up to last week's widget `stmBrowser`, I thought this research on [applications of `stm` to MOOCs](http://andrewgelman.com/2015/04/08/can-teachers-large-online-classes-use-text-data-online-learners/) is especially interesting.
+
+## This Week's Widget - `exportwidget`
+
+It seems exporting widgets is a popular request.  This week's widget `exportwidget` offers an easy way to add an export to `PNG` button to other `htmlwidgets` or `SVG`.  It works, but it is more an experiment and conversation starter for the broader discussion at [htmlwidgets issue #95](https://github.com/ramnathv/htmlwidgets/issues/95).  There are lots of questions looking for answers.
+
+- Why would you want to export an `htmlwidget`?
+- How would you like to export an `htmlwidget` - clientside or headless?
+- In what format would you like your exported `htmlwidget?
+
+Thanks so much to the authors of the two libraries  [`canvg`]() and [`Download-File-JS`]() that do all the magic in `exportwidget`.  
+
+
+### Quick Installation
+
+As with almost all widgets posted here, `exportwidget` is not on CRAN, so for now please install with `devtools::install_github`.  Given enough interest, I'm happy to put in the effort to make this or any others CRAN-worthy.  Just let me know.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/exportwidget")
+```
+
+
+### Example With SVG
+
+I'll start with what I think is the least likely use case of this widget but a demanding case that eliminates many of the `SVG` exporting JavaScript libraries.  To conduct the test and as an extra benefit and proof of functionality, I'll add a custom font from Google Fonts with `htmlDependency` from `htmltools`.  External fonts cause trouble in some of the other libraries I evaluated.
+
+```{r "example01", echo=T, eval = F}
+library(exportwidget)
+library(htmltools)
+library(pipeR)
+
+tagList(
+  '<svg id = "svg_to_export" width="400" height="200">
+    <text x="50" y="100" text-anchor="start" dy="14" style="font-family:\'Indie Flower\';font-size:36pt;">
+        Custom Fonts
+    </text>
+  </svg>' %>>%
+    HTML
+  ,export_widget( "svg" )
+) %>>%
+  attachDependencies(list(
+    htmlDependency(
+      name = "IndieFlower"
+      ,version = "0.1"
+      ,src = c(href='http://fonts.googleapis.com/css?family=Indie+Flower')
+      ,stylesheet = ""
+    )
+  ))
+```
+
+```{r "example01_run", echo=F, eval = T}
+library(exportwidget)
+library(htmltools)
+library(pipeR)
+
+tagList(
+  '<svg id = "svg_to_export" width="400" height="200">
+    <text x="50" y="100" text-anchor="start" dy="14" style="font-family:\'Indie Flower\';font-size:36pt">
+        Custom Fonts
+    </text>
+  </svg>' %>>%
+    HTML
+  ,export_widget( "svg" )
+) %>>%
+  attachDependencies(list(
+    htmlDependency(
+      name = "IndieFlower"
+      ,version = "0.1"
+      ,src = c(href='http://fonts.googleapis.com/css?family=Indie+Flower')
+      ,stylesheet = ""
+    )
+  ))  %>>% save_tags("example01.html", height = "270px", width = "470px")
+```
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- []() for `canvg`
+- []() for `Download-File-JS`
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R`
+
