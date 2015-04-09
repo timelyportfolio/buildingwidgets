@@ -51,7 +51,7 @@ It seems exporting widgets is a popular request.  This week's widget `exportwidg
 - How would you like to export an `htmlwidget` - clientside or headless?
 - In what format would you like your exported `htmlwidget?
 
-Thanks so much to the authors of the two libraries  [`canvg`]() and [`Download-File-JS`]() that do all the magic in `exportwidget`.  
+Thanks so much to the authors of [`canvg`](https://github.com/gabelerner/canvg), [`svg-crowbar`](https://github.com/NYTimes/svg-crowbar), and [`Download-File-JS`](https://github.com/PixelsCommander/Download-File-JS) on which `exportwidget` relies.
 
 
 ### Quick Installation
@@ -123,6 +123,7 @@ tagList(
 library(dplyr)
 library(streamgraph)
 library(htmltools)
+library(exportwidget)
 
 # use the built in ChickWeight data set; not ideal but built-in
 ChickWeight %>%
@@ -154,8 +155,9 @@ ChickWeight %>%
 
 Thanks so much for all the work by
 
-- []() for `canvg`
-- []() for `Download-File-JS`
+- [`canvg`](https://github.com/gabelerner/canvg) from Gabe Lerner
+- [`svg-crowbar`](https://github.com/NYTimes/svg-crowbar) from the NY Times
+- [`Download-File-JS`](https://github.com/PixelsCommander/Download-File-JS) from Denis Radin
 - Ramnath Vaidyanathan and RStudio for `htmlwidgets`
 - all the contributors to `R`
 

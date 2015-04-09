@@ -11,7 +11,7 @@
 
 <meta name="date" content="2015-04-09" />
 
-<title>Week13 - Exporting Widgets</title>
+<title>Week14 - Exporting Widgets</title>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -39,7 +39,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 <div id="header">
-<h1 class="title">Week13 - Exporting Widgets</h1>
+<h1 class="title">Week14 - Exporting Widgets</h1>
 <h4 class="date"><em>April 09, 2015</em></h4>
 </div>
 
@@ -67,7 +67,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li>How would you like to export an <code>htmlwidget</code> - clientside or headless?</li>
 <li>In what format would you like your exported `htmlwidget?</li>
 </ul>
-<p>Thanks so much to the authors of the two libraries <a href><code>canvg</code></a> and <a href><code>Download-File-JS</code></a> that do all the magic in <code>exportwidget</code>.</p>
+<p>Thanks so much to the authors of <a href="https://github.com/gabelerner/canvg"><code>canvg</code></a>, <a href="https://github.com/NYTimes/svg-crowbar"><code>svg-crowbar</code></a>, and <a href="https://github.com/PixelsCommander/Download-File-JS"><code>Download-File-JS</code></a> on which <code>exportwidget</code> relies.</p>
 <div id="quick-installation" class="section level3">
 <h3>Quick Installation</h3>
 <p>As with almost all widgets posted here, <code>exportwidget</code> is not on CRAN, so for now please install with <code>devtools::install_github</code>. Given enough interest, I’m happy to put in the effort to make this or any others CRAN-worthy. Just let me know.</p>
@@ -105,6 +105,7 @@ tagList(
 <pre class="r"><code>library(dplyr)
 library(streamgraph)
 library(htmltools)
+library(exportwidget)
 
 # use the built in ChickWeight data set; not ideal but built-in
 ChickWeight %&gt;%
@@ -122,8 +123,9 @@ ChickWeight %&gt;%
 <h2>Thanks</h2>
 <p>Thanks so much for all the work by</p>
 <ul>
-<li><a href></a> for <code>canvg</code></li>
-<li><a href></a> for <code>Download-File-JS</code></li>
+<li><a href="https://github.com/gabelerner/canvg"><code>canvg</code></a> from Gabe Lerner</li>
+<li><a href="https://github.com/NYTimes/svg-crowbar"><code>svg-crowbar</code></a> from the NY Times</li>
+<li><a href="https://github.com/PixelsCommander/Download-File-JS"><code>Download-File-JS</code></a> from Denis Radin</li>
 <li>Ramnath Vaidyanathan and RStudio for <code>htmlwidgets</code></li>
 <li>all the contributors to <code>R</code></li>
 </ul>
