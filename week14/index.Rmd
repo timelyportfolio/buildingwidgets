@@ -54,7 +54,7 @@ It seems exporting widgets is a popular request.  This week's widget `exportwidg
 Thanks so much to the authors of [`canvg`](https://github.com/gabelerner/canvg), [`svg-crowbar`](https://github.com/NYTimes/svg-crowbar), and [`Download-File-JS`](https://github.com/PixelsCommander/Download-File-JS) on which `exportwidget` relies.
 
 
-### Quick Installation
+## Quick Installation
 
 As with almost all widgets posted here, `exportwidget` is not on CRAN, so for now please install with `devtools::install_github`.  Given enough interest, I'm happy to put in the effort to make this or any others CRAN-worthy.  Just let me know.
 
@@ -62,6 +62,7 @@ As with almost all widgets posted here, `exportwidget` is not on CRAN, so for no
 devtools::install_github("timelyportfolio/exportwidget")
 ```
 
+## Examples
 
 ### Example With SVG + Custom Font
 
@@ -117,7 +118,7 @@ tagList(
 
 ### Example with another widget `streamgraph`
 
-[Alex Bresler](https://twitter.com/abresler/status/583050042099007489) assures me that streamgraphs are art, and thanks to [Bob Rudis \@hrbrmstr](http://rud.is/), there is an `htmlwidget` for that [`streamgraph`](http://rud.is/b/2015/03/12/streamgraph-htmlwidget-version-0-7-released-adds-support-for-markers-annotations/).  Let's see how we can use `exportwidget` to show somebody our "art".
+[Alex Bresler](https://twitter.com/abresler/status/583050042099007489) assures me that streamgraphs are art, and thanks to [Bob Rudis \@hrbrmstr](http://rud.is/), there is an `htmlwidget` [`streamgraph`](http://rud.is/b/2015/03/12/streamgraph-htmlwidget-version-0-7-released-adds-support-for-markers-annotations/) for that.  Let's see how we can use `exportwidget` to show somebody our "art". The `ChickWeight` dataset is definitely not the best for `streamgraphs` but it is small and built-in, so we'll go with it despite these issues.
 
 ```{r "example2", echo = T, eval = F}
 library(dplyr)
@@ -149,6 +150,155 @@ ChickWeight %>%
   tagList(
     export_widget( )
   ) %>>% save_tags("example02.html", height = "500px", width = "700px")
+```
+
+### Example with multiple widgets
+
+Let's assume that we love our `htmlwidgets` and like to use lots of them on a page.  `export_widget` without arguments will try to apply its button to all the `htmlwidgets` it finds.  This could be bad.  For instance, I doubt we would want to export a `navr`.  If there are `htmlwidgets` in your page that you don't want to export, you'll probably want to be more specific in your `export_widget( )` and explicitly export just those `htmlwidgets`.  As an example, with `grViz` from `DiagrammeR`, you could `export_widget(".grViz")` or with the `streamgraph` from the previous example, `export_widget(".streamgraph")`.  Any `css` selector should work as an argument to `export_widget( )`.
+
+Let's try it with [`DiagrammeR`](http://rich-iannone.github.io/DiagrammeR), [`rcdimple`](http://www.buildingwidgets.com/blog/2015/3/18/week-11-dimple-as-htmlwidget), and [`networkD3`](https://github.com/christophergandrud/networkD3).
+
+```{r "example03", echo = T, eval = F}
+library(htmltools)
+library(DiagrammeR)
+library(rcdimple)
+library(networkD3)
+library(exportwidget)
+
+tagList(
+  # A slightly more involved example
+  #  using example from http://www.graphviz.org/pdf/dotguide.pdf
+  #    "Drawing graphs with dot"
+  #    Emden R. Gansner and Eleftherios Koutsofios and Stephen North
+  #    January 5, 2015
+  grViz('
+  digraph G {
+        size = "4,4";
+        main [shape = box]; /* this is a comment */
+        main -> parse [weight = 8];
+        parse -> execute;
+        main -> init [style = dotted];
+        main -> cleanup;
+        execute -> { make_string; printf}
+        init -> make_string;
+        edge [color = red]; // so is this
+        main -> printf;
+        node [shape = box, style = filled, color = ".7 .3 1.0"];
+        execute -> compare;
+  }
+  ')
+  ,dimple(
+    mtcars
+    , mpg ~ cyl
+    , groups = "cyl"
+    , type = "bubble"
+  ) %>>%
+    default_colors( streamgraph:::tableau_colors( "tableau10medium" ) ) %>>%
+    set_bounds( x = "10%", y = "15%", width = "80%", height = "70%" )
+  ,simpleNetwork(
+    data.frame(
+      Source = c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+      ,Target = c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+    )
+    ,height = 400
+    ,width = 400
+  )
+  ,export_widget()
+)
+
+```
+```{r "example03_run", echo = F, eval = T}
+library(htmltools)
+library(DiagrammeR)
+library(rcdimple)
+library(networkD3)
+library(exportwidget)
+
+tagList(
+  # A slightly more involved example
+  #  using example from http://www.graphviz.org/pdf/dotguide.pdf
+  #    "Drawing graphs with dot"
+  #    Emden R. Gansner and Eleftherios Koutsofios and Stephen North
+  #    January 5, 2015
+  grViz('
+  digraph G {
+        size = "4,4";
+        main [shape = box]; /* this is a comment */
+        main -> parse [weight = 8];
+        parse -> execute;
+        main -> init [style = dotted];
+        main -> cleanup;
+        execute -> { make_string; printf}
+        init -> make_string;
+        edge [color = red]; // so is this
+        main -> printf;
+        node [shape = box, style = filled, color = ".7 .3 1.0"];
+        execute -> compare;
+  }
+  ', height = 400, width = 400)
+  ,dimple(
+    mtcars
+    , mpg ~ cyl
+    , groups = "cyl"
+    , type = "bubble"
+    , height = 400, width = 400
+  ) %>>%
+    default_colors( streamgraph:::tableau_colors( "tableau10medium" ) ) %>>%
+    set_bounds( x = "10%", y = "15%", width = "80%", height = "70%" )
+  ,simpleNetwork(
+    data.frame(
+      Source = c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+      ,Target = c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+    )
+    ,height = 400
+    ,width = 400
+  )
+  ,export_widget()
+) %>>%
+  save_tags("example03.html", height = "900px", width = "600px")
+```
+
+### Example | Headless with `webshot`
+
+Often, you might not want `exportwidget` at all.  We very well might like a headless way to make a static copy of an `htmlwidget`.  For this, we can use the excellent package [`webshot`](https://github.com/wch/webshot) by Winston Chang from RStudio.  `webshot` uses the very widely used and tested `phantomjs`.  We can push an `htmlwidget` through the pipe and get a `PNG` out the other end.  Note, `webshot` and Windows aren't best friends yet.  If you suffer through Windows like I do, then you can install my forked `webshot`.
+
+```{r "example04", echo = T, eval = F}
+library(networkD3)
+library(webshot)
+
+html_print(
+  simpleNetwork(
+    data.frame(
+      Source = c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+      ,Target = c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+    )
+    ,height = 400
+    ,width = 400
+)) %>>%
+  normalizePath(.,winslash="/") %>%
+  gsub(x=.,pattern = ":/",replacement="://") %>%
+  paste0("file:///",.) %>%
+  webshot( file = "headless_widget.png", delay = 2 )
+```
+
+```{r "example04_run", echo = F, eval = T}
+library(webshot)
+
+html_print(
+  simpleNetwork(
+    data.frame(
+      Source = c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+      ,Target = c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+    )
+    ,height = 400
+    ,width = 400
+)) %>>%
+  normalizePath(.,winslash="/") %>%
+  gsub(x=.,pattern = ":/",replacement="://") %>%
+  paste0("file:///",.) %>%
+  webshot( file = "headless_widget.png", delay = 2, selector = ".html-widget-static-bound" )
+
+tags$img(src = base64enc::dataURI(file="./headless_widget.png",mime="image/png"))
 ```
 
 ## Thanks

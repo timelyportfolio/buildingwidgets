@@ -46,10 +46,13 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="TOC">
 <ul>
 <li><a href="#htmlwidgets-news-this-week">htmlwidgets News This Week</a></li>
-<li><a href="#this-weeks-widget---exportwidget">This Week’s Widget - <code>exportwidget</code></a><ul>
+<li><a href="#this-weeks-widget---exportwidget">This Week’s Widget - <code>exportwidget</code></a></li>
 <li><a href="#quick-installation">Quick Installation</a></li>
+<li><a href="#examples">Examples</a><ul>
 <li><a href="#example-with-svg-custom-font">Example With SVG + Custom Font</a></li>
 <li><a href="#example-with-another-widget-streamgraph">Example with another widget <code>streamgraph</code></a></li>
+<li><a href="#example-with-multiple-widgets">Example with multiple widgets</a></li>
+<li><a href="#example-headless-with-webshot">Example | Headless with <code>webshot</code></a></li>
 </ul></li>
 <li><a href="#thanks">Thanks</a></li>
 </ul>
@@ -68,11 +71,14 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li>In what format would you like your exported `htmlwidget?</li>
 </ul>
 <p>Thanks so much to the authors of <a href="https://github.com/gabelerner/canvg"><code>canvg</code></a>, <a href="https://github.com/NYTimes/svg-crowbar"><code>svg-crowbar</code></a>, and <a href="https://github.com/PixelsCommander/Download-File-JS"><code>Download-File-JS</code></a> on which <code>exportwidget</code> relies.</p>
-<div id="quick-installation" class="section level3">
-<h3>Quick Installation</h3>
+</div>
+<div id="quick-installation" class="section level2">
+<h2>Quick Installation</h2>
 <p>As with almost all widgets posted here, <code>exportwidget</code> is not on CRAN, so for now please install with <code>devtools::install_github</code>. Given enough interest, I’m happy to put in the effort to make this or any others CRAN-worthy. Just let me know.</p>
 <pre class="r"><code>devtools::install_github(&quot;timelyportfolio/exportwidget&quot;)</code></pre>
 </div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
 <div id="example-with-svg-custom-font" class="section level3">
 <h3>Example With SVG + Custom Font</h3>
 <p>I’ll start with what I think is the least likely use case of this widget but a demanding case that eliminates many of the <code>SVG</code> exporting JavaScript libraries. To conduct the test and as an extra benefit and proof of functionality, I’ll add a custom font from Google Fonts with <code>htmlDependency</code> from <code>htmltools</code>. External fonts cause trouble in some of the other libraries I evaluated.</p>
@@ -101,7 +107,7 @@ tagList(
 </div>
 <div id="example-with-another-widget-streamgraph" class="section level3">
 <h3>Example with another widget <code>streamgraph</code></h3>
-<p><a href="https://twitter.com/abresler/status/583050042099007489">Alex Bresler</a> assures me that streamgraphs are art, and thanks to <a href="http://rud.is/">Bob Rudis @hrbrmstr</a>, there is an <code>htmlwidget</code> for that <a href="http://rud.is/b/2015/03/12/streamgraph-htmlwidget-version-0-7-released-adds-support-for-markers-annotations/"><code>streamgraph</code></a>. Let’s see how we can use <code>exportwidget</code> to show somebody our “art”.</p>
+<p><a href="https://twitter.com/abresler/status/583050042099007489">Alex Bresler</a> assures me that streamgraphs are art, and thanks to <a href="http://rud.is/">Bob Rudis @hrbrmstr</a>, there is an <code>htmlwidget</code> <a href="http://rud.is/b/2015/03/12/streamgraph-htmlwidget-version-0-7-released-adds-support-for-markers-annotations/"><code>streamgraph</code></a> for that. Let’s see how we can use <code>exportwidget</code> to show somebody our “art”. The <code>ChickWeight</code> dataset is definitely not the best for <code>streamgraphs</code> but it is small and built-in, so we’ll go with it despite these issues.</p>
 <pre class="r"><code>library(dplyr)
 library(streamgraph)
 library(htmltools)
@@ -117,6 +123,79 @@ ChickWeight %&gt;%
     export_widget( )
   )</code></pre>
 <p><iframe src="example02.html" height="500px" width="700px" style="border:0;"></iframe></p>
+</div>
+<div id="example-with-multiple-widgets" class="section level3">
+<h3>Example with multiple widgets</h3>
+<p>Let’s assume that we love our <code>htmlwidgets</code> and like to use lots of them on a page. <code>export_widget</code> without arguments will try to apply its button to all the <code>htmlwidgets</code> it finds. This could be bad. For instance, I doubt we would want to export a <code>navr</code>. If there are <code>htmlwidgets</code> in your page that you don’t want to export, you’ll probably want to be more specific in your <code>export_widget( )</code> and explicitly export just those <code>htmlwidgets</code>. As an example, with <code>grViz</code> from <code>DiagrammeR</code>, you could <code>export_widget(&quot;.grViz&quot;)</code> or with the <code>streamgraph</code> from the previous example, <code>export_widget(&quot;.streamgraph&quot;)</code>. Any <code>css</code> selector should work as an argument to <code>export_widget( )</code>.</p>
+<p>Let’s try it with <a href="http://rich-iannone.github.io/DiagrammeR"><code>DiagrammeR</code></a>, <a href="http://www.buildingwidgets.com/blog/2015/3/18/week-11-dimple-as-htmlwidget"><code>rcdimple</code></a>, and <a href="https://github.com/christophergandrud/networkD3"><code>networkD3</code></a>.</p>
+<pre class="r"><code>library(htmltools)
+library(DiagrammeR)
+library(rcdimple)
+library(networkD3)
+library(exportwidget)
+
+tagList(
+  # A slightly more involved example
+  #  using example from http://www.graphviz.org/pdf/dotguide.pdf
+  #    &quot;Drawing graphs with dot&quot;
+  #    Emden R. Gansner and Eleftherios Koutsofios and Stephen North
+  #    January 5, 2015
+  grViz('
+  digraph G {
+        size = &quot;4,4&quot;;
+        main [shape = box]; /* this is a comment */
+        main -&gt; parse [weight = 8];
+        parse -&gt; execute;
+        main -&gt; init [style = dotted];
+        main -&gt; cleanup;
+        execute -&gt; { make_string; printf}
+        init -&gt; make_string;
+        edge [color = red]; // so is this
+        main -&gt; printf;
+        node [shape = box, style = filled, color = &quot;.7 .3 1.0&quot;];
+        execute -&gt; compare;
+  }
+  ')
+  ,dimple(
+    mtcars
+    , mpg ~ cyl
+    , groups = &quot;cyl&quot;
+    , type = &quot;bubble&quot;
+  ) %&gt;&gt;%
+    default_colors( streamgraph:::tableau_colors( &quot;tableau10medium&quot; ) ) %&gt;&gt;%
+    set_bounds( x = &quot;10%&quot;, y = &quot;15%&quot;, width = &quot;80%&quot;, height = &quot;70%&quot; )
+  ,simpleNetwork(
+    data.frame(
+      Source = c(&quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;)
+      ,Target = c(&quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;J&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;, &quot;H&quot;, &quot;I&quot;)
+    )
+    ,height = 400
+    ,width = 400
+  )
+  ,export_widget()
+)</code></pre>
+<p><iframe src="example03.html" height="900px" width="600px" style="border:0;"></iframe></p>
+</div>
+<div id="example-headless-with-webshot" class="section level3">
+<h3>Example | Headless with <code>webshot</code></h3>
+<p>Often, you might not want <code>exportwidget</code> at all. We very well might like a headless way to make a static copy of an <code>htmlwidget</code>. For this, we can use the excellent package <a href="https://github.com/wch/webshot"><code>webshot</code></a> by Winston Chang from RStudio. <code>webshot</code> uses the very widely used and tested <code>phantomjs</code>. We can push an <code>htmlwidget</code> through the pipe and get a <code>PNG</code> out the other end. Note, <code>webshot</code> and Windows aren’t best friends yet. If you suffer through Windows like I do, then you can install my forked <code>webshot</code>.</p>
+<pre class="r"><code>library(networkD3)
+library(webshot)
+
+html_print(
+  simpleNetwork(
+    data.frame(
+      Source = c(&quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;)
+      ,Target = c(&quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;J&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;, &quot;H&quot;, &quot;I&quot;)
+    )
+    ,height = 400
+    ,width = 400
+)) %&gt;&gt;%
+  normalizePath(.,winslash=&quot;/&quot;) %&gt;%
+  gsub(x=.,pattern = &quot;:/&quot;,replacement=&quot;://&quot;) %&gt;%
+  paste0(&quot;file:///&quot;,.) %&gt;%
+  webshot( file = &quot;headless_widget.png&quot;, delay = 2 )</code></pre>
+<p><img src="data:image/png;base64,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x6rxkCSfz6dKpbLsivRi2daPPk4olSvJspgbwc5DQIBVsm1bozMFnb+99F7ofr9fkmquxCpWbL3z+ZhcLo5AsPNwCgtYJcMw9PHNlO4+lvD5fDIMQ3Nzc2poaFj2upsTOaXzJUUCnmXPDUxk9XfnhtQU8uifHe9Ue8S/QaMH1h9HIMAa3J7K1Xzc7/drbm6u5nO2pFsTuWVLfAcmsjrbP63vv31If/Z0t6ZzbMqI7YWAAGuQKZRrPh4IBO75unShtGwivX88pz852q6KZennF0f1089G122cwGbgFBawBqbLULmyfEJ8YWfelbhdLtmSFiekbFmazBbV4A/qzcfa9cVwZn0HC2wwAgKsQTzk1XBq7duWxMPeZY+9fKhFP3j/ptJ3Tl0909f0wOMDNhMBAVbJsm0daAuvOSAe09C+5pDuXoflc7v0l6/0rd8AgU3GHAiwSoakp3qjCnjW9mPzVG+TPCbLeLHzEBBglQzDkM/t0tvHOla9PUl7xKeXDjVv7MCAOjFsm+1DgbW6PJrRTz8d0Vx55R+fvc1BffOJTvncJvthYUciIIADti3lShWd65/SldFZTeeKsm3JaxrqjgV0fE+TDreHl628AnYSAgKsA8u2VbFsecz5s8K2LY46sOMREACAI0yiAwAcISAAAEcICADAEQICAHCEgAAAHCEgAABHCAgAwBECAgBwhIAAABwhIAAARwgIAMARAgIAcISAAAAcISAAAEcICADAEQICAHCEgAAAHCEgAABHCAgAwBECAgBwhIAAABwhIAAARwgIAMARAgIAcISAAAAcISAAAEcICADAEQICAHCEgAAAHCEgAABHCAgAwBECAgBwhIAAABwhIAAARwgIAMARAgIAcISAAAAcISAAAEcICADAEQICAHCEgAAAHCEgAABHCAgAwBECAgBwhIAAABwhIAAARwgIAMARAgIAcISAAAAcISAAAEcICADAEQICAHCEgAAAHCEgAABHCAgAwBECAgBwhIAAABwhIAAARwgIAMARAgIAcISAAAAcISAAAEcICADAEQICAHCEgAAAHCEgAABHCAgAwBECAgBwhIAAABwhIAAARwgIAMARAgIAcISAAAAcISAAAEcICADAEQICAHCEgAAAHCEgAABHCAgAwBECAgBwhIAAABwhIAAARwgIAMARAgIAcISAAAAcISAAAEcICADAkf8P0RKtZreeJCgAAAAASUVORK5CYII="/></p>
 </div>
 </div>
 <div id="thanks" class="section level2">
