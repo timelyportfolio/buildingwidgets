@@ -1,0 +1,120 @@
+---
+title: "Week15 - List Viewer"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+`htmlwidgets` now uses [`jsonlite`](https://github.com/jeroenooms/jsonlite).  I recommend anyone serious about their widgets to read through the discussion of [pull #28](https://github.com/ramnathv/htmlwidgets/pull/28).  Whether you care about the details or not, I would encourage updatating `jsonlite`, `htmlwidgets`, and `Shiny` with
+
+```{r}
+
+```
+
+For all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
+
+## This Week's Widget - `listviewer`
+
+Last week's [`exportwidget`](http://www.buildingwidgets.com/blog/2015/4/9/week-14-exporting-widget) got almost no love, so I'm hoping this one finds a loving home.  I have not been able to stop using it, since the first hour of creation, so it has quickly become a key component in my workflow.
+
+Nested data gets messy, inscrutable, and difficult to follow very quickly.  `lists` and `environments` in R are the primary source of this nested data.  Often, an interactive visual look provides the insight and understanding one needs.  `listviewer` gives us this view with just one line of code.  We can use it to inspect `htmlwidgets` or `lattice` plots or `par()` settings or your `.GlobalEnv`.
+
+Thanks so much to the [Jos de Jong](http://josdejong.com/), the author of [`jsoneditor`](https://github.com/josdejong/jsoneditor) on which `listviewer` relies for all its awesomeness.  If you look at the source of `listviewer`, you will notice how little code I had to write to wrap this as an `htmlwidget`.
+
+
+## Quick Installation
+
+As with almost all widgets posted here, `listviewer` is not on CRAN, so for now please install with `devtools::install_github`.  Given enough interest, I'm happy to put in the effort to make this or any others CRAN-worthy.  Just let me know.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/listviewer")
+```
+
+## Examples
+
+### par() what?
+
+When I first learned `R` I struggled with all the stuff in `par()`.  Let's see if this makes a little more sense.
+
+```{r "example01", echo=T, eval = F}
+library(listviewer)
+
+jsonedit( par() )
+```
+
+```{r "example01_run", echo=F, eval = T}
+library(listviewer)
+
+jsonedit( par(), height = 400, width = 400 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 520
+      , height = 520
+      , overflow = "hidden"
+    )
+  )
+```
+
+### Example with another widget `streamgraph`
+
+
+
+```{r "example2", echo = T, eval = F}
+
+```
+```{r "example2_run", echo = F, eval = T}
+
+```
+
+### Example with multiple widgets
+
+
+```{r "example03", echo = T, eval = F}
+
+```
+```{r "example03_run", echo = F, eval = T}
+
+```
+
+### Example | Headless with `webshot`
+
+
+```{r "example04", echo = T, eval = F}
+
+```
+
+```{r "example04_run", echo = F, eval = T}
+
+```
+
+## Thanks
+
+Thanks so much for all of this
+
+- [`jsoneditor`](https://github.com/josdejong/jsoneditor) from Jos de Jong
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
