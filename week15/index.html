@@ -62,6 +62,11 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="htmlwidgets-news-this-week" class="section level2">
 <h2>htmlwidgets News This Week</h2>
 <p><code>htmlwidgets</code> now uses <a href="https://github.com/jeroenooms/jsonlite"><code>jsonlite</code></a>. I recommend anyone serious about their widgets to read through the discussion of <a href="https://github.com/ramnathv/htmlwidgets/pull/28">pull #28</a>. Whether you care about the details or not, I would encourage updatating <code>jsonlite</code>, <code>htmlwidgets</code>, and <code>Shiny</code> with</p>
+<pre class="r"><code>devtools::install_github(c(
+  'jeroenooms/jsonlite'
+  , 'rstudio/shiny'
+  , 'ramnathv/htmlwidgets'
+))</code></pre>
 <p>For all the newest and updated <code>htmlwidgets</code>, just do this <a href="https://github.com/search?o=desc&amp;q=htmlwidgets&amp;s=indexed&amp;type=Code">Github search</a>, and you’ll quickly get up to date.</p>
 </div>
 <div id="this-weeks-widget---listviewer" class="section level2">

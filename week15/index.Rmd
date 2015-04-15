@@ -26,8 +26,12 @@ library(pipeR)
 
 `htmlwidgets` now uses [`jsonlite`](https://github.com/jeroenooms/jsonlite).  I recommend anyone serious about their widgets to read through the discussion of [pull #28](https://github.com/ramnathv/htmlwidgets/pull/28).  Whether you care about the details or not, I would encourage updatating `jsonlite`, `htmlwidgets`, and `Shiny` with
 
-```{r}
-
+```{r eval=F, echo=T}
+devtools::install_github(c(
+  'jeroenooms/jsonlite'
+  , 'rstudio/shiny'
+  , 'ramnathv/htmlwidgets'
+))
 ```
 
 For all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
