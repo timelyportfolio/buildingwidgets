@@ -49,10 +49,11 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#this-weeks-widget---listviewer">This Week’s Widget - <code>listviewer</code></a></li>
 <li><a href="#quick-installation">Quick Installation</a></li>
 <li><a href="#examples">Examples</a><ul>
-<li><a href="#par-what">par() what?</a></li>
-<li><a href="#example-with-another-widget-streamgraph">Example with another widget <code>streamgraph</code></a></li>
-<li><a href="#example-with-multiple-widgets">Example with multiple widgets</a></li>
-<li><a href="#example-headless-with-webshot">Example | Headless with <code>webshot</code></a></li>
+<li><a href="#whats-my-par">What’s my <code>par</code>?</a></li>
+<li><a href="#whats-in-my-lattice">What’s in my <code>lattice</code>?</a></li>
+<li><a href="#whats-in-my-broom">What’s in my <code>broom</code>?</a></li>
+<li><a href="#whats-in-my-htmlwidget">What’s in my <code>htmlwidget</code>?</a></li>
+<li><a href="#shiny">Shiny?</a></li>
 </ul></li>
 <li><a href="#thanks">Thanks</a></li>
 </ul>
@@ -66,7 +67,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="this-weeks-widget---listviewer" class="section level2">
 <h2>This Week’s Widget - <code>listviewer</code></h2>
 <p>Last week’s <a href="http://www.buildingwidgets.com/blog/2015/4/9/week-14-exporting-widget"><code>exportwidget</code></a> got almost no love, so I’m hoping this one finds a loving home. I have not been able to stop using it, since the first hour of creation, so it has quickly become a key component in my workflow.</p>
-<p>Nested data gets messy, inscrutable, and difficult to follow very quickly. <code>lists</code> and <code>environments</code> in R are the primary source of this nested data. Often, an interactive visual look provides the insight and understanding one needs. <code>listviewer</code> gives us this view with just one line of code. We can use it to inspect <code>htmlwidgets</code> or <code>lattice</code> plots or <code>par()</code> settings or your <code>.GlobalEnv</code>.</p>
+<p>With a <a href="https://twitter.com/JennyBryan/status/586327100769968128">tweet</a>, Jennifer Bryan inspired this widget. Nested data gets messy, inscrutable, and difficult to follow very quickly. <code>lists</code> and <code>environments</code> in R are the primary source of this nested data. Often, an interactive visual look provides the insight and understanding one needs. <code>listviewer</code> gives us this view with just one line of code. We can use it to inspect <code>htmlwidgets</code> or <code>lattice</code> plots or <code>par()</code> settings or your <code>.GlobalEnv</code>.</p>
 <p>Thanks so much to the <a href="http://josdejong.com/">Jos de Jong</a>, the author of <a href="https://github.com/josdejong/jsoneditor"><code>jsoneditor</code></a> on which <code>listviewer</code> relies for all its awesomeness. If you look at the source of <code>listviewer</code>, you will notice how little code I had to write to wrap this as an <code>htmlwidget</code>.</p>
 </div>
 <div id="quick-installation" class="section level2">
@@ -76,27 +77,55 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
-<div id="par-what" class="section level3">
-<h3>par() what?</h3>
+<div id="whats-my-par" class="section level3">
+<h3>What’s my <code>par</code>?</h3>
 <p>When I first learned <code>R</code> I struggled with all the stuff in <code>par()</code>. Let’s see if this makes a little more sense.</p>
 <pre class="r"><code>library(listviewer)
 
 jsonedit( par() )</code></pre>
 <p><iframe src="example01.html" width="520" height="520" style="border-width:0px;overflow:hidden ;"></iframe></p>
 </div>
-<div id="example-with-another-widget-streamgraph" class="section level3">
-<h3>Example with another widget <code>streamgraph</code></h3>
+<div id="whats-in-my-lattice" class="section level3">
+<h3>What’s in my <code>lattice</code>?</h3>
+<p><code>lattice</code> plots become <code>trellis</code> objects. Let’s peek inside. If you’re thinking let’s do the same with <code>ggplot2</code>, you’ll need to write a little more code to handle <code>S3</code>, <code>S4</code>, and <code>environments</code>.</p>
+<pre class="r"><code>library(lattice)
+library(listviewer)
+
+jsonedit(
+  xyplot( y~x, data.frame( x = 1:10, y = 1:10 ), type = &quot;b&quot; )
+)</code></pre>
+<p><iframe src="example02.html" width="520" height="720" style="border-width:0px;overflow:hidden ;"></iframe></p>
 </div>
-<div id="example-with-multiple-widgets" class="section level3">
-<h3>Example with multiple widgets</h3>
+<div id="whats-in-my-broom" class="section level3">
+<h3>What’s in my <code>broom</code>?</h3>
+<p>David Robinson’s <a href="http://varianceexplained.org/r/broom-slides/"><code>broom</code> package</a> tidies up our messy data in <code>R</code>. Let’s see the difference with <code>jsonedit</code>.</p>
+<pre class="r"><code>jsonedit(
+  list(
+    &quot;messy&quot; = lm(mpg~factor(cyl),mtcars)
+    ,&quot;broom&quot; = list(
+      &quot;tidy&quot; = broom::tidy(lm(mpg~factor(cyl),mtcars))
+      ,&quot;augment&quot; = broom::augment(lm(mpg~factor(cyl),mtcars))
+    )
+  )
+)</code></pre>
+<p><iframe src="example03.html" width="520" height="720" style="border-width:0px;overflow:hidden ;"></iframe></p>
 </div>
-<div id="example-headless-with-webshot" class="section level3">
-<h3>Example | Headless with <code>webshot</code></h3>
+<div id="whats-in-my-htmlwidget" class="section level3">
+<h3>What’s in my <code>htmlwidget</code>?</h3>
+<p>I hope you can see some of the power of this <code>htmlwidget</code>. As a final example, let’s go meta and <code>jsonedit</code> our <code>jsonedit</code>.</p>
+<pre class="r"><code>library(listviewer)
+
+jsonedit(jsonedit())</code></pre>
+<p><iframe src="example04.html" width="520" height="520" style="border-width:0px;overflow:hidden ;"></iframe></p>
+</div>
+<div id="shiny" class="section level3">
+<h3>Shiny?</h3>
+<p><code>listviewer</code> sort of works with <code>Shiny</code>. <code>modify</code> and <code>save</code> for <code>listviewer</code> is the next frontier. See the <a href="https://github.com/timelyportfolio/listviewer/blob/master/README.md"><code>Readme.md</code></a>.</p>
 </div>
 </div>
 <div id="thanks" class="section level2">
 <h2>Thanks</h2>
-<p>Thanks so much for all of this</p>
+<p>Thanks so much</p>
 <ul>
 <li><a href="https://github.com/josdejong/jsoneditor"><code>jsoneditor</code></a> from Jos de Jong</li>
 <li>Ramnath Vaidyanathan and RStudio for <code>htmlwidgets</code></li>

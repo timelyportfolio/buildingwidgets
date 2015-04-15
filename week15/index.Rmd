@@ -36,7 +36,7 @@ For all the newest and updated `htmlwidgets`, just do this [Github search](https
 
 Last week's [`exportwidget`](http://www.buildingwidgets.com/blog/2015/4/9/week-14-exporting-widget) got almost no love, so I'm hoping this one finds a loving home.  I have not been able to stop using it, since the first hour of creation, so it has quickly become a key component in my workflow.
 
-Nested data gets messy, inscrutable, and difficult to follow very quickly.  `lists` and `environments` in R are the primary source of this nested data.  Often, an interactive visual look provides the insight and understanding one needs.  `listviewer` gives us this view with just one line of code.  We can use it to inspect `htmlwidgets` or `lattice` plots or `par()` settings or your `.GlobalEnv`.
+With a [tweet](https://twitter.com/JennyBryan/status/586327100769968128), Jennifer Bryan inspired this widget.  Nested data gets messy, inscrutable, and difficult to follow very quickly.  `lists` and `environments` in R are the primary source of this nested data.  Often, an interactive visual look provides the insight and understanding one needs.  `listviewer` gives us this view with just one line of code.  We can use it to inspect `htmlwidgets` or `lattice` plots or `par()` settings or your `.GlobalEnv`.
 
 Thanks so much to the [Jos de Jong](http://josdejong.com/), the author of [`jsoneditor`](https://github.com/josdejong/jsoneditor) on which `listviewer` relies for all its awesomeness.  If you look at the source of `listviewer`, you will notice how little code I had to write to wrap this as an `htmlwidget`.
 
@@ -51,7 +51,7 @@ devtools::install_github("timelyportfolio/listviewer")
 
 ## Examples
 
-### par() what?
+### What's my `par`?
 
 When I first learned `R` I struggled with all the stuff in `par()`.  Let's see if this makes a little more sense.
 
@@ -78,41 +78,114 @@ jsonedit( par(), height = 400, width = 400 ) %>>%
   )
 ```
 
-### Example with another widget `streamgraph`
+### What's in my `lattice`?
 
-
+`lattice` plots become `trellis` objects.  Let's peek inside.  If you're thinking let's do the same with `ggplot2`, you'll need to write a little more code to handle `S3`, `S4`, and `environments`.
 
 ```{r "example2", echo = T, eval = F}
+library(lattice)
+library(listviewer)
 
+jsonedit(
+  xyplot( y~x, data.frame( x = 1:10, y = 1:10 ), type = "b" )
+)
 ```
 ```{r "example2_run", echo = F, eval = T}
+library(lattice)
+library(listviewer)
 
+jsonedit(
+  xyplot( y~x, data.frame( x = 1:10, y = 1:10 ), type = "b" )
+  ,height = 600
+  ,width = 400
+)  %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 520
+      , height = 720
+      , overflow = "hidden"
+    )
+  )
 ```
 
-### Example with multiple widgets
+### What's in my `broom`?
+
+David Robinson's [`broom` package](http://varianceexplained.org/r/broom-slides/) tidies up our messy data in `R`.  Let's see the difference with `jsonedit`.
 
 
 ```{r "example03", echo = T, eval = F}
-
+jsonedit(
+  list(
+    "messy" = lm(mpg~factor(cyl),mtcars)
+    ,"broom" = list(
+      "tidy" = broom::tidy(lm(mpg~factor(cyl),mtcars))
+      ,"augment" = broom::augment(lm(mpg~factor(cyl),mtcars))
+    )
+  )
+)
 ```
 ```{r "example03_run", echo = F, eval = T}
-
+jsonedit(
+  list(
+    "messy" = lm(mpg~factor(cyl),mtcars)
+    ,"broom" = list(
+      "tidy" = broom::tidy(lm(mpg~factor(cyl),mtcars))
+      ,"augment" = broom::augment(lm(mpg~factor(cyl),mtcars))
+    )
+  ), height = 600, width = 400
+) %>>%
+    (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 520
+      , height = 720
+      , overflow = "hidden"
+    )
+  )
 ```
 
-### Example | Headless with `webshot`
+### What's in my `htmlwidget`?
+
+I hope you can see some of the power of this `htmlwidget`.  As a final example, let's go meta and `jsonedit` our `jsonedit`.
 
 
 ```{r "example04", echo = T, eval = F}
+library(listviewer)
 
+jsonedit(jsonedit())
 ```
 
 ```{r "example04_run", echo = F, eval = T}
+library(listviewer)
 
+jsonedit(jsonedit(),height=400,width = 400)  %>>%
+    (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 520
+      , height = 520
+      , overflow = "hidden"
+    )
+  )
 ```
+
+### Shiny?
+
+`listviewer` sort of works with `Shiny`.  `modify` and `save` for `listviewer` is the next frontier.  See the [`Readme.md` ](https://github.com/timelyportfolio/listviewer/blob/master/README.md).
 
 ## Thanks
 
-Thanks so much for all of this
+Thanks so much
 
 - [`jsoneditor`](https://github.com/josdejong/jsoneditor) from Jos de Jong
 - Ramnath Vaidyanathan and RStudio for `htmlwidgets`
