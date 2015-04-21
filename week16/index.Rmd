@@ -28,7 +28,7 @@ Be **sure** to check out [`rcstatebin`](https://github.com/ramnathv/rcstatebin) 
 
 ## This Week's Widget - `gamer`
 
-If you are like me, the last thing you need is another excuse to procrastinate/"research" while you are in `R`.  I thought making `gamer`--this week's `htmlwidget`--would help expand our minds to think beyond charts and tables when we think `htmlwidgets`.  Wouldn't you know it the prolific Yihui Xie from RStudio has already made the [`fun`] package](http://yihui.name/en/2011/08/the-fun-package-use-r-for-fun/) if you want more games for `R`.
+If you are like me, the last thing you need is another excuse to procrastinate/"research" while you are in `R`.  I thought making `gamer`--this week's `htmlwidget`--would help expand our minds to think beyond charts and tables when we think `htmlwidgets`.  Wouldn't you know it the prolific Yihui Xie from RStudio has already made the [`fun` package](http://yihui.name/en/2011/08/the-fun-package-use-r-for-fun/) if you want more games for `R`.
 
 Earlier this month, I spotted [this post](http://cacodaemon.de/index.php?id=67) about [`EntangledClone`](https://github.com/Cacodaimon/EntangledClone), which is written in `TypeScript` with help from [`d3.js`](http://d3js.org).  It is nice in that it is fun, it is small, and it is responsive, and it is easily embeddable, so go ahead and put it in your next `rmarkdown` research paper.  Most of the work(not hard at all) wrapping `EntangledClone` was locally building the project.  Then, I just separated the instantiation piece and pasted it into `entangler.js`.
 
