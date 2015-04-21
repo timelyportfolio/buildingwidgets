@@ -1,0 +1,79 @@
+---
+title: "Week16 - Games in R"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+Be **sure** to check out [`rcstatebin`](https://github.com/ramnathv/rcstatebin) from Ramnath Vaidyanathan, author of `htmlwidgets`.  For `rcstatebin`, Ramnath created both the underlying `d3js` library and `R` wrapper, so they integrate beautifully.  In creating the `d3js` side, he is able to contribute back to the JavaScript community from which we source so much.  Avid readers already know, but for all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
+
+## This Week's Widget - `gamer`
+
+If you are like me, the last thing you need is another excuse to procrastinate/"research" while you are in `R`.  I thought making `gamer`--this week's `htmlwidget`--would help expand our minds to think beyond charts and tables when we think `htmlwidgets`.  Wouldn't you know it the prolific Yihui Xie from RStudio has already made the [`fun`] package](http://yihui.name/en/2011/08/the-fun-package-use-r-for-fun/) if you want more games for `R`.
+
+Earlier this month, I spotted [this post](http://cacodaemon.de/index.php?id=67) about [`EntangledClone`](https://github.com/Cacodaimon/EntangledClone), which is written in `TypeScript` with help from [`d3.js`](http://d3js.org).  It is nice in that it is fun, it is small, and it is responsive, and it is easily embeddable, so go ahead and put it in your next `rmarkdown` research paper.  Most of the work(not hard at all) wrapping `EntangledClone` was locally building the project.  Then, I just separated the instantiation piece and pasted it into `entangler.js`.
+
+
+## Quick Installation
+
+`gamer` is very unlikely to go to CRAN, so for now please install with `devtools::install_github`. 
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/gamer")
+```
+
+## Example
+
+I think one example is plenty.  Press `tab` for a new game.
+
+```{r "example01", echo=T, eval = F}
+library(gamer)
+
+entangler( )
+```
+
+```{r "example01_run", echo=F, eval = T}
+library(gamer)
+
+entangler( height = 400, width = 400 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 520
+      , height = 520
+      , overflow = "hidden"
+    )
+  )
+```
+
+## Thanks
+
+Thanks so much
+
+- [`EntangledClone`](https://github.com/Cacodaimon/EntangledClone) from [Guido Krömer](http://www.cacodaemon.de/)
+- [`d3.js`](http://d3js.org) from Mike Bostock
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
