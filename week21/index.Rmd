@@ -1,0 +1,152 @@
+---
+title: "Week21 - Radial Tree"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+Avid readers already know, but for all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
+
+## This Week's Widget - `radialNetwork`
+
+When I saw Wm Leler demonstrate his radial tree on this [d3.bayarea() Show and Tell](https://youtu.be/ewJdCnO9eQo?t=2m13s), I instantly wanted it as an `htmlwidget`.  His statement that with all the `d3` examples out there very few are full-featured explains perfectly why his [Radial Tree with UI](http://bl.ocks.org/wmleler/a734fb2bb3319a2cb386) is exceptional.  Unfortunately, I had to remove a couple of the features temporarily due to my inability to get them to work within the constraints of a widget.  I'll try to add them back as soon as I can.  Even with the removals, I think this radial tree will be a very useful addition to `networkD3`.
+
+## Quick Installation
+
+`radialNetwork` currently exists in a fork of `networkD3`.  To try it out, please use `devtools::install_github`.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
+```
+
+## Example
+
+While we are exploring `radialNetwork`, I would also like to publicize the helpful [`data.tree`](https://github.com/gluc/data.tree) package from Christopher Glur.  He has recently added the function to easily go from `data.tree` to the `JSON` network format expected by `d3.js`.  Let's see `data.tree` working with `radialNetwork`.
+
+```{r "example01", echo=T, eval = F}
+# you'll need this fork of networkD3
+# devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
+library(networkD3)
+
+# devtools::install_github( "gluc/data.tree" )
+library(data.tree)
+
+# use the acme data from data.tree
+data(acme)
+
+# unname = TRUE to get in the proper d3 format
+radialNetwork(  acme$ToList( unname = TRUE ) )
+
+```
+
+```{r "example01_run", echo=F, eval = T}
+library(networkD3)
+
+# devtools::install_github( "gluc/data.tree" )
+library(data.tree)
+
+# use the acme data from data.tree
+data(acme)
+
+# unname = TRUE to get in the proper d3 format
+radialNetwork(  acme$ToList( unname = TRUE ), height= 500, width = 650 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 700
+      , overflow = "hidden"
+    )
+  )
+```
+
+Of course, no `d3.js` network example is complete without `flare.json`.
+
+```{r "example02", echo=T, eval = F}
+# you'll need this fork of networkD3
+# devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
+library(networkD3)
+library(curl)
+
+radialNetwork(
+  rjson::fromJSON(
+   paste0(
+     readLines(
+       curl(
+         paste0(
+           "https://gist.githubusercontent.com/mbostock/"
+           ,"1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
+         )
+       )
+     )
+     ,collapse = "\n"
+   )
+  )
+)
+```
+
+```{r "example02_run", echo=F, eval = T}
+# you'll need this fork of networkD3
+# devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
+library(networkD3)
+library(curl)
+
+radialNetwork(
+  rjson::fromJSON(
+   paste0(
+     readLines(
+       curl(
+         paste0(
+           "https://gist.githubusercontent.com/mbostock/"
+           ,"1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
+         )
+       )
+     )
+     ,collapse = "\n"
+   )
+  )
+, height= 600, width = 680 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 800
+      , overflow = "hidden"
+    )
+  )
+```
+
+## Thanks
+
+Thanks so much
+
+- Wm Leler for his [Radial Tree with UI](http://bl.ocks.org/wmleler/a734fb2bb3319a2cb386) on which this is based
+- [`d3.js`](http://d3js.org) from Mike Bostock
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
