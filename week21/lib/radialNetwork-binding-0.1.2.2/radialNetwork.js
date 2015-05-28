@@ -31,6 +31,13 @@ HTMLWidgets.widget({
   },
 
   renderValue: function(el, x, tree) {
+    
+    /*
+    ######################################################
+    thanks to Wm Leler
+    https://gist.github.com/wmleler/a734fb2bb3319a2cb386
+    ######################################################
+    */
     // x is a list with three elements: root, options, tasks   
     
     el = d3.select(el)
@@ -51,7 +58,7 @@ HTMLWidgets.widget({
     }
     
     // overwrite defaults with x.options if provided
-    if( x.options !== "undefined"  && x.options.length > 0 ){
+    if( typeof x.options !== "undefined"  && Object.keys(x.options).length > 0 ){
       Object.keys( x.options ).map(function(key){
         defaults[key] = x.options[key]
       })
@@ -128,6 +135,15 @@ HTMLWidgets.widget({
   
     // Define the data root
     var root = x.root;
+    
+    
+    //use TreeColors.js to get sane colors for the radial network
+    //  https://github.com/e-/TreeColors.js
+    var additive = TreeColors("add");
+    // apply the colors to our root
+    //  this will add a color object (hcl) to each node
+    additive(root);
+    
     root.x0 = curY;
     root.y0 = 0;
     selectNode(root); // current selected node
@@ -198,9 +214,9 @@ HTMLWidgets.widget({
       node.select('circle')
         .attr('r', defaults.NODE_DIAMETER * reduceZ())
         .style('fill', function(d) {
-            return d._children ? defaults.HAS_CHILDREN_COLOR : 'white';
+            return d._children ? d3.hcl( d.color.h, d.color.c, d.color.l ) : 'white';
         }).attr('stroke', function(d) {
-            return d.selected ? defaults.SELECTED_COLOR : 'steelblue';
+            return d.selected ? defaults.SELECTED_COLOR : d3.hcl( d.color.h, d.color.c, d.color.l );
         }).attr('stroke-width', function(d) {
             return d.selected ? 3 : 1.5;
         });
@@ -214,7 +230,7 @@ HTMLWidgets.widget({
                 'rotate(180)translate(-8)scale('
               ) + reduceZ() +')';
         }).attr('fill', function(d) {
-            return d.selected ? defaults.SELECTED_COLOR : 'black';
+            return d.selected ? defaults.SELECTED_COLOR : d3.hcl( d.color.h, d.color.c, d.color.l );
         }).attr('dy', '.35em');
   
       nodeUpdate = node.transition().duration(duration)
@@ -738,7 +754,7 @@ HTMLWidgets.widget({
     // set up a container for tasks to perform after completion
     //  one example would be add callbacks for event handling
     //  styling
-    if (!(typeof x.tasks === "undefined") ){
+    if (!(typeof x.tasks === "undefined") && x.tasks !== null ){
       if ( (typeof x.tasks.length === "undefined") ||
        (typeof x.tasks === "function" ) ) {
          // handle a function not enclosed in array
