@@ -44,7 +44,7 @@ devtools::install_github("renkun-ken/formattable@feature/htmlwidget")
 
 I tried to discuss in the vignette added to the package.  I'll embed it as an iframe below.
 
-<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week23/formattable_vignette.html" style = "height:800; width:90%;"></iframe>
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week23/formattable_vignette.html" style = "height:800px; width:90%;"></iframe>
 
 ## Thanks
 
