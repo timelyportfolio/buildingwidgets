@@ -1,0 +1,58 @@
+---
+title: "Week23 - formattable"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+Avid readers already know, but for all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
+
+## This Week's Widget - `formattable`
+
+This week's widget [`formattable`](https://github.com/renkun-ken/formattable) is unique from all of the other widgets so far.  One of my favorite R developers [\@renkun-ken](https://github.com/renkun-ken) (also created `rlist` and `pipeR`) made this really nice package `formattable` to add styling and Excel-like conditional formatting to tables in `Rmarkdown`.  However, its design limited its use to `Rmd` contexts.  Of course, the magic of `htmlwidgets` can solve this, so we created a new function `as.htmlwidget` to convert `formattable` objects and added some logic to auto-convert.  Kun Ren deserves all the credit for the awesomeness of `formattable`.  I simply assisted in the `htmlwidget` conversion and testing.
+
+
+## Quick Installation
+
+`formattable` is not yet on CRAN, so for now please install with `devtools::install_github`. 
+
+```{r eval = F}
+# should move to master soon
+devtools::install_github("renkun-ken/formattable@feature/htmlwidget")
+```
+
+## Vignette
+
+I tried to discuss in the vignette added to the package.  I'll embed it as an iframe below.
+
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week23/formattable_vignette.html" style = "height:800; width:90%;"></iframe>
+
+## Thanks
+
+Thanks so much
+
+- [\@renkun-ken](http://renkun.me) for `formattable`, `rlist`, and `pipeR`
+- authors of [`markdown`](http://cran.r-project.org/web/packages/markdown/index.html)
+- Yihui Xie for [`knitr`](http://yihui.name/knitr/)
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
