@@ -28,7 +28,7 @@ I can't keep up with all that is happening in widget-world, so for all the newes
 
 ## This Week's Widget - `flowtypeR`
 
-[`flowtypeR`](https://github.com/timelyportfolio/flowtypeR) attempts to make your R output more readable.
+[`flowtypeR`](https://github.com/timelyportfolio/flowtypeR) attempts to make your R output more readable.  Simply include the `flowtype()` in your `htmltools::tagList`.
 
 
 ## Quick Installation
@@ -48,8 +48,7 @@ The expert developers at [simplefocus](http://simplefocus.com) put together a fa
 
 
 ## Example from R
-
-I tried to discuss in the vignette added to the package.  I'll embed it as an iframe below.  Resize your browser window to see how flowtype adjusts the text size so that there are a more optimal number of words per line.
+Now for something a little more R-like.  Using `about.html` that is in your R system directory, we can do a side by side comparison of the flowtype-effect.  Resize your browser window to see how flowtype adjusts the text size so that there are a more optimal number of words per line.
 
 ```{r "example01", eval=FALSE}
 # using about.html from R help

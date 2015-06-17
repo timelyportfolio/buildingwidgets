@@ -60,7 +60,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="this-weeks-widget---flowtyper" class="section level2">
 <h2>This Week’s Widget - <code>flowtypeR</code></h2>
-<p><a href="https://github.com/timelyportfolio/flowtypeR"><code>flowtypeR</code></a> attempts to make your R output more readable.</p>
+<p><a href="https://github.com/timelyportfolio/flowtypeR"><code>flowtypeR</code></a> attempts to make your R output more readable. Simply include the <code>flowtype()</code> in your <code>htmltools::tagList</code>.</p>
 </div>
 <div id="quick-installation" class="section level2">
 <h2>Quick Installation</h2>
@@ -76,7 +76,7 @@ devtools::install_github(&quot;timelyportfolio/flowtypeR&quot;)</code></pre>
 </div>
 <div id="example-from-r" class="section level2">
 <h2>Example from R</h2>
-<p>I tried to discuss in the vignette added to the package. I’ll embed it as an iframe below. Resize your browser window to see how flowtype adjusts the text size so that there are a more optimal number of words per line.</p>
+<p>Now for something a little more R-like. Using <code>about.html</code> that is in your R system directory, we can do a side by side comparison of the flowtype-effect. Resize your browser window to see how flowtype adjusts the text size so that there are a more optimal number of words per line.</p>
 <pre class="r"><code># using about.html from R help
 library(&quot;flowtypeR&quot;)
 library(&quot;htmltools&quot;)
