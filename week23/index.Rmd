@@ -37,7 +37,7 @@ This week's widget [`formattable`](https://github.com/renkun-ken/formattable) is
 
 ```{r eval = F}
 # should move to master soon
-devtools::install_github("renkun-ken/formattable@feature/htmlwidget")
+devtools::install_github("renkun-ken/formattable")
 ```
 
 ## Vignette
