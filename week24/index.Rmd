@@ -1,0 +1,150 @@
+---
+title: "Week23 - flowtypeR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+I can't keep up with all that is happening in widget-world, so for all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
+
+## This Week's Widget - `flowtypeR`
+
+[`flowtypeR`](https://github.com/timelyportfolio/flowtypeR) attempts to make your R output more readable.
+
+
+## Quick Installation
+
+`flowtypeR` is not yet on CRAN and won't be unless someone asks, so for now please install with `devtools::install_github`. 
+
+```{r eval = F}
+# should move to master soon
+devtools::install_github("timelyportfolio/flowtypeR")
+```
+
+## Example from FlowTypeJS
+
+The expert developers at [simplefocus](http://simplefocus.com) put together a far nicer example than I could, so I have embedded it below.
+
+<iframe src = "http://simplefocus.com/flowtype" style = "height:600px;width:85%;"></iframe>
+
+
+## Example from R
+
+I tried to discuss in the vignette added to the package.  I'll embed it as an iframe below.  Resize your browser window to see how flowtype adjusts the text size so that there are a more optimal number of words per line.
+
+```{r "example01", eval=FALSE}
+# using about.html from R help
+library("flowtypeR")
+library("htmltools")
+library("shiny")
+
+# read about.html from the R system help directory
+about_html <- readLines(file.path(R.home("doc/html"),"about.html"))
+browsable(
+  tagList(
+    bootstrapPage(
+      tags$div(class="row"
+        ,tags$div(class="col-xs-6"
+          ,tags$h1("with flowtype")
+          ,tags$div(
+            id="flowtype-resize"
+            ,style="padding:0em 1em 0em 1em; border: 2px solid gray;"
+            ,HTML(
+              about_html[do.call(seq,as.list(grep(x=about_html,pattern="<h2>")+c(0,-1)))]
+            )
+          )
+        )
+        ,tags$div(class="col-xs-6"
+          ,tags$h1("without flowtype")
+          ,tags$div(id="flowtype-resize"
+            ,style="padding:0em 1em 0em 1em; border: 2px dashed gray;"
+            ,HTML(
+              about_html[do.call(seq,as.list(grep(x=about_html,pattern="<h2>")+c(0,-1)))]
+            )
+          )
+        )
+      )
+    )
+    ,flowtype(
+      '#flowtype-resize'
+      ,minFont = 12
+      ,fontRatio = 20
+    )
+  )
+)
+```
+
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week24/flowtypeR_example.html" style = "height:600px; width:85%;"></iframe>
+
+
+```{r "example01_run", eval=TRUE, echo = FALSE}
+# using about.html from R help
+library("flowtypeR")
+library("htmltools")
+library("shiny")
+
+# read about.html from the R system help directory
+about_html <- readLines(file.path(R.home("doc/html"),"about.html"))
+htmltools::save_html(
+  tagList(
+    bootstrapPage(
+      tags$div(class="row"
+        ,tags$div(class="col-xs-6"
+          ,tags$h1("with flowtype")
+          ,tags$div(
+            id="flowtype-resize"
+            ,style="padding:0em 1em 0em 1em; border: 2px solid gray;"
+            ,HTML(
+              about_html[do.call(seq,as.list(grep(x=about_html,pattern="<h2>")+c(0,-1)))]
+            )
+          )
+        )
+        ,tags$div(class="col-xs-6"
+          ,tags$h1("without flowtype")
+          ,tags$div(id="flowtype-resize"
+            ,style="padding:0em 1em 0em 1em; border: 2px dashed gray;"
+            ,HTML(
+              about_html[do.call(seq,as.list(grep(x=about_html,pattern="<h2>")+c(0,-1)))]
+            )
+          )
+        )
+      )
+    )
+    ,flowtype(
+      '#flowtype-resize'
+      ,minFont = 12
+      ,fontRatio = 20
+    )
+  )
+  ,
+  file = "flowtypeR_example.html"
+)
+```
+
+## Thanks
+
+Thanks so much
+
+- [simplefocus](http://simplefocus.com/) team for [`flowtype.js`](simplefocus.com/flowtype/)
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
