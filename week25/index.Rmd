@@ -1,0 +1,57 @@
+---
+title: "Week25 - sweetAlertR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+I can't keep up with all that is happening in widget-world, so for all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
+
+## This Week's Widget - `sweetalertR`
+
+[SweetAlert](t4t5.github.io/sweetalert) by [Tristan Edwards](http://tristanedwards.me/) is a beautiful, dependency-free, and really popular replacement for JavaScript's ugly and crude  `alert`, so perfect for an `htmlwidget`.  [`sweetalertR`](https://github.com/timelyportfolio/sweetalertR) offers the beauty and power of SweetAlert to R in `htmlwidget` form.
+
+
+## Quick Installation
+
+`sweetalertR` is not yet on CRAN and won't be unless someone asks, so for now please install with `devtools::install_github`. 
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/sweetalertR")
+```
+
+## SweetAlert Example Recreated in `rmarkdown`
+
+In the [demo page](http://t4t5.github.io/sweetalert) for SweetAlert, the author Tristan Edwards demonstrates both his HTML/CSS/JS prowress and documents SweetAlert's functionality.  Let's recreate the example fully in `rmarkdown` with `sweetalertR`.  **Please note Tristan deserves all the credit for this code**.
+
+<iframe src = "http://timelyportfolio.github.io/week25/sweetalert_examples.html" style = "height:600px;width:85%;"></iframe>
+
+
+
+## Thanks
+
+Thanks so much
+
+- [Tristan Edwards](http://tristanedwards.me/) for [`SweetAlert`](https://github.com/t4t5/sweetalert)
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
