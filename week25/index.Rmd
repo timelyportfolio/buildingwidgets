@@ -28,7 +28,7 @@ I can't keep up with all that is happening in widget-world, so for all the newes
 
 ## This Week's Widget - `sweetalertR`
 
-[SweetAlert](t4t5.github.io/sweetalert) by [Tristan Edwards](http://tristanedwards.me/) is a beautiful, dependency-free, and really popular replacement for JavaScript's ugly and crude  `alert`, so perfect for an `htmlwidget`.  [`sweetalertR`](https://github.com/timelyportfolio/sweetalertR) offers the beauty and power of SweetAlert to R in `htmlwidget` form.
+[SweetAlert](t4t5.github.io/sweetalert) by [Tristan Edwards](http://tristanedwards.me/) is a beautiful, dependency-free, and really popular replacement for JavaScript's ugly and crude  `alert`, so in my mind perfect for an `htmlwidget`.  [`sweetalertR`](https://github.com/timelyportfolio/sweetalertR) offers the beauty and power of SweetAlert to R in `htmlwidget` form.
 
 
 ## Quick Installation
@@ -43,7 +43,7 @@ devtools::install_github("timelyportfolio/sweetalertR")
 
 In the [demo page](http://t4t5.github.io/sweetalert) for SweetAlert, the author Tristan Edwards demonstrates both his HTML/CSS/JS prowress and documents SweetAlert's functionality.  Let's recreate the example fully in `rmarkdown` with `sweetalertR`.  **Please note Tristan deserves all the credit for this code**.
 
-<iframe src = "http://timelyportfolio.github.io/week25/sweetalert_examples.html" style = "height:600px;width:85%;"></iframe>
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week25/sweetalert_examples.html" style = "height:600px;width:85%;"></iframe>
 
 
 
