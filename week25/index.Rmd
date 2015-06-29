@@ -5,6 +5,7 @@ output:
   html_document:
     theme: ~
     toc: true
+    mathjax: null
 ---
 
 ```{r echo=F}
