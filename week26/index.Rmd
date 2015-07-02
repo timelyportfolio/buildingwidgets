@@ -1,0 +1,198 @@
+---
+title: "Week26 - sunburstR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+I can't keep up with all that is happening in widget-world, so for all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code), and you'll quickly get up to date.
+
+## Why My Naming Scheme?
+
+For those who wonder if there is any reason why I name my `htmlwidgets` the way I do, the answer is yes.  I append "R" to a short name for the widget.  The appended "R" makes it much easier to track on Github.  Without the appended "R", it would quickly get confusing especially considering the number of `htmlwidgets` I have produced and the number of Github projects that I star/watch.  I learned this lesson with [`svgPanZoom`](http://www.buildingwidgets.com/blog/2015/1/15/week-02-) and [`parcoords`](http://www.buildingwidgets.com/blog/2015/1/30/week-04-interactive-parallel-coordinates-1).  At one point I considered appending "-htmlwidget" to my widgets, but that seems much too long.
+
+## This Week's Widget - `sunburstR`
+
+I fell in love with this [`Sequences Sunburst`](http://bl.ocks.org/kerryrodden/7090426) by [Kerry Rodden](https://twitter.com/kerryrodden) immediately when it was [tweeted](https://twitter.com/kerryrodden/status/392726704109547521) to the world in October 2013.  I'll put it in an iframe below to insure that you don't miss it.  It was also mentioned it back in the post [Week 3 | More Network Layouts](http://www.buildingwidgets.com/blog/2015/1/23/week-03-more-network-layouts#direction-id-like-to-head). 
+
+<iframe src = "http://bl.ocks.org/kerryrodden/7090426" style = "height: 600px; width: 85%;"></iframe>
+
+The additional request by Mark Riseley in this Github [issue](https://github.com/timelyportfolio/materializeR/pull/2#issuecomment-117817974) motivated me to attempt to squeeze this beauty into an `htmlwidget`
+
+
+## Breaking My Rules
+
+This week I broke a number of my [rules or best practices](http://www.buildingwidgets.com/blog/2015/2/12/week-06-what-makes-a-good-htmlwidget) for `htmlwidgets`.  My excuses follow:
+
+1.  **I really need help, input, feedback on this to determine direction and functionality**.  My twitter poll provided four potential use cases:  [hierarchical topic models from Carson Sievert](https://twitter.com/cpsievert/status/616468307802112000), [`TraMineR` state sequences from James Curley](https://twitter.com/jalapic/status/616620921885970432), [thoroughbred sire pedigree family trees by Tom H](https://twitter.com/UTVilla/status/616597942959513600), and [VERIS security data by Bob Rudis](https://twitter.com/hrbrmstr/status/616572240071688192).
+
+2.  I did two widgets this week, since I missed last week due to vacation, and I just ran out of time.
+
+
+## Quick Installation
+
+`sunburstR` is not yet on CRAN and won't be unless someone asks, so for now please install with `devtools::install_github`. 
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/sunburstR")
+```
+
+
+## Examples
+
+### Original Example but in R
+
+The most obvious example is to recreate the original example but in R.  Since I embedded the original in an iframe above, I'll just post the code to demonstrate.
+
+```{r echo = TRUE, eval = FALSE}
+# devtools::install_github("timelyportfolio/sunburstR")
+
+library(sunburstR)
+
+# read in sample visit-sequences.csv data provided in source
+#   https://gist.github.com/kerryrodden/7090426#file-visit-sequences-csv
+sequence_data <- read.csv(
+  paste0(
+    "https://gist.githubusercontent.com/kerryrodden/7090426/"
+    ,"raw/ad00fcf422541f19b70af5a8a4c5e1460254e6be/visit-sequences.csv"
+  )
+  ,header=F
+  ,stringsAsFactors = FALSE
+)
+
+sunburst(sequence_data)
+```
+
+### Example with `TraMineR`
+
+[`TraMineR`](http://traminer.unige.ch/index.shtml) is a really, really nice [R package](http://cran.r-project.org/web/packages/TraMineR/) for working with sequences.  
+
+<blockquote>
+Gabadinho, A., Ritschard, G., Müller, N.S. & Studer, M. (2011), Analyzing and visualizing state sequences in R with TraMineR, Journal of Statistical Software. Vol. 40(4), pp. 1-37.
+</blockquote>
+
+Let's adapt the first example from the [`TraMineR` vignette](http://cran.r-project.org/web/packages/TraMineR/vignettes/TraMineR-state-sequence.pdf)
+so that we can visualize it with our new `sunburstR`.  *I apologize to the non-piping R world, but pipes make this so much easier.*
+
+```{r "example01", eval = FALSE, echo = TRUE}
+library(TraMineR)
+library(sunburstR)
+library(pipeR)
+
+# use example from TraMineR vignette
+data("mvad")
+mvad.alphab <- c(
+  "employment", "FE", "HE", "joblessness",
+  "school", "training"
+)
+mvad.seq <- seqdef(mvad, 17:86, xtstep = 6, alphabet = mvad.alphab)
+
+# to make this work, we'll compress the sequences with seqdss
+#   could also aggregate with dply later
+seqtab( seqdss(mvad.seq), tlim = 0, format = "SPS" ) %>>%
+  attr("freq") %>>%
+  (
+    data.frame(
+      # appending "-end" is necessary for this to work
+      sequence = paste0(
+        gsub(
+          x = names(.$Freq)
+          , pattern = "(/[0-9]*)"
+          , replacement = ""
+          , perl = T
+        )
+        ,"-end"
+      )
+      ,freq = as.numeric(.$Freq)
+      ,stringsAsFactors = FALSE
+    )
+  ) %>>%
+  sunburst
+```
+
+```{r "example01_run", eval = TRUE, echo = FALSE}
+library(TraMineR)
+library(sunburstR)
+library(pipeR)
+
+# use example from TraMineR vignette
+data("mvad")
+mvad.alphab <- c(
+  "employment", "FE", "HE", "joblessness",
+  "school", "training"
+)
+mvad.seq <- seqdef(mvad, 17:86, xtstep = 6, alphabet = mvad.alphab)
+
+# to make this work, we'll compress the sequences with seqdss
+#   could also aggregate with dply later
+seqtab( seqdss(mvad.seq), tlim = 0, format = "SPS" ) %>>%
+  attr("freq") %>>%
+  (
+    data.frame(
+      # appending "-end" is necessary for this to work
+      sequence = paste0(
+        gsub(
+          x = names(.$Freq)
+          , pattern = "(/[0-9]*)"
+          , replacement = ""
+          , perl = T
+        )
+        ,"-end"
+      )
+      ,freq = as.numeric(.$Freq)
+      ,stringsAsFactors = FALSE
+    )
+  ) %>>%
+  sunburst(height = 400, width = 600) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 600
+      , overflow = "hidden"
+   ))
+
+```
+
+## Additional Reading
+
+- Fast Company's [To Take on HBO and Netflix, Youtube Had to Rewire Itself](http://www.fastcompany.com/3044995/to-take-on-hbo-and-netflix-youtube-had-to-rewire-itself) featuring Kerry Rodden and this sequences sunburst.
+
+- [US Sirelines](http://durtal.github.io/d3-pages/US-prominent-sires.html) with a very nicely adapted `Sequences Sunburst` as a pedigree visualization for thoroughbred horses
+
+- USERcycle blog post [Behavior Flow](http://blog.usercycle.com/behavior-flow/)
+
+- `Sequences Sunburst` [fork for Kaggle See Click Predict Fix](http://bl.ocks.org/mkajava/7515402)
+
+
+## Thanks
+
+Thanks so much
+
+- [Kerry Rodden](https://twitter.com/kerryrodden) for [`Sequences Sunburst`](http://bl.ocks.org/kerryrodden/7090426)
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
