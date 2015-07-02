@@ -163,7 +163,7 @@ seqtab( seqdss(mvad.seq), tlim = 0, format = "SPS" ) %>>%
       ,stringsAsFactors = FALSE
     )
   ) %>>%
-  sunburst(height = 400, width = 600) %>>%
+  sunburst(height = 400, width = 650) %>>%
   (
    htmlwidgets::as.iframe(
       .
