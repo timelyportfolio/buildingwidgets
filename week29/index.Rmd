@@ -1,0 +1,303 @@
+---
+title: "Week29 - d3treeR 2"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## htmlwidgets News This Week
+
+A **gallery is up** thanks to Ryan Hafen, but not "official".  As always, for all the newest and updated `htmlwidgets`, just do this [Github search](https://github.com/search?o=desc&q=htmlwidgets&s=indexed&type=Code).
+
+## This Week's Widget - `d3treeR` Again
+
+[d3treeR](https://github.com/timelyportfolio/d3treeR) was released last week in the post [Week 28 | d3treeR](http://www.buildingwidgets.com/blog/2015/7/17/week-28-d3treer).  We'll do `d3treeR` again but we'll make a version 2 `d3tree2` using the versions from Mike Bostock's [Zoomable Treemaps](http://bost.ocks.org/mike/treemap/) and Zan Armstrong's fork [Zoomable Treemaps with Color]](https://gist.github.com/zanarmstrong/76d263bd36f312cb0f9f).
+
+This `d3tree2` version should work much better when there are multiple levels or nesting.
+
+## Quick Installation
+
+`d3treeR` is not yet on CRAN and won't be unless someone asks, so for now please install with `devtools::install_github`.  If you installed last week, you'll need to do this again.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/d3treeR")
+```
+
+
+## Examples
+
+
+### `treemap` as data
+
+As stated in the introduction, `d3treeR` is built to work seamlessly with `treemaps` from the `R` treemap package.
+
+```{r "example01", eval = FALSE}
+# devtools::install_github("timelyportfolio/d3treeR")
+library(treemap)
+library(d3treeR)
+
+# first example from ?treemap
+
+data(GNI2010)
+d3tree(
+  treemap(
+     GNI2010,
+     index=c("continent", "iso3"),
+     vSize="population",
+     vColor="GNI",
+     type="value"
+   )
+  ,rootname = "World"
+)
+
+d3tree2(
+  treemap(
+     GNI2010,
+     index=c("continent", "iso3"),
+     vSize="population",
+     vColor="GNI",
+     type="value"
+   )
+  ,rootname = "World"
+)
+```
+
+```{r "example01_run", eval = TRUE, echo = FALSE}
+# devtools::install_github("timelyportfolio/d3treeR")
+library(treemap)
+library(d3treeR)
+
+# first example from ?treemap
+
+data(GNI2010)
+d3tree(
+  treemap(
+     GNI2010,
+     index=c("continent", "iso3"),
+     vSize="population",
+     vColor="GNI",
+     type="value"
+   )
+  ,rootname = "World"
+  ,height = 520
+  ,width = 620
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01a.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 670
+      , overflow = "hidden"
+   ))
+
+d3tree2(
+  treemap(
+     GNI2010,
+     index=c("continent", "iso3"),
+     vSize="population",
+     vColor="GNI",
+     type="value"
+   )
+  ,rootname = "World"
+  ,height = 520
+  ,width = 620
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01b.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 670
+      , overflow = "hidden"
+   ))
+```
+
+```{r "example02", eval = FALSE}
+# devtools::install_github("timelyportfolio/d3treeR")
+library(treemap)
+library(d3treeR)
+
+# last example from ?treemap
+
+data(business)
+business$employees.growth <- business$employees - business$employees.prev
+d3tree(
+  # Brewer's Red-White-Grey palette reversed with predefined range
+  treemap(business,
+          index=c("NACE1", "NACE2"),
+          vSize="employees",
+          vColor="employees.growth",
+          type="value",
+          palette="-RdGy",
+          range=c(-30000,30000))
+  ,rootname = "World"
+)
+
+d3tree2(
+  # Brewer's Red-White-Grey palette reversed with predefined range
+  treemap(business,
+          index=c("NACE1", "NACE2"),
+          vSize="employees",
+          vColor="employees.growth",
+          type="value",
+          palette="-RdGy",
+          range=c(-30000,30000))
+  ,rootname = "World"
+)
+```
+
+```{r "example02_run", eval = TRUE, echo = FALSE}
+library(treemap)
+library(d3treeR)
+
+# last example from ?treemap
+
+data(business)
+business$employees.growth <- business$employees - business$employees.prev
+d3tree(
+  # Brewer's Red-White-Grey palette reversed with predefined range
+  treemap(business,
+          index=c("NACE1", "NACE2"),
+          vSize="employees",
+          vColor="employees.growth",
+          type="value",
+          palette="-RdGy",
+          range=c(-30000,30000))
+  ,rootname = "World"
+  ,height = 520
+  ,width = 620
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02a.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 670
+      , overflow = "hidden"
+   ))
+
+d3tree2(
+  # Brewer's Red-White-Grey palette reversed with predefined range
+  treemap(business,
+          index=c("NACE1", "NACE2"),
+          vSize="employees",
+          vColor="employees.growth",
+          type="value",
+          palette="-RdGy",
+          range=c(-30000,30000))
+  ,rootname = "World"
+  ,height = 520
+  ,width = 620
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02b.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 670
+      , overflow = "hidden"
+   ))
+```
+
+### `JSON` as data
+
+We can use `JSON` or lists from `R` to provide our hierarchy.  Let's use the ubiquitous `flare.json`.
+
+```{r "example03", eval = FALSE}
+library(treemap)
+library(d3treeR)
+
+  # with flare.json from Mike Bostock
+
+d3tree(
+  "http://bl.ocks.org/mbostock/raw/4063582/raw/flare.json"
+  ,id = "name"
+  ,height = 520
+  ,width = 620
+)
+
+d3tree2(
+  "http://bl.ocks.org/mbostock/raw/4063582/raw/flare.json"
+  ,id = "name"
+  ,height = 520
+  ,width = 620
+)
+```
+
+```{r "example03_run", eval = TRUE, echo = FALSE}
+library(treemap)
+library(d3treeR)
+
+  # with flare.json from Mike Bostock
+
+d3tree(
+  "http://bl.ocks.org/mbostock/raw/4063582/raw/flare.json"
+  ,id = "name"
+  ,height = 520
+  ,width = 620
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03a.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 670
+      , overflow = "hidden"
+   ))
+
+d3tree2(
+  "http://bl.ocks.org/mbostock/raw/4063582/raw/flare.json"
+  ,id = "name"
+  ,height = 520
+  ,width = 620
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03b.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 670
+      , overflow = "hidden"
+   ))
+```
+
+## Thanks
+
+Thanks so much to Martijn Tennekes, Edwin de Jonge, Mike Bostock, and Zan Armstrong.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
