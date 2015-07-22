@@ -29,9 +29,9 @@ A **gallery is up** thanks to Ryan Hafen, but not "official".  As always, for al
 
 ## This Week's Widget - `d3treeR` Again
 
-[d3treeR](https://github.com/timelyportfolio/d3treeR) was released last week in the post [Week 28 | d3treeR](http://www.buildingwidgets.com/blog/2015/7/17/week-28-d3treer).  We'll do `d3treeR` again but we'll make a version 2 `d3tree2` using the versions from Mike Bostock's [Zoomable Treemaps](http://bost.ocks.org/mike/treemap/) and Zan Armstrong's fork [Zoomable Treemaps with Color]](https://gist.github.com/zanarmstrong/76d263bd36f312cb0f9f).
+[d3treeR](https://github.com/timelyportfolio/d3treeR) was released last week in the post [Week 28 | d3treeR](http://www.buildingwidgets.com/blog/2015/7/17/week-28-d3treer).  We'll do `d3treeR` again but we'll make a version 2 `d3tree2` using the versions from Mike Bostock's [Zoomable Treemaps](http://bost.ocks.org/mike/treemap/) and Zan Armstrong's fork [Zoomable Treemaps with Color](https://gist.github.com/zanarmstrong/76d263bd36f312cb0f9f).
 
-This `d3tree2` version should work much better when there are multiple levels or nesting.
+This `d3tree2` version should work much better when there are multiple levels of nesting or if you want a small in size `d3tree`.  All it takes is one, so thanks so much for [\@ignacio82 ](https://github.com/ignacio82) for the [motivation](https://github.com/timelyportfolio/d3treeR/issues/2).
 
 ## Quick Installation
 
@@ -44,6 +44,7 @@ devtools::install_github("timelyportfolio/d3treeR")
 
 ## Examples
 
+Let's look at the differences between `d3tree` and `d3tree2` in the examples below.  We'll use the same examples as last week.
 
 ### `treemap` as data
 
@@ -57,47 +58,41 @@ library(d3treeR)
 # first example from ?treemap
 
 data(GNI2010)
-d3tree(
-  treemap(
-     GNI2010,
-     index=c("continent", "iso3"),
-     vSize="population",
-     vColor="GNI",
-     type="value"
-   )
-  ,rootname = "World"
-)
 
-d3tree2(
-  treemap(
-     GNI2010,
-     index=c("continent", "iso3"),
-     vSize="population",
-     vColor="GNI",
-     type="value"
-   )
-  ,rootname = "World"
-)
+tm <-  treemap(
+   GNI2010,
+   index=c("continent", "iso3"),
+   vSize="population",
+   vColor="GNI",
+   type="value"
+ )
+
+
+d3tree( tm,rootname = "World" )
+
+d3tree2( tm,rootname = "World" )
 ```
 
-```{r "example01_run", eval = TRUE, echo = FALSE}
+```{r "example01a_run", eval = TRUE, echo = FALSE,fig.keep="last"}
 # devtools::install_github("timelyportfolio/d3treeR")
 library(treemap)
 library(d3treeR)
 
 # first example from ?treemap
-
 data(GNI2010)
+
+tm <-  treemap(
+   GNI2010,
+   index=c("continent", "iso3"),
+   vSize="population",
+   vColor="GNI",
+   type="value"
+ )
+
 d3tree(
-  treemap(
-     GNI2010,
-     index=c("continent", "iso3"),
-     vSize="population",
-     vColor="GNI",
-     type="value"
-   )
+  tm
   ,rootname = "World"
-  ,height = 520
+  ,height = 420
   ,width = 620
 ) %>>%
   (
@@ -107,20 +102,26 @@ d3tree(
       , libdir = "lib"
       , selfcontained=F
       , width = 800
-      , height = 670
+      , height = 570
       , overflow = "hidden"
    ))
+```
+
+```{r "example01b_run", eval = T, echo = F, fig.keep="none"}
+
+tm <-  treemap(
+   GNI2010,
+   index=c("continent", "iso3"),
+   vSize="population",
+   vColor="GNI",
+   type="value"
+ )
+
 
 d3tree2(
-  treemap(
-     GNI2010,
-     index=c("continent", "iso3"),
-     vSize="population",
-     vColor="GNI",
-     type="value"
-   )
+  tm
   ,rootname = "World"
-  ,height = 520
+  ,height = 420
   ,width = 620
 ) %>>%
   (
@@ -130,7 +131,7 @@ d3tree2(
       , libdir = "lib"
       , selfcontained=F
       , width = 800
-      , height = 670
+      , height = 570
       , overflow = "hidden"
    ))
 ```
@@ -144,20 +145,8 @@ library(d3treeR)
 
 data(business)
 business$employees.growth <- business$employees - business$employees.prev
-d3tree(
-  # Brewer's Red-White-Grey palette reversed with predefined range
-  treemap(business,
-          index=c("NACE1", "NACE2"),
-          vSize="employees",
-          vColor="employees.growth",
-          type="value",
-          palette="-RdGy",
-          range=c(-30000,30000))
-  ,rootname = "World"
-)
 
-d3tree2(
-  # Brewer's Red-White-Grey palette reversed with predefined range
+tm <- # Brewer's Red-White-Grey palette reversed with predefined range
   treemap(business,
           index=c("NACE1", "NACE2"),
           vSize="employees",
@@ -165,11 +154,13 @@ d3tree2(
           type="value",
           palette="-RdGy",
           range=c(-30000,30000))
-  ,rootname = "World"
-)
+
+d3tree( tm, rootname = "World" )
+
+d3tree2( tm, rootname = "World" )
 ```
 
-```{r "example02_run", eval = TRUE, echo = FALSE}
+```{r "example02a_run", eval = TRUE, echo = FALSE,fig.keep="last"}
 library(treemap)
 library(d3treeR)
 
@@ -177,17 +168,18 @@ library(d3treeR)
 
 data(business)
 business$employees.growth <- business$employees - business$employees.prev
-d3tree(
-  # Brewer's Red-White-Grey palette reversed with predefined range
-  treemap(business,
+# Brewer's Red-White-Grey palette reversed with predefined range
+tm <- treemap(business,
           index=c("NACE1", "NACE2"),
           vSize="employees",
           vColor="employees.growth",
           type="value",
           palette="-RdGy",
           range=c(-30000,30000))
+d3tree(
+  tm
   ,rootname = "World"
-  ,height = 520
+  ,height = 420
   ,width = 620
 ) %>>%
   (
@@ -197,21 +189,24 @@ d3tree(
       , libdir = "lib"
       , selfcontained=F
       , width = 800
-      , height = 670
+      , height = 570
       , overflow = "hidden"
    ))
 
-d3tree2(
-  # Brewer's Red-White-Grey palette reversed with predefined range
-  treemap(business,
+```
+
+```{r "example02b_run", echo = F, eval = T, fig.keep="none"}
+tm <- treemap(business,
           index=c("NACE1", "NACE2"),
           vSize="employees",
           vColor="employees.growth",
           type="value",
           palette="-RdGy",
           range=c(-30000,30000))
+d3tree2(
+  tm
   ,rootname = "World"
-  ,height = 520
+  ,height = 420
   ,width = 620
 ) %>>%
   (
@@ -221,7 +216,7 @@ d3tree2(
       , libdir = "lib"
       , selfcontained=F
       , width = 800
-      , height = 670
+      , height = 570
       , overflow = "hidden"
    ))
 ```
@@ -251,7 +246,7 @@ d3tree2(
 )
 ```
 
-```{r "example03_run", eval = TRUE, echo = FALSE}
+```{r "example03a_run", eval = TRUE, echo = FALSE}
 library(treemap)
 library(d3treeR)
 
@@ -260,7 +255,7 @@ library(d3treeR)
 d3tree(
   "http://bl.ocks.org/mbostock/raw/4063582/raw/flare.json"
   ,id = "name"
-  ,height = 520
+  ,height = 420
   ,width = 620
 ) %>>%
   (
@@ -270,9 +265,12 @@ d3tree(
       , libdir = "lib"
       , selfcontained=F
       , width = 800
-      , height = 670
+      , height = 570
       , overflow = "hidden"
    ))
+```
+
+```{r "example03b_run",eval=TRUE,echo=FALSE}
 
 d3tree2(
   "http://bl.ocks.org/mbostock/raw/4063582/raw/flare.json"
@@ -294,7 +292,7 @@ d3tree2(
 
 ## Thanks
 
-Thanks so much to Martijn Tennekes, Edwin de Jonge, Mike Bostock, and Zan Armstrong.
+Thanks so much to Martijn Tennekes, Edwin de Jonge, Mike Bostock, Bill White, and Zan Armstrong.
 
 As always, thanks to 
 
