@@ -1,0 +1,266 @@
+---
+title: "Week30 - taucharts"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - `taucharts`
+
+As I said in [week 1](http://www.buildingwidgets.com/blog/2015/1/8/week-01-easy-flowcharts-and-diagrams-diagrammer), an `htmlwidget` collaboration still qualifies as an `htmlwidget` of the week.  This week's [`taucharts`](https://github.com/hrbrmstr/taucharts) is a very fine case of why I set this rule.  [boB Rudis \@hrbrmstr](https://about.me/hrbrmstr) delighted me when he started to tackle the very well-designed [`TauCharts`](http://www.taucharts.com/).  Check out the `TauCharts` site, docs, and [design post](http://blog.taucharts.com/taucharts-data-focused-charting-library/), and I think you'll quickly see why we have both been very intrigued by this library.  Bob's first [tweet](https://twitter.com/hrbrmstr/status/628135027843448832) said
+
+<blockquote>
+"now to find the time to finish it :-)"
+</blockquote>
+
+I took this as an invitation to participate and quickly responded especially since I had hesitated on `TauCharts` becuase I didn't think I would have the time in a week to cover all of its features.  Please note almost all the code and credit for `taucharts` belongs to Bob.  I simply chipped in where possible.
+
+## Quick Installation
+
+`taucharts` is not yet on CRAN, so for now please install with `devtools::install_github`.
+
+```{r eval = F}
+devtools::install_github("hrbrmstr/taucharts")
+```
+
+## Examples
+
+@hrbrmstr has already assembled quite a few examples in the documentation, this [RPubs](http://rpubs.com/hrbrmstr/taucharts), and his blog post [Achieve Charting Zen With TauCharts](http://rud.is/b/2015/08/04/achieve-charting-zen-with-taucharts/).  I'll try to supplement instead of replicate his examples.  Limiting myself to only a couple of examples with so much functionality will be tricky.
+
+I very often go to the Deepayan Sarkar's (author of `lattice`) book 
+<a href="http://www.amazon.com/gp/product/0387759689/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0387759689&linkCode=as2&tag=timelyp-20&linkId=DPBUHS26NLF6YFY6">Lattice: Multivariate Data Visualization with R (Use R!)</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=timelyp-20&l=as2&o=1&a=0387759689" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+to find examples to replicate with new charting libraries.  Let's look at a couple of my favorites starting with bars since these can be quite tricky.  As an aside, `xtabs` still just does not get nearly the credit it deserves.
+
+### Stacked Bar
+
+```{r "example01", eval = FALSE}
+# devtools::install_github("hrbrmstr/taucharts")
+library(taucharts)
+
+# http://lmdvr.r-forge.r-project.org/figures/figures.html
+xtabs( Freq ~ Survived + Sex, Titanic ) %>% 
+  # tables get automatically converted to a data.frame
+  tauchart() %>%
+  tau_stacked_bar( "Sex", "Freq", "Survived" ) %>%
+  tau_guide_y( label = "# of Passengers") %>%
+  tau_legend()
+```
+
+```{r "example01_run", eval = TRUE, echo = FALSE}
+# devtools::install_github("hrbrmstr/taucharts")
+library(taucharts)
+
+# http://lmdvr.r-forge.r-project.org/figures/figures.html
+xtabs( Freq ~ Survived + Sex, Titanic ) %>% 
+  # tables get automatically converted to a data.frame
+  tauchart( height = 400, width = 630 ) %>%
+  tau_stacked_bar( "Sex", "Freq", "Survived" ) %>%
+  tau_guide_y( label = "# of Passengers") %>%
+  tau_legend() %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 570
+      , overflow = "hidden"
+   ))
+```
+
+### Facets/Strips
+
+`R` users need `facets`/`strips`, and `taucharts` makes it easy.
+
+```{r "example02", eval = FALSE}
+# devtools::install_github("hrbrmstr/taucharts")
+library(taucharts)
+
+# based off http://lmdvr.r-forge.r-project.org/figures/figures.html
+Titanic %>% 
+  # tables get automatically converted to a data.frame
+  tauchart() %>%
+  tau_bar( 
+    c( "Age","Sex" )
+    , c( "Class", "Freq" )
+    , "Survived"
+  ) %>%
+  tau_legend()
+```
+
+```{r "example02_run", eval = TRUE, echo = FALSE}
+library(taucharts)
+
+# based off http://lmdvr.r-forge.r-project.org/figures/figures.html
+Titanic %>% 
+  # tables get automatically converted to a data.frame
+  tauchart( height = 700, width = 650 ) %>%
+  tau_bar( 
+    c( "Age","Sex" )
+    , c( "Class", "Freq" )
+    , "Survived"
+  ) %>%
+  tau_legend() %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 820
+      , height = 870
+      , overflow = "hidden"
+   ))
+```
+
+### Facetted Line
+
+
+```{r "example03", eval = FALSE}
+library(taucharts)
+
+# based off http://lmdvr.r-forge.r-project.org/figures/figures.html
+## Figure 2.1
+data(Oats, package = "MEMSS")
+
+# xyplot(yield ~ nitro | Variety + Block, data = Oats, type = 'o')
+
+tauchart( Oats ) %>%
+  tau_line( "Block", c("Variety", "yield") , "nitro" ) %>%
+  tau_tooltip() %>%
+  tau_legend()
+```
+
+```{r "example03_run", eval = TRUE, echo = FALSE}
+library(taucharts)
+
+# based off http://lmdvr.r-forge.r-project.org/figures/figures.html
+## Figure 2.1
+data(Oats, package = "MEMSS")
+
+# xyplot(yield ~ nitro | Variety + Block, data = Oats, type = 'o')
+
+tauchart( Oats, height = 500, width = 500 ) %>%
+  tau_line( "Block", c("Variety", "yield") , "nitro" ) %>%
+  tau_tooltip() %>%
+  tau_legend() %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 670
+      , height = 680
+      , overflow = "hidden"
+   ))
+```
+
+### Tricky R->JS Dates
+
+Date handling from `R` to `JavaScript` can get tricky quickly.  Although date support is not as full featured as I would like, `taucharts` does pretty well with dates.
+
+```{r "example04", eval = FALSE}
+library(taucharts)
+library(xts)
+
+as.xts(
+  data.frame( "random" = runif( 100, 0, 100 ) )
+  , order.by = seq(Sys.Date(),Sys.Date()+99,by="days")
+) %>%
+  tauchart() %>%
+  # xts index get added as a column named Date
+  tau_point( "Date", "random" ) %>%
+  tau_guide_x( tick_format = "%b %d" )
+```
+
+```{r "example04_run", eval = TRUE, echo = FALSE}
+library(taucharts)
+library(xts)
+
+as.xts(
+  data.frame( "random" = runif( 100, 0, 100 ) )
+  , order.by = seq(Sys.Date(),Sys.Date()+99,by="days")
+) %>%
+  tauchart( height = 370, width = 550 ) %>%
+  # xts index get added as a column named Date
+  tau_point( "Date", "random" ) %>%
+  tau_guide_x( tick_format = "%b %d" ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 630
+      , height = 520
+      , overflow = "hidden"
+   ))
+```
+
+### Trendlines
+
+`R` can draw some mean trendlines, but can `JavaScript`?
+
+
+```{r "example05", eval = FALSE}
+library(taucharts)
+
+CO2 %>%
+  tauchart( ) %>%
+  tau_point( "conc", c("Treatment","uptake"), "Plant" ) %>%
+  tau_tooltip( ) %>%
+  tau_trendline( )
+```
+
+```{r "example05_run", eval = TRUE, echo = FALSE}
+library(taucharts)
+
+CO2 %>%
+  tauchart( height= 540, width = 670 ) %>%
+  tau_point( "conc", c("Treatment","uptake"), "Plant" ) %>%
+  tau_tooltip( ) %>%
+  tau_trendline( ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example05.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 700
+      , overflow = "hidden"
+   ))
+```
+
+This is certainly not all, but I'll stop here.  As always, feedback, examples, use cases are very welcome.
+
+
+## Thanks
+
+Thanks so much to boB Rudis for a really wonderful collaborative experience fueled by his vast wealth of skill and experience.  Thanks to [Petriko Vladimir](https://github.com/vladminsky) at [targetprocess](http://www.targetprocess.com/) for the spectacular charting library `TauCharts`.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
