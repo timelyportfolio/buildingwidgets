@@ -1,0 +1,203 @@
+---
+title: "Week32 - mapshaperWidget"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - `mapshaperWidget`
+
+Even a geo-novice like me can quickly see the amazing power of [`mapshaper`](https://github.com/mbloch/mapshaper) and it [web gui](http://www.mapshaper.org) and even use it immediately.  The author has clearly focused on a speedy, intuitive, but still full-feautured user experience.  To take it one step further though, let's try to integrate mapshaper seamlessly into our `R` geospatial workflow.
+
+For now, I chose the awkward name `mapshaperWidget`, since "mapshaperr" is a little hard and there already is [`rmapshaper`](https://github.com/ateucher/rmapshaper) to use the non-gui node.js version.  I'm thinking if ok [with the author](https://github.com/ateucher/rmapshaper/issues/1), eventually I can fold `mapshaperWidget` into `rmapshaper`.
+
+`mapshaper` is an entire website, so converting it to an `htmlwidget` is much different from most of the other conversions.  As of now, `mapshaperWidget` is not composeable and will not integrate into `rmarkdown`, since it completely takes over the page.  In later iterations, I hope to contain it.
+
+`mapshaperWidget` relies on [`geojsonio`](https://github.com/ropensci/geojsonio).  Thanks to the [contributors](https://github.com/ropensci/geojsonio/graphs/contributors) for this very helpful package.  I also enjoyed adding some lazy magic from Hadley Wickham's [`lazyeval`](https://github.com/hadley/lazyeval).  Also, one last thanks to RStudio for integrating RStudio Viewer, which allows for a smooth all-in-one window experience.
+
+## Quick Installation
+
+`mapshaperWidget` is not yet on CRAN, so for now please install with `devtools::install_github`.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/mapshaper_htmlwidget")
+```
+
+## Examples
+
+Examples usually help more than text.  Let's see if this is true.
+
+### Straight `geojson`
+
+```{r "example01", eval = FALSE}
+# devtools::install_github("timelyportfolio/mapshaperWidget")
+library(mapshaperWidget)
+
+alabama <- paste0(
+    readLines(
+        "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/alabama.geojson"
+    )
+    ,collapse = " "
+)
+mapshaper(alabama)
+```
+
+```{r "example01_run", eval = TRUE, echo = FALSE}
+# devtools::install_github("timelyportfolio/mapshaperWidget")
+library(mapshaperWidget)
+
+alabama <- paste0(
+    readLines(
+        curl::curl("https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/alabama.geojson"
+    ))
+    ,collapse = " "
+)
+mapshaper(alabama) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 570
+      , overflow = "hidden"
+   ))
+```
+
+### World Data from tmap
+
+`data(World)` from [`tmap`](https://github.com/mtennekes/tmap) will give us a good example of working with `SpatialPolygonsDataFrame` in `mapshaper`.  Play with it a bit, and see if you can filter from the console.
+
+```{r "example02", eval = FALSE}
+# devtools::install_github("timelyportfolio/mapshaperWidget")
+library(mapshaperWidget)
+library(tmap)
+
+data(World)
+mapshaper(World)
+```
+
+```{r "example02_run", eval = TRUE, echo = FALSE}
+# devtools::install_github("timelyportfolio/mapshaperWidget")
+library(mapshaperWidget)
+library(tmap)
+
+data(World)
+mapshaper(World) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 570
+      , overflow = "hidden"
+   ))
+```
+
+### Multiple Spatial Objects
+
+Now, let's incorporate some examples from `spdep` to show how we can analyze multiple spatial objects with `mapshaper`.  Remember, you can always drag and drop shapefiles, geojson, topojson files onto your `mapshaper`.  I highly recommend trying it out with the shapefiles from `spdep`.
+
+
+```{r "example03", eval = FALSE}
+# devtools::install_github("timelyportfolio/mapshaperWidget")
+library(mapshaperWidget)
+library(spdep)
+library(maptools)
+
+auckland <- readShapePoly(
+  system.file(
+    "etc/shapes/auckland.shp"
+    ,package="spdep"
+  )[1]
+)
+wheat <- readShapePoly(
+  system.file(
+    "etc/shapes/wheat.shp"
+    ,package="spdep"
+  )[1]
+)
+columbus <- readShapePoly(
+  system.file(
+    "etc/shapes/columbus.shp"
+    ,package="spdep"
+  )[1]
+)
+
+mapshaper( auckland, wheat, columbus )
+```
+
+```{r "example03_run", eval = TRUE, echo = FALSE}
+# devtools::install_github("timelyportfolio/mapshaperWidget")
+library(mapshaperWidget)
+library(spdep)
+library(maptools)
+
+auckland <- readShapePoly(
+  system.file(
+    "etc/shapes/auckland.shp"
+    ,package="spdep"
+  )[1]
+)
+wheat <- readShapePoly(
+  system.file(
+    "etc/shapes/wheat.shp"
+    ,package="spdep"
+  )[1]
+)
+columbus <- readShapePoly(
+  system.file(
+    "etc/shapes/columbus.shp"
+    ,package="spdep"
+  )[1]
+)
+
+mapshaper( auckland, wheat, columbus ) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 800
+      , height = 570
+      , overflow = "hidden"
+   ))
+```
+
+
+## Next...
+
+This is certainly not all, but I'll stop here. Next step will be bidirectional communication with `Shiny` and as said earlier some containment for composeability.  As always, I would love to work together if you have some ideas.
+
+
+## Thanks
+
+Thanks so much to [Matthew Bloch](https://github.com/mbloch) from the New York Times for `mapshaper`.  It is really good!
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
