@@ -70,15 +70,15 @@ alabama <- paste0(
     ))
     ,collapse = " "
 )
-mapshaper(alabama) %>>%
+mapshaper(alabama,width=530,height=500) %>>%
   (
    htmlwidgets::as.iframe(
       .
       ,file="example01.html"
       , libdir = "lib"
       , selfcontained=F
-      , width = 800
-      , height = 570
+      , width = 700
+      , height = 670
       , overflow = "hidden"
    ))
 ```
@@ -102,15 +102,15 @@ library(mapshaperWidget)
 library(tmap)
 
 data(World)
-mapshaper(World) %>>%
+mapshaper(World,width=530,height=500) %>>%
   (
    htmlwidgets::as.iframe(
       .
       ,file="example02.html"
       , libdir = "lib"
       , selfcontained=F
-      , width = 800
-      , height = 570
+      , width = 700
+      , height = 670
       , overflow = "hidden"
    ))
 ```
@@ -173,15 +173,15 @@ columbus <- readShapePoly(
   )[1]
 )
 
-mapshaper( auckland, wheat, columbus ) %>>%
+mapshaper( auckland, wheat, columbus,width=530,height=500) %>>%
   (
    htmlwidgets::as.iframe(
       .
       ,file="example03.html"
       , libdir = "lib"
       , selfcontained=F
-      , width = 800
-      , height = 570
+      , width = 700
+      , height = 670
       , overflow = "hidden"
    ))
 ```
