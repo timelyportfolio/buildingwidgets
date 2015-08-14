@@ -59,7 +59,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="this-weeks-widget---mapshaperwidget" class="section level2">
 <h2>This Week’s Widget - <code>mapshaperWidget</code></h2>
-<p>Even a geo-novice like me can quickly see the amazing power of <a href="https://github.com/mbloch/mapshaper"><code>mapshaper</code></a> and it <a href="http://www.mapshaper.org">web gui</a> and even use it immediately. The author has clearly focused on a speedy, intuitive, but still full-feautured user experience. To take it one step further though, let’s try to integrate mapshaper seamlessly into our <code>R</code> geospatial workflow.</p>
+<p>Even a geo-novice like me can quickly see the amazing power of <a href="https://github.com/mbloch/mapshaper"><code>mapshaper</code></a> and its <a href="http://www.mapshaper.org">web gui</a> and even use it immediately. The author has clearly focused on a speedy, intuitive, but still full-feautured user experience. To take it one step further though, let’s try to integrate mapshaper seamlessly into our <code>R</code> geospatial workflow.</p>
 <p>For now, I chose the awkward name <code>mapshaperWidget</code>, since “mapshaperr” is a little hard and there already is <a href="https://github.com/ateucher/rmapshaper"><code>rmapshaper</code></a> to use the non-gui node.js version. I’m thinking if ok <a href="https://github.com/ateucher/rmapshaper/issues/1">with the author</a>, eventually I can fold <code>mapshaperWidget</code> into <code>rmapshaper</code>.</p>
 <p><code>mapshaper</code> is an entire website, so converting it to an <code>htmlwidget</code> is much different from most of the other conversions. As of now, <code>mapshaperWidget</code> is not composeable and will not integrate into <code>rmarkdown</code>, since it completely takes over the page. In later iterations, I hope to contain it.</p>
 <p><code>mapshaperWidget</code> relies on <a href="https://github.com/ropensci/geojsonio"><code>geojsonio</code></a>. Thanks to the <a href="https://github.com/ropensci/geojsonio/graphs/contributors">contributors</a> for this very helpful package. I also enjoyed adding some lazy magic from Hadley Wickham’s <a href="https://github.com/hadley/lazyeval"><code>lazyeval</code></a>. Also, one last thanks to RStudio for integrating RStudio Viewer, which allows for a smooth all-in-one window experience.</p>
@@ -84,7 +84,7 @@ alabama &lt;- paste0(
     ,collapse = &quot; &quot;
 )
 mapshaper(alabama)</code></pre>
-<p><iframe src="http://timelyportfolio.github.io/buidlingwidgets/week32/example01.html" width="700" height="670" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p><iframe src="http://timelyportfolio.github.io/buildingwidgets/week32/example01.html" width="700" height="670" style="border-width:0px;overflow:hidden ;"></iframe></p>
 </div>
 <div id="world-data-from-tmap" class="section level3">
 <h3>World Data from tmap</h3>
@@ -95,7 +95,7 @@ library(tmap)
 
 data(World)
 mapshaper(World)</code></pre>
-<p><iframe src="http://timelyportfolio.github.io/buidlingwidgets/week32/example02.html" width="700" height="670" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p><iframe src="http://timelyportfolio.github.io/buildingwidgets/week32/example02.html" width="700" height="670" style="border-width:0px;overflow:hidden ;"></iframe></p>
 </div>
 <div id="multiple-spatial-objects" class="section level3">
 <h3>Multiple Spatial Objects</h3>
@@ -125,7 +125,7 @@ columbus &lt;- readShapePoly(
 )
 
 mapshaper( auckland, wheat, columbus )</code></pre>
-<p><iframe src="http://timelyportfolio.github.io/buidlingwidgets/week32/example03.html" width="700" height="670" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p><iframe src="http://timelyportfolio.github.io/buildingwidgets/week32/example03.html" width="700" height="670" style="border-width:0px;overflow:hidden ;"></iframe></p>
 </div>
 </div>
 <div id="next" class="section level2">

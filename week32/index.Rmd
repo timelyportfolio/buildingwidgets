@@ -25,7 +25,7 @@ library(pipeR)
 
 ## This Week's Widget - `mapshaperWidget`
 
-Even a geo-novice like me can quickly see the amazing power of [`mapshaper`](https://github.com/mbloch/mapshaper) and it [web gui](http://www.mapshaper.org) and even use it immediately.  The author has clearly focused on a speedy, intuitive, but still full-feautured user experience.  To take it one step further though, let's try to integrate mapshaper seamlessly into our `R` geospatial workflow.
+Even a geo-novice like me can quickly see the amazing power of [`mapshaper`](https://github.com/mbloch/mapshaper) and its [web gui](http://www.mapshaper.org) and even use it immediately.  The author has clearly focused on a speedy, intuitive, but still full-feautured user experience.  To take it one step further though, let's try to integrate mapshaper seamlessly into our `R` geospatial workflow.
 
 For now, I chose the awkward name `mapshaperWidget`, since "mapshaperr" is a little hard and there already is [`rmapshaper`](https://github.com/ateucher/rmapshaper) to use the non-gui node.js version.  I'm thinking if ok [with the author](https://github.com/ateucher/rmapshaper/issues/1), eventually I can fold `mapshaperWidget` into `rmapshaper`.
 
