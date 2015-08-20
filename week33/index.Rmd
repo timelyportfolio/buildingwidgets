@@ -1,0 +1,278 @@
+---
+title: "Week33 - RBioFabric"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - `RBioFabric`
+
+[William Longabaugh (\@wjrl)](https://github.com/wjrl) developed a novel hairball-less way to visualize networks called [BioFabric](http://www.biofabric.org/) in his 2012 paper.
+
+<blockquote>
+Longabaugh, W.J.R. <a href = "http://www.biomedcentral.com/1471-2105/13/275">Combing the hairball with BioFabric: a new approach for visualization of large networks</a>. BMC Bioinformatics, 13:275, 2012.
+</blockquote>
+
+Since then, he has done an incredible amount to speed adoption by implementing BioFabric in Java, JavaScript (`d3.js`), and R.  His work, numerous examples, and discussion convinced me of the power of BioFabric, and I have been waiting for a week that I could commit enough time to attempt an implementation as an `htmlwidget`.  When I saw that the genius prolific node.js programmer [Max Ogden \@maxogden](https://github.com/maxogden/biofabric) had taken a first step toward extending and generalizing @wjrl's `d3.js` code, I decided to see if I could combine the `R` and JavaScript into an `htmlwidget`.
+
+As I plunged through the code, I decided to approach this by using the much fuller featured `bioFabric` plotting function in `R` with all the power of `igraph` to do most of the data conversion and preparation in `R`.  I stripped this from the JavaScript, and instead use `d3.js` just to render the graph and layout.  By far, the [Java version](http://www.biofabric.org/#launch) is the fullest implementation of BioFabric with lots of helpful interactivity and analysis tools.  Using it for inspiration, I added crude pan/zoom and then some mouseover interaction in the JavaScript.  There is still a whole lot to do, and I would love help, ideas, comments, and suggestions from anyone willing or interested.
+
+I want to make sure I at least spend another sentence commending and thanking William Longabaugh (@wjrl) for not only his brilliant idea but his incredible commitment to it.  I can only hope that this little `htmlwidget` will help bring a little bit more attention and help spread the word.
+
+## Quick Installation
+
+`RBioFabric` is not yet on CRAN, so for now please install with `devtools::install_github`.
+
+```{r eval = F}
+devtools::install_github("timelyportfolio/RBioFabric")
+```
+
+## Examples
+
+Let's start simple with some `igraph` data.  It is beyond the scope of this post to explain BioFabric.  I highly encourage enjoying all of William's incredible [resources on BioFabric](http://biofabric.org) to get a better sense of how to interpret these special diagrams.
+
+### Bridges of Koenigsberg
+
+```{r "example01", eval = FALSE}
+# devtools::install_github("timelyportfolio/RBioFabric")
+library(igraph)
+library(igraphdata)
+library(RBioFabric)
+
+data("Koenigsberg")
+
+#  strange but we actually use the bioFabric plot function
+#   to give us the data
+
+bioFabric_htmlwidget( bioFabric( Koenigsberg) )
+```
+
+```{r "example01_run", eval = TRUE, echo = FALSE, fig.keep='none'}
+library(igraph)
+library(igraphdata)
+library(RBioFabric)
+
+data("Koenigsberg")
+
+#  strange but we actually use the bioFabric plot function
+#   to give us the data
+
+bioFabric_htmlwidget( bioFabric( Koenigsberg ),width=530,height=300) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 700
+      , height = 420
+      , overflow = "hidden"
+   ))
+```
+
+### shadowLinks
+
+In the case of the Bridges of Koenigsberg, `shadowLinks` probably are not that helpful, but in bigger more complicated networks, `shadowLinks = TRUE` can help preserve and communicate a better sense of connectedness.
+
+```{r "example02", eval = FALSE}
+# devtools::install_github("timelyportfolio/RBioFabric")
+library(igraph)
+library(igraphdata)
+library(RBioFabric)
+
+data("Koenigsberg")
+
+#  strange but we actually use the bioFabric plot function
+#   to give us the data
+
+bioFabric_htmlwidget(
+  bioFabric( Koenigsberg, shadowLinks = TRUE )
+)
+```
+
+```{r "example02_run", eval = TRUE, echo = FALSE, fig.keep='none'}
+# devtools::install_github("timelyportfolio/RBioFabric")
+library(igraph)
+library(igraphdata)
+library(RBioFabric)
+
+data("Koenigsberg")
+
+#  strange but we actually use the bioFabric plot function
+#   to give us the data
+
+bioFabric_htmlwidget(
+  bioFabric( Koenigsberg, shadowLinks = TRUE )
+  ,height = 400
+  ,width = 550
+) %>>%  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 720
+      , height = 520
+      , overflow = "hidden"
+   ))
+```
+
+### Ordering Nodes
+
+By default, nodes are sorted by degree.  However, `bioFabric` allows custom sort order through a function with `orderFun` or as a vector with `userOrder`.  
+
+```{r "example03", eval = FALSE}
+# devtools::install_github("timelyportfolio/RBioFabric")
+library(igraph)
+library(igraphdata)
+library(RBioFabric)
+library(dplyr)
+
+data(karate)
+# ?fastgreedy.community
+
+fc <- fastgreedy.community(karate)
+
+# let's sort by community and then degree
+bioFabric_htmlwidget(
+  bioFabric(
+    karate
+    , userOrder = 
+      data.frame(membership = membership(fc), degree = degree(karate)) %>%
+        mutate( id = rownames(.) ) %>%
+        arrange( membership, desc( degree ) ) %>%
+        select( id ) %>%
+        as.vector
+  )
+)
+
+```
+
+```{r "example03_run", eval = TRUE, echo = FALSE, fig.keep='none'}
+# devtools::install_github("timelyportfolio/RBioFabric")
+library(igraph)
+library(igraphdata)
+library(RBioFabric)
+library(dplyr)
+
+data(karate)
+# ?fastgreedy.community
+
+fc <- fastgreedy.community(karate)
+
+# let's sort by community and then degree
+bioFabric_htmlwidget(
+  bioFabric(
+    karate
+    , userOrder = 
+      data.frame(membership = membership(fc), degree = degree(karate)) %>%
+        mutate( id = rownames(.) ) %>%
+        arrange( membership, desc( degree ) ) %>%
+        select( id ) %>%
+        as.vector
+  )
+  ,height = 550
+  ,width = 600
+) %>>%  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 720
+      , height = 670
+      , overflow = "hidden"
+   ))
+```
+
+### Les Mis
+
+No network visualization is complete unless it now includes Les Mis.  It's a little small in the blog, but this will give us a good opportunity to try out the pan and zoom.
+
+```{r "example04", eval = FALSE}
+# devtools::install_github("timelyportfolio/RBioFabric")
+library(RBioFabric)
+library(igraph)
+
+# d3 example from BioFabric
+#  source:   https://github.com/wjrl/D3BioFabric
+#  example:  http://rawgit.com/wjrl/D3BioFabric/master/src/JustBioFabric.html
+
+miserables <- jsonlite::fromJSON(
+  "https://rawgit.com/wjrl/D3BioFabric/master/src/data/miserablesSimple.json"
+)
+
+mis_igraph <- graph.data.frame(
+  d = miserables$links
+  ,vertices = data.frame(
+    id = as.character( 0:(nrow(miserables$nodes)-1) ) 
+    ,name = miserables$nodes
+    ,stringsAsFactors = F
+  )
+)
+
+bioFabric_htmlwidget( bioFabric( mis_igraph ))
+```
+
+```{r "example04_run", eval = TRUE, echo = FALSE, fig.keep='none'}
+ # devtools::install_github("timelyportfolio/RBioFabric")
+library(RBioFabric)
+library(igraph)
+
+# d3 example from BioFabric
+#  source:   https://github.com/wjrl/D3BioFabric
+#  example:  http://rawgit.com/wjrl/D3BioFabric/master/src/JustBioFabric.html
+
+miserables <- jsonlite::fromJSON(
+  "https://rawgit.com/wjrl/D3BioFabric/master/src/data/miserablesSimple.json"
+)
+
+mis_igraph <- graph.data.frame(
+  d = miserables$links
+  ,vertices = data.frame(
+    id = as.character( 0:(nrow(miserables$nodes)-1) ) 
+    ,name = miserables$nodes
+    ,stringsAsFactors = F
+  )
+)
+
+bioFabric_htmlwidget( bioFabric( mis_igraph ), height = 550, width = 600) %>>%  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 720
+      , height = 670
+      , overflow = "hidden"
+   ))
+```
+
+
+## Thanks
+
+Thanks so much to [William Longabaugh (\@wjrl)](https://github.com/wjrl) for a brilliant idea and his commitment to it.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
