@@ -172,7 +172,7 @@ library(leaflet)
 leaf <- leaflet() %>%
   addTiles() %>%
   # central park
-  fitBounds(-73.96, 40.75, -73.98,40.76) %>%
+  fitBounds(-73.93, 40.76, -73.99,40.81) %>%
   addMeasure()
 
 leaf
