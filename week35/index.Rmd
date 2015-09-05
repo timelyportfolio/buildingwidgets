@@ -1,0 +1,52 @@
+---
+title: "Week35 - gifrecordeR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - gifrecordeR
+
+Animated GIFs are really useful for documenting, illustrating, sharing,  and sometimes annoying.  [Yaron Noveh's](https://twitter.com/YaronNaveh) absolutely amazing [gifw00t]( https://github.com/yaronn/gifw00t/) lets us record GIFs in the browser client-side, so if I wrap it in a `htmlwidget` I can record GIFs of my RStudio Viewer or Shiny session and share them with the world.
+
+**SVG support is currently weak, but a work-in-progress.**
+
+## Installation
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/gifrecordeR")
+```
+
+## Examples
+
+Wrestling with the SVG support and trying to squeeze these into a `htmlwidget` provde far more difficult than I imagined, so I ran out of time to write up a full post.  I hope you don't mind, but I just `iframed` the Readme.md for now.  I'll try to edit and make a full post for now, but the weekend holiday is starting and the family is up.   Also, I want to remind you of the weakly received Week 14's [exportwidget](http://www.buildingwidgets.com/blog/2015/4/9/week-14-exporting-widget) as a non-animated export option.
+
+<iframe src = "http://timelyportfolio.github.io/gifrecordeR/README.html" height = 600 width = 700></iframe>
+
+## Thanks
+
+I'm still amazed we can do this.  Thanks so much to [Yaron Naveh \@yaronn](https://twitter.com/YaronNaveh) for making `gifw00t`.  Be sure to also check out [blessed-contrib](https://github.com/yaronn/blessed-contrib).
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
