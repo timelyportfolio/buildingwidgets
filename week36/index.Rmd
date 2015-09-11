@@ -1,0 +1,86 @@
+---
+title: "Week36 - stockchartR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - stockchartR
+
+I intentionally do not talk much finance here at Building Widgets, but for those who are unaware of [TimelyPortfolio](http://timelyportfolio.blogspot.com), finance pays the bills for me.  Although `d3.js` was released in 2010 (see this [first Github commit](https://github.com/mbostock/d3/commit/b2aa3c7355f46634738b46789c649c4e2da94e3e), we did not see robust finance-targeted `d3.js` visualization libraries until last year.  Now suddenly we have three really solid, very well-built options.
+
+1. [techan.js](http://techanjs.org/)
+2. [d3fc](http://d3fc.io/)
+3. [react-stockcharts](http://rrag.github.io/react-stockcharts/)
+
+I have wanted to `htmlwidget`-ize all of these but to do a good job on any of them would require at least a month of dedicated effort.  However, I just couldn't resist doing a sparse teaser implementation of `react-stockcharts`. I chose this one only because I have not done a [React](http://facebook.github.io/react/) `htmlwidget` yet.  I strongly encourage the interested reader to check out all three of the options listed above.  Also, please, please let me know if you want to collaborate on a `htmlwidget` for any of these.  All of them are great.
+
+## Installation
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/stockchartR")
+```
+
+## Examples
+
+As of now, this sparse wrapper provides a finance-based time scale, pan+zoom interaction, candlestick plotting, and a volume bar chart.  I'll say one more time just to be clear that `react-stockcharts` does much, much more.
+
+
+```{r "example01", eval = FALSE}
+# devtools::install_github("timelyportfolio/stockchartR")
+library(stockchartR)
+library(quantmod)
+
+iwm <- getSymbols("IWM", auto.assign=FALSE, from="2014-01-01")
+stockchart(adjustOHLC(iwm))
+```
+
+```{r "example01_run", echo = FALSE}
+# devtools::install_github("timelyportfolio/stockchartR")
+library(stockchartR)
+library(quantmod)
+
+iwm <- getSymbols("IWM", auto.assign=FALSE, from="2014-01-01")
+stockchart(adjustOHLC(iwm),width = 620,height = 400)%>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 480
+      , overflow = "hidden"
+   ))
+```
+
+<span style="font-size:.6em;font-style:italic;">source: Yahoo! Finance</span>
+
+
+## Thanks
+
+[Ragu Ramaswamy](https://github.com/rrag), thanks for your really fine work on [`react-stockcharts`](http://rrag.github.io/react-stockcharts/).  I can't wait to implement and take advantage of all that you have built into this amazing library.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
