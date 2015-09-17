@@ -1,0 +1,56 @@
+---
+title: "Week37 - parsetR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - parsetR
+
+
+## Installation
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/parsetR")
+```
+
+## Examples + Vignette
+
+Making interactive `d3.js` parallel sets is now as simple as this.
+
+```{r eval = FALSE}
+library(parsetR)
+parset(Titanic)
+```
+
+I'll iframe the vignette below for more examples.  If it doesn't look good/right, then here is the direct [link](http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html).
+
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html" seamless width = "80%" height = 600></iframe>
+
+## Thanks
+
+`parsetR` was easy due to all the effort by [Jason Davies](http://jasondavies.com) with [`d3-parsets`](https://www.jasondavies.com/parallel-sets/).  The world is a better place because of all Jason Davies other crazy awesome `d3.js` and JavaScript work.  Thanks!
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
