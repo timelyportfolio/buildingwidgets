@@ -25,6 +25,7 @@ library(pipeR)
 
 ## This Week's Widget - parsetR
 
+As far as I know, [`ggparallel`](https://cran.r-project.org/web/packages/ggparallel/) is the only way to make [Robert Kosara's parallel sets](http://kosara.net/papers/2006/Kosara_TVCG_2006.pdf) in `R`.  While `ggparallel` does a very nice job, this ridiculously amazing interactive `d3.js` [parallel sets implementation](https://www.jasondavies.com/parallel-sets/) by [Jason Davies](http://jasondavies.com) needs a `htmlwidget`.  When a JavaScript library is as well designed as [`d3-parsets`](https://github.com/jasondavies/d3-parsets), wrapping it as an `htmlwidget` can be very quick and straightforward.  In this case, I was able to achieve a working implementation in two hours documented on Twitter.  Of course for a `htmlwidget` to be really good and worthwhile to the `R` community, a lot of time still should be spent on documentation, examples, and testing to satisfy the ["What Makes a Good htmlwidget"](https://github.com/ramnathv/htmlwidgets/wiki/A-Good-htmlwidget) checklist.
 
 ## Installation
 
@@ -34,14 +35,14 @@ devtools::install_github("timelyportfolio/parsetR")
 
 ## Examples + Vignette
 
-Making interactive `d3.js` parallel sets is now as simple as this.
+Making interactive `d3.js` parallel sets from `R` is now as simple as this.
 
 ```{r eval = FALSE}
 library(parsetR)
 parset(Titanic)
 ```
 
-I'll iframe the vignette below for more examples.  If it doesn't look good/right, then here is the direct [link](http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html).
+I'll iframe the vignette below for more examples.  If it doesn't look good/right, then here is the direct [link](http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html).  I highly encourage **clicking, playing, and exploring the interactivity** in these examples.
 
 <iframe src = "http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html" seamless width = "80%" height = 600></iframe>
 

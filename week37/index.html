@@ -54,6 +54,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="this-weeks-widget---parsetr" class="section level2">
 <h2>This Week’s Widget - parsetR</h2>
+<p>As far as I know, <a href="https://cran.r-project.org/web/packages/ggparallel/"><code>ggparallel</code></a> is the only way to make <a href="http://kosara.net/papers/2006/Kosara_TVCG_2006.pdf">Robert Kosara’s parallel sets</a> in <code>R</code>. While <code>ggparallel</code> does a very nice job, this ridiculously amazing interactive <code>d3.js</code> <a href="https://www.jasondavies.com/parallel-sets/">parallel sets implementation</a> by <a href="http://jasondavies.com">Jason Davies</a> needs a <code>htmlwidget</code>. When a JavaScript library is as well designed as <a href="https://github.com/jasondavies/d3-parsets"><code>d3-parsets</code></a>, wrapping it as an <code>htmlwidget</code> can be very quick and straightforward. In this case, I was able to achieve a working implementation in two hours documented on Twitter. Of course for a <code>htmlwidget</code> to be really good and worthwhile to the <code>R</code> community, a lot of time still should be spent on documentation, examples, and testing to satisfy the <a href="https://github.com/ramnathv/htmlwidgets/wiki/A-Good-htmlwidget">“What Makes a Good htmlwidget”</a> checklist.</p>
 </div>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
@@ -61,16 +62,16 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="examples-vignette" class="section level2">
 <h2>Examples + Vignette</h2>
-<p>Making interactive <code>d3.js</code> parallel sets is now as simple as this.</p>
+<p>Making interactive <code>d3.js</code> parallel sets from <code>R</code> is now as simple as this.</p>
 <pre class="r"><code>library(parsetR)
 parset(Titanic)</code></pre>
-<p>I’ll iframe the vignette below for more examples. If it doesn’t look good/right, then here is the direct <a href="http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html">link</a>.</p>
+<p>I’ll iframe the vignette below for more examples. If it doesn’t look good/right, then here is the direct <a href="http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html">link</a>. I highly encourage <strong>clicking, playing, and exploring the interactivity</strong> in these examples.</p>
 <iframe src="http://timelyportfolio.github.io/buildingwidgets/week37/vignette.html" seamless width="80%" height="600">
 </iframe>
 </div>
 <div id="thanks" class="section level2">
 <h2>Thanks</h2>
-<p><a href="https://github.com/rrag">Ragu Ramaswamy</a>, thanks for your really fine work on <a href="http://rrag.github.io/react-stockcharts/"><code>react-stockcharts</code></a>. I can’t wait to implement and take advantage of all that you have built into this amazing library.</p>
+<p><code>parsetR</code> was easy due to all the effort by <a href="http://jasondavies.com">Jason Davies</a> with <a href="https://www.jasondavies.com/parallel-sets/"><code>d3-parsets</code></a>. The world is a better place because of all Jason Davies other crazy awesome <code>d3.js</code> and JavaScript work. Thanks!</p>
 <p>As always, thanks to</p>
 <ul>
 <li>Ramnath Vaidyanathan and RStudio for <code>htmlwidgets</code></li>
