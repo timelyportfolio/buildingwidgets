@@ -11,7 +11,7 @@ output:
 ```{r echo=F}
 ### get knitr just the way we like it
 
-knitr::opts_chunk$set(
+knitr::opts_chunk$set( 
   message = FALSE
   , warning = FALSE
   , error = FALSE
@@ -51,7 +51,7 @@ Datacomb(diamonds)
 ```{r "example01_run", echo = FALSE}
 library(datacomb)
 data(diamonds, package="ggplot2")
-Datacomb(diamonds)%>>%
+Datacomb(diamonds,height=520,width=600)%>>%
   (
    htmlwidgets::as.iframe(
       .
