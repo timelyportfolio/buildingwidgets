@@ -1,0 +1,76 @@
+---
+title: "Week38 - datacomb"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - datacomb
+
+I was blown away when an August 21 \@ChrisPolis [tweet](https://twitter.com/ChrisPolis/status/634604023044182016) led me to this animated GIF.
+
+<img alt="animated gif of datacomb" src = "https://rawgit.com/cmpolis/datacomb/master/demo/poc-demo.gif" width = "750px">
+
+Then, I was even more delighted when I saw the magic word `htmlwidget` on the roadmap/todos.  Just a month later thanks to magic/diligence of Chris Polis we can make a `datacomb` interactive table viewer in one-line of `R`.
+
+## Installation
+
+```{r eval = FALSE}
+devtools::install_github("cmpolis/datacomb",subdir="pkg")
+```
+
+## Example
+
+In one line, we get a rich quick interactive overview of pretty-"big" data.
+
+```{r "example01", eval = FALSE}
+# devtools::install_github("cmpolis/datacomb", subdir="pkg")
+library(datacomb)
+data(diamonds, package="ggplot2")
+Datacomb(diamonds)
+```
+
+```{r "example01_run", echo = FALSE}
+library(datacomb)
+data(diamonds, package="ggplot2")
+Datacomb(diamonds)%>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 750
+      , height = 650
+      , overflow = "hidden"
+   ))
+```
+
+
+## Thanks
+
+`datacomb` on both the `JS` and `R` side is all the work of [Chris Polis \@cmpolis](https://github.com/cmpolis), so please direct all thanks, praise, and attribution to him.  `datacomb` has amazed me and many others since we first saw the animated GIF preview.  Thanks Chris!
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
