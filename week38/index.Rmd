@@ -31,6 +31,8 @@ I was blown away when an August 21 \@ChrisPolis [tweet](https://twitter.com/Chri
 
 Then, I was even more delighted when I saw the magic word `htmlwidget` on the roadmap/todos.  Just a month later thanks to magic/diligence of Chris Polis we can make a `datacomb` interactive table viewer in one-line of `R`.
 
+<span style="font-size:120%;font-style:italic;font-weight:bold;">Note, you will notice this is not done and there is much left to do</span>, but I just couldn't wait to show this one off.
+
 ## Installation
 
 ```{r eval = FALSE}

@@ -1221,7 +1221,7 @@ module.exports = scaleFn;
           svg.remove();
         }
       }
-      if (d3_mouse_bug44083) point.x = e.pageX, point.y = e.pageY; else point.x = e.clientX, 
+      if (d3_mouse_bug44083) point.x = e.pageX, point.y = e.pageY; else point.x = e.clientX,
       point.y = e.clientY;
       point = point.matrixTransform(container.getScreenCTM().inverse());
       return [ point.x, point.y ];
@@ -1591,7 +1591,7 @@ module.exports = scaleFn;
     }
     function mousewheeled() {
       var dispatch = event.of(this, arguments);
-      if (mousewheelTimer) clearTimeout(mousewheelTimer); else d3_selection_interrupt.call(this), 
+      if (mousewheelTimer) clearTimeout(mousewheelTimer); else d3_selection_interrupt.call(this),
       translate0 = location(center0 = center || d3.mouse(this)), zoomstarted(dispatch);
       mousewheelTimer = setTimeout(function() {
         mousewheelTimer = null;
@@ -1961,7 +1961,7 @@ module.exports = scaleFn;
   d3.xhr = d3_xhrType(d3_identity);
   function d3_xhrType(response) {
     return function(url, mimeType, callback) {
-      if (arguments.length === 2 && typeof mimeType === "function") callback = mimeType, 
+      if (arguments.length === 2 && typeof mimeType === "function") callback = mimeType,
       mimeType = null;
       return d3_xhr(url, mimeType, response, callback);
     };
@@ -2799,7 +2799,7 @@ module.exports = scaleFn;
     return n ? (date.y = d3_time_expandYear(+n[0]), i + n[0].length) : -1;
   }
   function d3_time_parseZone(date, string, i) {
-    return /^[+-]\d{4}$/.test(string = string.slice(i, i + 5)) ? (date.Z = -string, 
+    return /^[+-]\d{4}$/.test(string = string.slice(i, i + 5)) ? (date.Z = -string,
     i + 5) : -1;
   }
   function d3_time_expandYear(d) {
@@ -2992,7 +2992,7 @@ module.exports = scaleFn;
     var λ00, φ00, λ0, cosφ0, sinφ0;
     d3_geo_area.point = function(λ, φ) {
       d3_geo_area.point = nextPoint;
-      λ0 = (λ00 = λ) * d3_radians, cosφ0 = Math.cos(φ = (φ00 = φ) * d3_radians / 2 + π / 4), 
+      λ0 = (λ00 = λ) * d3_radians, cosφ0 = Math.cos(φ = (φ00 = φ) * d3_radians / 2 + π / 4),
       sinφ0 = Math.sin(φ);
     };
     function nextPoint(λ, φ) {
@@ -4821,7 +4821,7 @@ module.exports = scaleFn;
       return _ ? center([ -_[1], _[0] ]) : (_ = center(), [ _[1], -_[0] ]);
     };
     projection.rotate = function(_) {
-      return _ ? rotate([ _[0], _[1], _.length > 2 ? _[2] + 90 : 90 ]) : (_ = rotate(), 
+      return _ ? rotate([ _[0], _[1], _.length > 2 ? _[2] + 90 : 90 ]) : (_ = rotate(),
       [ _[0], _[1], _[2] - 90 ]);
     };
     return rotate([ 0, 0, 90 ]);
@@ -5675,7 +5675,7 @@ module.exports = scaleFn;
     };
     quadtree.extent = function(_) {
       if (!arguments.length) return x1 == null ? null : [ [ x1, y1 ], [ x2, y2 ] ];
-      if (_ == null) x1 = y1 = x2 = y2 = null; else x1 = +_[0][0], y1 = +_[0][1], x2 = +_[1][0], 
+      if (_ == null) x1 = y1 = x2 = y2 = null; else x1 = +_[0][0], y1 = +_[0][1], x2 = +_[1][0],
       y2 = +_[1][1];
       return quadtree;
     };
@@ -7379,7 +7379,7 @@ module.exports = scaleFn;
         return d3_layout_treemapPad(node, x);
       }
       var type;
-      pad = (padding = x) == null ? d3_layout_treemapPadNull : (type = typeof x) === "function" ? padFunction : type === "number" ? (x = [ x, x, x, x ], 
+      pad = (padding = x) == null ? d3_layout_treemapPadNull : (type = typeof x) === "function" ? padFunction : type === "number" ? (x = [ x, x, x, x ],
       padConstant) : padConstant;
       return treemap;
     };
@@ -7679,7 +7679,7 @@ module.exports = scaleFn;
     scale.tickFormat = function(n, format) {
       if (!arguments.length) return d3_scale_logFormat;
       if (arguments.length < 2) format = d3_scale_logFormat; else if (typeof format !== "function") format = d3.format(format);
-      var k = Math.max(.1, n / scale.ticks().length), f = positive ? (e = 1e-12, Math.ceil) : (e = -1e-12, 
+      var k = Math.max(.1, n / scale.ticks().length), f = positive ? (e = 1e-12, Math.ceil) : (e = -1e-12,
       Math.floor), e;
       return function(d) {
         return d / pow(f(log(d) + e)) <= k ? format(d) : "";
@@ -7779,7 +7779,7 @@ module.exports = scaleFn;
     };
     scale.rangePoints = function(x, padding) {
       if (arguments.length < 2) padding = 0;
-      var start = x[0], stop = x[1], step = domain.length < 2 ? (start = (start + stop) / 2, 
+      var start = x[0], stop = x[1], step = domain.length < 2 ? (start = (start + stop) / 2,
       0) : (stop - start) / (domain.length - 1 + padding);
       range = steps(start + step * padding / 2, step);
       rangeBand = 0;
@@ -7791,7 +7791,7 @@ module.exports = scaleFn;
     };
     scale.rangeRoundPoints = function(x, padding) {
       if (arguments.length < 2) padding = 0;
-      var start = x[0], stop = x[1], step = domain.length < 2 ? (start = stop = Math.round((start + stop) / 2), 
+      var start = x[0], stop = x[1], step = domain.length < 2 ? (start = stop = Math.round((start + stop) / 2),
       0) : (stop - start) / (domain.length - 1 + padding) | 0;
       range = steps(start + Math.round(step * padding / 2 + (stop - start - (domain.length - 1 + padding) * step) / 2), step);
       rangeBand = 0;
@@ -8214,7 +8214,7 @@ module.exports = scaleFn;
     return points.length < 4 ? d3_svg_lineLinear(points) : points[1] + d3_svg_lineHermite(points.slice(1, -1), d3_svg_lineCardinalTangents(points, tension));
   }
   function d3_svg_lineCardinalClosed(points, tension) {
-    return points.length < 3 ? d3_svg_lineLinear(points) : points[0] + d3_svg_lineHermite((points.push(points[0]), 
+    return points.length < 3 ? d3_svg_lineLinear(points) : points[0] + d3_svg_lineHermite((points.push(points[0]),
     points), d3_svg_lineCardinalTangents([ points[points.length - 2] ].concat(points, [ points[1] ]), tension));
   }
   function d3_svg_lineCardinal(points, tension) {
@@ -8972,7 +8972,7 @@ module.exports = scaleFn;
         var g = d3.select(this);
         var scale0 = this.__chart__ || scale, scale1 = this.__chart__ = scale.copy();
         var ticks = tickValues == null ? scale1.ticks ? scale1.ticks.apply(scale1, tickArguments_) : scale1.domain() : tickValues, tickFormat = tickFormat_ == null ? scale1.tickFormat ? scale1.tickFormat.apply(scale1, tickArguments_) : d3_identity : tickFormat_, tick = g.selectAll(".tick").data(ticks, scale1), tickEnter = tick.enter().insert("g", ".domain").attr("class", "tick").style("opacity", ε), tickExit = d3.transition(tick.exit()).style("opacity", ε).remove(), tickUpdate = d3.transition(tick.order()).style("opacity", 1), tickSpacing = Math.max(innerTickSize, 0) + tickPadding, tickTransform;
-        var range = d3_scaleRange(scale1), path = g.selectAll(".domain").data([ 0 ]), pathUpdate = (path.enter().append("path").attr("class", "domain"), 
+        var range = d3_scaleRange(scale1), path = g.selectAll(".domain").data([ 0 ]), pathUpdate = (path.enter().append("path").attr("class", "domain"),
         d3.transition(path));
         tickEnter.append("line");
         tickEnter.append("text");
@@ -44190,6 +44190,7 @@ ScrollableTable.prototype.updateData = function(newData) {
     this.data[ndx].__node.style.top = this.data[ndx].__top + 'px';
   }
   this.bottomEl.style.top = this.totalHeight + 'px';
+  this.lastMidNdx = 0;
   this.isUpdating = false;
   this.updateVisibleRows();
   // console.log((performance.now() - start) + ' ms (update)');
