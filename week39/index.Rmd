@@ -1,0 +1,57 @@
+---
+title: "Week39 - timelineR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - timelineR
+
+The stream of `d3.js` layouts and plugins has slowed considerably, so I got excited when I saw [Elijah Meeks'](http://elijahmeeks.org) new [`d3.layout.timeline`](https://github.com/emeeks/d3.layout.timeline).  This swimlane timeline layout fills a void for both the `JavaScript` and `R` world, so I thought let's make an `htmlwidget` with it.  I very creatively call it [`timelineR`](https://github.com/timelyportfolio/timelineR).
+
+For those not familiar, a layout is not a reusable chart and certainly not a full-featured charting library that we have incorporated into other `htmlwidgets`.  Rather, a layout takes in data and spits out coordinates leaving the rest to the user.  This is nice because we can do what I call super-isomorphic stuff like use `d3.layout.timeline` in `ggplot2` (see the examples below).  However, layouts require much more work for the `htmlwidget` author, so I'll warn **timelineR is just a start and still very JavaScripty**.
+
+I encourage you to look at Elijah Meeks [examples](http://bl.ocks.org/emeeks) and also this more full-featured, nicely styled [Wars of the United States](http://jasonheppler.org/jasonheppler/projects/war/) from [Jason Heppler](http://jasonheppler.org/).  If you want more, both of these guys host a podcast [First Draft](http://www.fiddly.fm/firstdraft/).
+
+## Installation
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/timelineR")
+```
+
+## Example
+
+I ran out of time, so I'll `iframe` the vignette again.
+
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week39/timeline_vignette.html" height = 600 width = "90%" seamless></iframe>
+
+
+## Thanks
+
+- [Elijah Meeks](http://elijahmeeks.org) for all your contributions to the `d3.js` community.
+
+- [Mike Bostock](http://d3js.org) for it seems like everything, but especially `d3.js`.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
