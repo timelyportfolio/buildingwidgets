@@ -1,0 +1,174 @@
+---
+title: "Week40 - networkD3 0.2.1 -> 0.2.4"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - networkD3
+
+[`networkD3`](http://christophergandrud.github.io/networkD3/) from [Christopher Gandrud](https://twitter.com/ChrisGandrud) is the second most popular `htmlwidget` based on Github stars, so I think it is important that it stays in *elite* shape.  Last week `networkD3` [hit CRAN](https://cran.r-project.org/web/packages/networkD3/index.html) with version `0.2.4`, so I'll claim `networkD3` as the `htmlwidget` of the week.  The main improvements are a cycle-supporting `sankeyNetwork` (no more infinite loops) and I hope a much better fitting `diagonalNetwork` and `radialNetwork`.
+
+For those of you who don't know or forgot, I am using [Github issues on the buildingwidgets](https://github.com/timelyportfolio/buildingwidgets/issues) repo to list ideas for future `htmlwidgets`.  We only have 12 more in the year long adventure,  so I would love to hear from you if you have any particular widgets that intrigue you.
+
+I also wanted to highlight [`scatterD3`](https://github.com/juba/scatterD3) which has turned into a very nice and powerful `htmlwidget`.
+
+## Installation
+
+`networkD3` is on CRAN, so installation is simple.
+
+```{r eval = FALSE}
+install.packages("networkD3")
+```
+
+For the latest and greatest, you can use `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("christophergandrud/networkD3")
+```
+
+## Examples
+
+### diagonal/radialNewtwork
+
+`diagonalNetwork` and `radialNetwork` needed a little help automatically sizing themselves, so the user didn't need to endlessly fiddle with margins.  Also, the `margins` argument only supported a right margin.  Now, `margins` can be a single number if you only want right, but now `margins` also can be a `list` with any of `top`, `right`, `bottom`, or `left`.
+
+Let's take a look at what happens if we make a tiny plot of a big network.  Change the size of your screen and see that we also get a little bit of "responsive"-ness.
+
+```{r "example01", eval = FALSE}
+library(networkD3)
+
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata//flare.json")
+
+## Convert to list format
+Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
+
+## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
+diagonalNetwork(
+  List = Flare, fontSize = 10, opacity = 0.9,
+  height = "100%", width = "60%"
+)
+```
+
+```{r "example01_run", eval = TRUE, echo = FALSE, fig.keep='none'}
+library(networkD3)
+
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata//flare.json")
+
+## Convert to list format
+Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
+
+## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
+diagonalNetwork(
+  List = Flare, fontSize = 10, opacity = 0.9,
+  height = "100%", width = "60%"
+) %>>%  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = "90%"
+      , height = 500
+      , overflow = "hidden"
+   ))
+```
+
+
+
+### sankeyNetwork
+
+`sankeyNetwork` now needs a lot fewer arguments to work.  The function tries to be "smart" about guessing the structure of your data, such as in `Links`, it assumes `Source` will be column 1 and `Target` will be column 2 if not explicitly told where to look.
+
+`sankeyNetwork` would result in a blank screen caused by cycles in the network.  These cycles would induce an infinite loop in the [sankey plugin](https://github.com/d3/d3-plugins/tree/master/sankey).  Fortunately, [Stefaan Lippens \@soxofaan](https://github.com/soxofaan) fixed and improved Sankey with [d3-plugin-captain-sankey]( https://github.com/soxofaan/d3-plugin-captain-sankey).  We were able to just plug it right in to get some output.  **`sankeyNetwork` needs a little more work to get the nice output that we see in this [example](http://bl.ocks.org/soxofaan/7c96560677ead0425fe7)**.
+
+```{r "example02", eval = FALSE}
+library(networkD3)
+
+# simple network with cycles
+net_cycles <- list(
+  links = data.frame(
+    source = c(0,0,0,1,1,5),
+    target = c(1,2,3,4,5,0),
+    value = 10
+  ),
+  nodes = data.frame(
+    name = letters[1:6]
+  )
+)
+
+# notice how few arguments we need now
+# some output but not the nice output I expect
+sankeyNetwork(
+  net_cycles$links,
+  net_cycles$nodes,
+  Value = "value"
+)
+
+```
+
+```{r "example02_run", eval = TRUE, echo = FALSE, fig.keep='none'}
+library(networkD3)
+library(jsonlite)
+
+# simple network with cycles
+net_cycles <- list(
+  links = data.frame(
+    source = c(0,0,0,1,1,5),
+    target = c(1,2,3,4,5,0),
+    value = 10
+  ),
+  nodes = data.frame(
+    name = letters[1:6]
+  )
+)
+
+# some output but not the nice output I expect
+sankeyNetwork(
+  net_cycles$links,
+  net_cycles$nodes,
+  Value = "value",
+  width=400,height=400
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 550
+      , height = 550
+      , overflow = "hidden"
+   ))
+```
+
+
+## Thanks
+
+Thanks Christopher Gandrud for spearheading `networkD3`.  Thanks Mike Bostock and Jason Davies for what seems like everything, but most especially `d3.js`.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
