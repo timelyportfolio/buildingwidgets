@@ -100,7 +100,7 @@ diagonalNetwork(
 
 `sankeyNetwork` now needs a lot fewer arguments to work.  The function tries to be "smart" about guessing the structure of your data, such as in `Links`, it assumes `Source` will be column 1 and `Target` will be column 2 if not explicitly told where to look.
 
-`sankeyNetwork` would result in a blank screen caused by cycles in the network.  These cycles would induce an infinite loop in the [sankey plugin](https://github.com/d3/d3-plugins/tree/master/sankey).  Fortunately, [Stefaan Lippens \@soxofaan](https://github.com/soxofaan) fixed and improved Sankey with [d3-plugin-captain-sankey]( https://github.com/soxofaan/d3-plugin-captain-sankey).  We were able to just plug it right in to get some output.  **`sankeyNetwork` needs a little more work to get the nice output that we see in this [example](http://bl.ocks.org/soxofaan/7c96560677ead0425fe7)**.
+`sankeyNetwork` would result in a blank screen caused by cycles in the network.  These cycles would induce an infinite loop in the [sankey plugin](https://github.com/d3/d3-plugins/tree/master/sankey).  Fortunately, [Stefaan Lippens \@soxofaan](https://github.com/soxofaan) fixed and improved Sankey with [d3-plugin-captain-sankey]( https://github.com/soxofaan/d3-plugin-captain-sankey).  We were able to just plug it right in.  **I screwed up the CRAN `sankeyNetwork`, so to get the same output as below please install from Github**.
 
 ```{r "example02", eval = FALSE}
 library(networkD3)

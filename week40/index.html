@@ -92,7 +92,7 @@ diagonalNetwork(
 <div id="sankeynetwork" class="section level3">
 <h3>sankeyNetwork</h3>
 <p><code>sankeyNetwork</code> now needs a lot fewer arguments to work. The function tries to be “smart” about guessing the structure of your data, such as in <code>Links</code>, it assumes <code>Source</code> will be column 1 and <code>Target</code> will be column 2 if not explicitly told where to look.</p>
-<p><code>sankeyNetwork</code> would result in a blank screen caused by cycles in the network. These cycles would induce an infinite loop in the <a href="https://github.com/d3/d3-plugins/tree/master/sankey">sankey plugin</a>. Fortunately, <a href="https://github.com/soxofaan">Stefaan Lippens @soxofaan</a> fixed and improved Sankey with <a href="https://github.com/soxofaan/d3-plugin-captain-sankey">d3-plugin-captain-sankey</a>. We were able to just plug it right in to get some output. <strong><code>sankeyNetwork</code> needs a little more work to get the nice output that we see in this <a href="http://bl.ocks.org/soxofaan/7c96560677ead0425fe7">example</a></strong>.</p>
+<p><code>sankeyNetwork</code> would result in a blank screen caused by cycles in the network. These cycles would induce an infinite loop in the <a href="https://github.com/d3/d3-plugins/tree/master/sankey">sankey plugin</a>. Fortunately, <a href="https://github.com/soxofaan">Stefaan Lippens @soxofaan</a> fixed and improved Sankey with <a href="https://github.com/soxofaan/d3-plugin-captain-sankey">d3-plugin-captain-sankey</a>. We were able to just plug it right in. <strong>I screwed up the CRAN <code>sankeyNetwork</code>, so to get the same output as below please install from Github</strong>.</p>
 <pre class="r"><code>library(networkD3)
 
 # simple network with cycles
