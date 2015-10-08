@@ -47,7 +47,7 @@ devtools::install_github("christophergandrud/networkD3")
 
 ## Examples
 
-### diagonal/radialNewtwork
+### diagonal/radialNetwork
 
 `diagonalNetwork` and `radialNetwork` needed a little help automatically sizing themselves, so the user didn't need to endlessly fiddle with margins.  Also, the `margins` argument only supported a right margin.  Now, `margins` can be a single number if you only want right, but now `margins` also can be a `list` with any of `top`, `right`, `bottom`, or `left`.
 

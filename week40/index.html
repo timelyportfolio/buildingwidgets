@@ -48,7 +48,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#this-weeks-widget---networkd3">This Week’s Widget - networkD3</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#examples">Examples</a><ul>
-<li><a href="#diagonalradialnewtwork">diagonal/radialNewtwork</a></li>
+<li><a href="#diagonalradialnetwork">diagonal/radialNetwork</a></li>
 <li><a href="#sankeynetwork">sankeyNetwork</a></li>
 </ul></li>
 <li><a href="#thanks">Thanks</a></li>
@@ -70,8 +70,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
-<div id="diagonalradialnewtwork" class="section level3">
-<h3>diagonal/radialNewtwork</h3>
+<div id="diagonalradialnetwork" class="section level3">
+<h3>diagonal/radialNetwork</h3>
 <p><code>diagonalNetwork</code> and <code>radialNetwork</code> needed a little help automatically sizing themselves, so the user didn’t need to endlessly fiddle with margins. Also, the <code>margins</code> argument only supported a right margin. Now, <code>margins</code> can be a single number if you only want right, but now <code>margins</code> also can be a <code>list</code> with any of <code>top</code>, <code>right</code>, <code>bottom</code>, or <code>left</code>.</p>
 <p>Let’s take a look at what happens if we make a tiny plot of a big network. Change the size of your screen and see that we also get a little bit of “responsive”-ness.</p>
 <pre class="r"><code>library(networkD3)
