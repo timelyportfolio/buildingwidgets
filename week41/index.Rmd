@@ -1,0 +1,233 @@
+---
+title: "Week41 - railroadR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - railroadR
+
+[Railroad diagrams](https://en.wikipedia.org/wiki/Syntax_diagram) are generally used in computer science to represent language syntax or grammar.  However, I just know these can be used for other purposes. I just have not had the time for creativity or inspiration.  Please, please let me know if you have ideas.
+
+Anyways, Tab Atkins, Jr. created this nice library [railroad-diagrams](https://github.com/tabatkins/railroad-diagrams/blob/master/example.html) to make these good looking diagrams.  I saw that it had a Python port, so I figured we needed it in `R` as an `htmlwidget`.
+
+Even if you don't need `railroad-diagrams`, this little `htmlwidget` is a great example of the magic of non-standard evaluation, specifically with the Hadley Wickham package [`lazyeval`](https://github.com/hadley/lazyeval).  Using `lazyeval` allows a `railroadR` user to specify a diagram without a whole bunch of quotes and backslashes.  Have a look at these [lines](https://github.com/timelyportfolio/railroadR/blob/master/R/railroad.R#L14) if interested.
+
+```{r eval = FALSE}
+diagram <- lazyeval::auto_name(lazyeval::lazy_dots(...))
+
+# forward options using x
+x = list(
+  diagram = unname(lapply(
+    diagram,
+    function(x) as.character(unclass(x)[1])
+  ))
+)
+```
+
+## Installation
+
+`railroadR` is not on CRAN (happy to add if anybody requests), so please use `devtools::install_github` to install.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/railroadR")
+```
+
+## Examples
+
+Since I did not have time to explore creative uses of `railroadR`, I'll recreate the more complicated `railroad-diagram` [examples](http://www.xanthir.com/etc/railroad-diagrams/example.html).
+
+### UNICODE-RANGE
+
+```{r "example01", eval = F}
+#devtools::install_github("timelyportfolio/railroadR")
+
+library(railroadR)
+
+#from https://github.com/tabatkins/railroad-diagrams/blob/master/example.html
+
+railroad(
+	Choice(0,
+		'U',
+		'u'),
+	'+',
+	Choice(0,
+		Sequence(OneOrMore(NonTerminal('hex digit'), Comment('1-6 times'))),
+		Sequence(
+			ZeroOrMore(NonTerminal('hex digit'), Comment('1-5 times')),
+			OneOrMore('?', Comment('1 to (6 - digits) times'))),
+		Sequence(
+			OneOrMore(NonTerminal('hex digit'), Comment('1-6 times')),
+			'-',
+			OneOrMore(NonTerminal('hex digit'), Comment('1-6 times'))))
+)
+```
+
+```{r "example01_run", echo = F}
+#devtools::install_github("timelyportfolio/railroadR")
+
+library(railroadR)
+
+#from https://github.com/tabatkins/railroad-diagrams/blob/master/example.html
+
+railroad(
+	Choice(0,
+		'U',
+		'u'),
+	'+',
+	Choice(0,
+		Sequence(OneOrMore(NonTerminal('hex digit'), Comment('1-6 times'))),
+		Sequence(
+			ZeroOrMore(NonTerminal('hex digit'), Comment('1-5 times')),
+			OneOrMore('?', Comment('1 to (6 - digits) times'))),
+		Sequence(
+			OneOrMore(NonTerminal('hex digit'), Comment('1-6 times')),
+			'-',
+			OneOrMore(NonTerminal('hex digit'), Comment('1-6 times'))))
+,height = 200, width = "95%") %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = "90%"
+      , height = 320
+      , overflow = "hidden"
+   ))
+```
+
+### SQL
+
+```{r "example02", eval = F}
+#devtools::install_github("timelyportfolio/railroadR")
+
+library(railroadR)
+
+#from https://github.com/tabatkins/railroad-diagrams/blob/master/example.html
+
+railroad(
+	Stack(
+		Sequence(
+			'SELECT',
+			Optional('DISTINCT', 'skip'),
+			Choice(0, 
+				'*', 
+				OneOrMore(
+					Sequence(NonTerminal('expression'), Optional(Sequence('AS', NonTerminal('output_name')))), 
+					','
+				)
+			),
+			'FROM',
+			OneOrMore(NonTerminal('from_item'), ','),
+			Optional(Sequence('WHERE', NonTerminal('condition')))
+		),
+		Sequence(
+			Optional(Sequence('GROUP BY', NonTerminal('expression'))),
+			Optional(Sequence('HAVING', NonTerminal('condition'))),
+			Optional(Sequence(
+				Choice(0, 'UNION', 'INTERSECT', 'EXCEPT'),
+				Optional('ALL'),
+				NonTerminal('select')
+			))
+		),
+		Sequence(
+			Optional(Sequence(
+				'ORDER BY',
+				OneOrMore(Sequence(NonTerminal('expression'), Choice(0, Skip(), 'ASC', 'DESC')), ','))
+			),
+			Optional(Sequence(
+				'LIMIT',
+				Choice(0, NonTerminal('count'), 'ALL')
+			)),
+			Optional(Sequence('OFFSET', NonTerminal('start'), Optional('ROWS')))
+		)
+	)
+)
+```
+
+```{r "example02_run", echo = F}
+#devtools::install_github("timelyportfolio/railroadR")
+
+library(railroadR)
+
+#from https://github.com/tabatkins/railroad-diagrams/blob/master/example.html
+
+railroad(
+	Stack(
+		Sequence(
+			'SELECT',
+			Optional('DISTINCT', 'skip'),
+			Choice(0, 
+				'*', 
+				OneOrMore(
+					Sequence(NonTerminal('expression'), Optional(Sequence('AS', NonTerminal('output_name')))), 
+					','
+				)
+			),
+			'FROM',
+			OneOrMore(NonTerminal('from_item'), ','),
+			Optional(Sequence('WHERE', NonTerminal('condition')))
+		),
+		Sequence(
+			Optional(Sequence('GROUP BY', NonTerminal('expression'))),
+			Optional(Sequence('HAVING', NonTerminal('condition'))),
+			Optional(Sequence(
+				Choice(0, 'UNION', 'INTERSECT', 'EXCEPT'),
+				Optional('ALL'),
+				NonTerminal('select')
+			))
+		),
+		Sequence(
+			Optional(Sequence(
+				'ORDER BY',
+				OneOrMore(Sequence(NonTerminal('expression'), Choice(0, Skip(), 'ASC', 'DESC')), ','))
+			),
+			Optional(Sequence(
+				'LIMIT',
+				Choice(0, NonTerminal('count'), 'ALL')
+			)),
+			Optional(Sequence('OFFSET', NonTerminal('start'), Optional('ROWS')))
+		)
+	)
+,height = 600, width = "95%") %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = "90%"
+      , height = 600
+      , overflow = "hidden"
+   ))
+```
+
+
+## Thanks
+
+Thanks Tab Atkins, Jr. for the brilliant [railroad-diagrams](https://github.com/tabatkins/railroad-diagrams).
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
