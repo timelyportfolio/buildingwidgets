@@ -1,0 +1,110 @@
+---
+title: "Week42 - adjacency matrix"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - adjacency matrix
+
+
+
+## Installation
+
+This is not on CRAN and not even in the `master` branch, so to install we will need some help from `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/networkD3@feature/adjacency")
+```
+
+## Examples
+
+```{r "example01", eval = F}
+#devtools::install_github("timelyportfolio/networkD3@feature/adjacency")
+
+library(networkD3)
+library(igraph)
+
+data(Koenigsberg, package="igraphdata")
+koen_df <- get.data.frame(upgrade_graph(Koenigsberg), what="both")
+koen_df$edges$from <- match(koen_df$edges$from,koen_df$vertices$name) - 1
+koen_df$edges$to <- match(koen_df$edges$to,koen_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = koen_df$edges,
+  Nodes = koen_df$vertices,
+  Source = "from",
+  Target = "to",
+  NodeID = "name",
+  Group = "name",
+  margin = list(left=150, top=150),
+  colourScale = htmlwidgets::JS("d3.scale.category10()"),
+  width = 500,
+  height = 500
+)
+```
+
+```{r "example01_run", echo = F}
+#devtools::install_github("timelyportfolio/networkD3@feature/adjacency")
+
+library(networkD3)
+library(igraph)
+
+data(Koenigsberg, package="igraphdata")
+koen_df <- get.data.frame(upgrade_graph(Koenigsberg), what="both")
+koen_df$edges$from <- match(koen_df$edges$from,koen_df$vertices$name) - 1
+koen_df$edges$to <- match(koen_df$edges$to,koen_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = koen_df$edges,
+  Nodes = koen_df$vertices,
+  Source = "from",
+  Target = "to",
+  NodeID = "name",
+  Group = "name",
+  margin = list(left=150, top=150),
+  colourScale = htmlwidgets::JS("d3.scale.category10()"),
+  width = 500,
+  height = 500
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 650
+      , height = 650
+      , overflow = "hidden"
+   ))
+```
+
+
+
+## Thanks
+
+Thanks 
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
