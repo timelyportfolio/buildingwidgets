@@ -25,7 +25,9 @@ library(pipeR)
 
 ## This Week's Widget - adjacency matrix
 
+This beautiful little [adjacency matrix](http://bost.ocks.org/mike/miserables/) by Mike Bostock inspired this Github [issue/request](https://github.com/timelyportfolio/buildingwidgets/issues/64).  At the beginning of the week, I started banging away on a `htmlwidget` extension to [`networkD3`](https://github.com/christophergandrud/networkD3) using Elijah Meeks' [d3.layout.adjacencyMatrix](https://github.com/emeeks/d3.layout.adjacencyMatrix).  The deeper I got the more I realized that an adjacency matrix really is just a subset of a heatmap, so then I started replicating [Matthew Lincoln](http://matthewlincoln.net/)'s [fine `Shiny`/`ggplot2` adjacency matrix](http://matthewlincoln.net/2014/12/20/adjacency-matrix-plots-with-r-and-ggplot2.html) with RStudio/Joe Cheng's [`d3heatmap`](https://github.com/rstudio/d3heatmap).  This [bl.ock visualizing 2015 NCAA football](http://bl.ocks.org/timelyportfolio/0ae64825cf9b3278faf9) is one result.
 
+As the end of this week nears, I don't have a whole lot in terms of a finished `htmlwidget`, but I do have some prototype code and some examples.
 
 ## Installation
 
@@ -35,7 +37,12 @@ This is not on CRAN and not even in the `master` branch, so to install we will n
 devtools::install_github("timelyportfolio/networkD3@feature/adjacency")
 ```
 
+For `d3heatmap`, you can just `install.packages("d3heatmap")`.
+
+
 ## Examples
+
+Let's start small with the [bridges of Koenigsberg](https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg).
 
 ```{r "example01", eval = F}
 #devtools::install_github("timelyportfolio/networkD3@feature/adjacency")
@@ -97,11 +104,214 @@ adjacencyNetwork(
    ))
 ```
 
+Now we can compare with `d3heatmap`.
 
+```{r "example02", eval = F}
+library(d3heatmap)
+
+d3heatmap(
+  get.adjacency(
+    upgrade_graph(Koenigsberg),
+    sparse = FALSE
+  ),
+  colors = "Blues",
+  dendrogram = "none",
+  cexRow = 0.7, cexCol = 0.7
+)
+```
+
+```{r "example02_run", echo = F}
+library(d3heatmap)
+
+d3heatmap(
+  get.adjacency(
+    upgrade_graph(Koenigsberg),
+    sparse = FALSE
+  ),
+  colors = "Blues",
+  dendrogram = "none",
+  cexRow = 0.7, cexCol = 0.7,
+  width = 500,
+  height = 500
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 650
+      , height = 650
+      , overflow = "hidden"
+   ))
+```
+
+One more example with the `karate` data from `igraphdata`.
+
+```{r "example03", eval = F}
+library(networkD3)
+library(igraph)
+
+data(karate, package="igraphdata")
+karate_df <- get.data.frame(upgrade_graph(karate), what="both")
+karate_df$edges$from <- match(karate_df$edges$from,karate_df$vertices$name) - 1
+karate_df$edges$to <- match(karate_df$edges$to,karate_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = karate_df$edges,
+  Nodes = karate_df$vertices,
+  Source = "from",
+  Target = "to",
+  NodeID = "name",
+  Group = "Faction",
+  margin = list(left=150, top=150),
+  width = 500,
+  height = 500
+)
+```
+
+```{r "example03_run", echo = F}
+library(networkD3)
+library(igraph)
+
+data(karate, package="igraphdata")
+karate_df <- get.data.frame(upgrade_graph(karate), what="both")
+karate_df$edges$from <- match(karate_df$edges$from,karate_df$vertices$name) - 1
+karate_df$edges$to <- match(karate_df$edges$to,karate_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = karate_df$edges,
+  Nodes = karate_df$vertices,
+  Source = "from",
+  Target = "to",
+  NodeID = "name",
+  Group = "Faction",
+  margin = list(left=150, top=150),
+  width = 500,
+  height = 500
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 650
+      , height = 650
+      , overflow = "hidden"
+   ))
+```
+
+Again, let's do the same network but in `d3heatmap`, but we will include the dendrogram this time.
+
+```{r "example04", eval = F}
+library(d3heatmap)
+
+d3heatmap(
+  get.adjacency(
+    upgrade_graph(karate),
+    sparse = FALSE
+  ),
+  colors = "Blues",
+  cexRow = 0.7, cexCol = 0.7
+)
+```
+
+```{r "example04_run", echo = F}
+library(d3heatmap)
+
+d3heatmap(
+  get.adjacency(
+    upgrade_graph(karate),
+    sparse = FALSE
+  ),
+  colors = "Blues",
+  cexRow = 0.7, cexCol = 0.7,
+  width = 500,
+  height = 500
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 650
+      , height = 650
+      , overflow = "hidden"
+   ))
+```
+
+With a little sorting, our `karate` adjacency matrix can be more helpful.
+
+
+```{r "example05", eval = F}
+# community then by degree sorting
+library(dplyr)
+fc <- fastgreedy.community(karate)
+karate_df <- get.data.frame(karate, what = "both")
+karate_df$vertices <- data.frame(membership = unclass(membership(fc)), degree = degree(karate)) %>%
+  mutate( name = rownames(.) ) %>%
+  arrange( membership, desc( degree ) ) %>%
+  select( name ) %>%
+  as.vector %>%
+  inner_join( karate_df$vertices )
+karate_df$edges$from <- match(karate_df$edges$from,karate_df$vertices$name) - 1
+karate_df$edges$to <- match(karate_df$edges$to,karate_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = karate_df$edges,
+  Nodes = karate_df$vertices[,c(2,1)],
+  Source = "from",
+  Target = "to",
+  NodeID = "name",
+  Group = "Faction",
+  margin = list(left=100, top=100)
+)
+```
+
+```{r "example05_run", echo = F}
+# community then by degree sorting
+library(dplyr)
+fc <- fastgreedy.community(karate)
+karate_df <- get.data.frame(karate, what = "both")
+karate_df$vertices <- data.frame(membership = unclass(membership(fc)), degree = degree(karate)) %>%
+  mutate( name = rownames(.) ) %>%
+  arrange( membership, desc( degree ) ) %>%
+  select( name ) %>%
+  as.vector %>%
+  inner_join( karate_df$vertices )
+karate_df$edges$from <- match(karate_df$edges$from,karate_df$vertices$name) - 1
+karate_df$edges$to <- match(karate_df$edges$to,karate_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = karate_df$edges,
+  Nodes = karate_df$vertices[,c(2,1)],
+  Source = "from",
+  Target = "to",
+  NodeID = "name",
+  Group = "Faction",
+  margin = list(left=100, top=100),
+  width = 500,
+  height = 500
+) %>>%
+  (
+   htmlwidgets::as.iframe(
+      .
+      ,file="example05.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 650
+      , height = 650
+      , overflow = "hidden"
+   ))
+```
+
+As you can see, I have a long way to go with this.  The dynamic sorting in the Mike Bostock example is probably first to implement.  I'd love help, comments, feedback, anything...
 
 ## Thanks
 
-Thanks 
+Thanks Mike Bostock for `d3` and another great example using it.  Thanks Elijah Meeks for all his `d3` posts, book, examples, and layouts.  Thanks Joe Cheng for `d3heatmap`.
 
 As always, thanks to 
 

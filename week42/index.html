@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2015-10-21" />
+<meta name="date" content="2015-10-22" />
 
 <title>Week42 - adjacency matrix</title>
 
@@ -40,7 +40,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="header">
 <h1 class="title">Week42 - adjacency matrix</h1>
-<h4 class="date"><em>October 21, 2015</em></h4>
+<h4 class="date"><em>October 22, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -54,14 +54,18 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="this-weeks-widget---adjacency-matrix" class="section level2">
 <h2>This Week’s Widget - adjacency matrix</h2>
+<p>This beautiful little <a href="http://bost.ocks.org/mike/miserables/">adjacency matrix</a> by Mike Bostock inspired this Github <a href="https://github.com/timelyportfolio/buildingwidgets/issues/64">issue/request</a>. At the beginning of the week, I started banging away on a <code>htmlwidget</code> extension to <a href="https://github.com/christophergandrud/networkD3"><code>networkD3</code></a> using Elijah Meeks’ <a href="https://github.com/emeeks/d3.layout.adjacencyMatrix">d3.layout.adjacencyMatrix</a>. The deeper I got the more I realized that an adjacency matrix really is just a subset of a heatmap, so then I started replicating <a href="http://matthewlincoln.net/">Matthew Lincoln</a>’s <a href="http://matthewlincoln.net/2014/12/20/adjacency-matrix-plots-with-r-and-ggplot2.html">fine <code>Shiny</code>/<code>ggplot2</code> adjacency matrix</a> with RStudio/Joe Cheng’s <a href="https://github.com/rstudio/d3heatmap"><code>d3heatmap</code></a>. This <a href="http://bl.ocks.org/timelyportfolio/0ae64825cf9b3278faf9">bl.ock visualizing 2015 NCAA football</a> is one result.</p>
+<p>As the end of this week nears, I don’t have a whole lot in terms of a finished <code>htmlwidget</code>, but I do have some prototype code and some examples.</p>
 </div>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
 <p>This is not on CRAN and not even in the <code>master</code> branch, so to install we will need some help from <code>devtools::install_github</code>.</p>
 <pre class="r"><code>devtools::install_github(&quot;timelyportfolio/networkD3@feature/adjacency&quot;)</code></pre>
+<p>For <code>d3heatmap</code>, you can just <code>install.packages(&quot;d3heatmap&quot;)</code>.</p>
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
+<p>Let’s start small with the <a href="https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">bridges of Koenigsberg</a>.</p>
 <pre class="r"><code>#devtools::install_github(&quot;timelyportfolio/networkD3@feature/adjacency&quot;)
 
 library(networkD3)
@@ -85,10 +89,81 @@ adjacencyNetwork(
   height = 500
 )</code></pre>
 <p><iframe src="example01.html" width="650" height="650" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>Now we can compare with <code>d3heatmap</code>.</p>
+<pre class="r"><code>library(d3heatmap)
+
+d3heatmap(
+  get.adjacency(
+    upgrade_graph(Koenigsberg),
+    sparse = FALSE
+  ),
+  colors = &quot;Blues&quot;,
+  dendrogram = &quot;none&quot;,
+  cexRow = 0.7, cexCol = 0.7
+)</code></pre>
+<p><iframe src="example02.html" width="650" height="650" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>One more example with the <code>karate</code> data from <code>igraphdata</code>.</p>
+<pre class="r"><code>library(networkD3)
+library(igraph)
+
+data(karate, package=&quot;igraphdata&quot;)
+karate_df &lt;- get.data.frame(upgrade_graph(karate), what=&quot;both&quot;)
+karate_df$edges$from &lt;- match(karate_df$edges$from,karate_df$vertices$name) - 1
+karate_df$edges$to &lt;- match(karate_df$edges$to,karate_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = karate_df$edges,
+  Nodes = karate_df$vertices,
+  Source = &quot;from&quot;,
+  Target = &quot;to&quot;,
+  NodeID = &quot;name&quot;,
+  Group = &quot;Faction&quot;,
+  margin = list(left=150, top=150),
+  width = 500,
+  height = 500
+)</code></pre>
+<p><iframe src="example03.html" width="650" height="650" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>Again, let’s do the same network but in <code>d3heatmap</code>, but we will include the dendrogram this time.</p>
+<pre class="r"><code>library(d3heatmap)
+
+d3heatmap(
+  get.adjacency(
+    upgrade_graph(karate),
+    sparse = FALSE
+  ),
+  colors = &quot;Blues&quot;,
+  cexRow = 0.7, cexCol = 0.7
+)</code></pre>
+<p><iframe src="example04.html" width="650" height="650" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>With a little sorting, our <code>karate</code> adjacency matrix can be more helpful.</p>
+<pre class="r"><code># community then by degree sorting
+library(dplyr)
+fc &lt;- fastgreedy.community(karate)
+karate_df &lt;- get.data.frame(karate, what = &quot;both&quot;)
+karate_df$vertices &lt;- data.frame(membership = unclass(membership(fc)), degree = degree(karate)) %&gt;%
+  mutate( name = rownames(.) ) %&gt;%
+  arrange( membership, desc( degree ) ) %&gt;%
+  select( name ) %&gt;%
+  as.vector %&gt;%
+  inner_join( karate_df$vertices )
+karate_df$edges$from &lt;- match(karate_df$edges$from,karate_df$vertices$name) - 1
+karate_df$edges$to &lt;- match(karate_df$edges$to,karate_df$vertices$name) - 1
+
+adjacencyNetwork(
+  Links = karate_df$edges,
+  Nodes = karate_df$vertices[,c(2,1)],
+  Source = &quot;from&quot;,
+  Target = &quot;to&quot;,
+  NodeID = &quot;name&quot;,
+  Group = &quot;Faction&quot;,
+  margin = list(left=100, top=100)
+)</code></pre>
+<p><iframe src="example05.html" width="650" height="650" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>As you can see, I have a long way to go with this. The dynamic sorting in the Mike Bostock example is probably first to implement. I’d love help, comments, feedback, anything…</p>
 </div>
 <div id="thanks" class="section level2">
 <h2>Thanks</h2>
-<p>Thanks</p>
+<p>Thanks Mike Bostock for <code>d3</code> and another great example using it. Thanks Elijah Meeks for all his <code>d3</code> posts, book, examples, and layouts. Thanks Joe Cheng for <code>d3heatmap</code>.</p>
 <p>As always, thanks to</p>
 <ul>
 <li>Ramnath Vaidyanathan and RStudio for <code>htmlwidgets</code></li>
