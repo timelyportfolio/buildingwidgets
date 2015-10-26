@@ -1,0 +1,164 @@
+---
+title: "Week43 - emoji"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+save_tags <- function (tags, file, selfcontained = F, libdir = "./lib") 
+{
+    if (is.null(libdir)) {
+        libdir <- paste(tools::file_path_sans_ext(basename(file)), 
+            "_files", sep = "")
+    }
+    htmltools::save_html(tags, file = file, libdir = libdir)
+    if (selfcontained) {
+        if (!htmlwidgets:::pandoc_available()) {
+            stop("Saving a widget with selfcontained = TRUE requires pandoc. For details see:\n", 
+                "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
+        }
+        htmlwidgets:::pandoc_self_contained_html(file, file)
+        unlink(libdir, recursive = TRUE)
+    }
+    return(htmltools::tags$iframe(src= file, height = "400px", width = "100%", style="border:0;"))
+}
+
+
+library(pipeR)
+
+```
+
+## This Week's Widget - twemoji
+
+For this week's `htmlwidget`, all I needed was an excuse, and that excuse came in the form of a [tweet](https://twitter.com/JennyBryan/status/656985008121384960) by [Jenny Bryan](http://www.stat.ubc.ca/~jenny/).  Of course, we need an emoji `htmlwidget`.  Since [`remoji`](https://github.com/richfitz/remoji) already brings some emoji power to R, I thought I would try to piggyback on it and reduce the future number of `R` packages by at least 1.  There are lots of very good JavaScript emoji libraries on Github.  I chose [`twemoji`](http://twitter.github.io/twemoji/) from Twitter for my first round of experiments.
+
+**This needs help, so I'd love any help you can give in the form of feedback, ideas, feature requests, use cases, examples, ...**
+
+## Installation
+
+This is not on CRAN and not even in the `master` branch, so to install we will need some help from `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/remoji@twemoji")
+```
+
+## Examples
+
+Examples this week are a little difficult, since emoji generally appear inline, and my blog setup doesn't really like inline `htmlwidgets`.  Here is a quick [example](http://bl.ocks.org/timelyportfolio/83488a9fe43f1ebe4b5c) from `rmarkdown`.
+
+<iframe src = "http://bl.ocks.org/timelyportfolio/raw/83488a9fe43f1ebe4b5c/" seamless style= "height:600px; width:100%;"></iframe>
+
+
+### Know the Unicode
+
+If you really love emoji, you might already know the unicode value for it.
+
+```{r "example01", eval = F}
+#devtools::install_github("timelyportfolio/remoji@twemoji")
+
+library(remoji)
+library(stringi)
+library(htmltools)
+
+tagList(
+  twemoji(svg = TRUE),
+  tags$div(HTML("&#x1F4AA"),style="height:200px;width:200px")
+)
+```
+
+
+```{r "example01_run", echo = F}
+#devtools::install_github("timelyportfolio/remoji@twemoji")
+
+library(remoji)
+library(stringi)
+library(htmltools)
+
+tagList(
+  twemoji(svg = TRUE),
+  tags$div(HTML("&#x1F4AA"),style="height:200px;width:200px")
+) %>>%
+  save_tags(file="example01.html")
+```
+
+### Find with remoji
+
+`remoji` offers the helpful `find_emoji` function so we don't have to memorize unicode.  I discovered the secret combination for use with `htmltools`.  It looks like this `HTML(stri_trans_general(emoji(flag),"any-hex/xml"))`.
+
+```{r "example02", eval = F}
+#devtools::install_github("timelyportfolio/remoji@twemoji")
+
+library(remoji)
+library(stringi)
+library(htmltools)
+
+tagList(
+  lapply(
+    find_emoji("flag"),
+    function(flag){
+      tags$div(
+        tags$p(
+          style = "font-size:150%",
+          flag,
+          tags$span(
+            HTML(stri_trans_general(emoji(flag),"any-hex/xml"))
+          )
+        )
+      )
+    }
+  )
+)
+```
+
+
+```{r "example02_run", echo = F}
+#devtools::install_github("timelyportfolio/remoji@twemoji")
+
+library(remoji)
+library(stringi)
+library(htmltools)
+
+tagList(
+  lapply(
+    find_emoji("flag"),
+    function(flag){
+      tags$div(
+        tags$p(
+          style = "font-size:150%",
+          flag,
+          tags$span(
+            HTML(stri_trans_general(emoji(flag),"any-hex/xml"))
+          )
+        )
+      )
+    }
+  )
+) %>>%
+  save_tags(file="example02.html")
+```
+
+
+
+## Thanks
+
+Thanks Twitter for `twemoji`.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
