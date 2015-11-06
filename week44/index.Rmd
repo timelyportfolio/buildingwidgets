@@ -225,7 +225,7 @@ hair_eye %>>%
   ) %>>%
   formattable::as.htmlwidget() %>>%
   tagList(
-    tooltipster()
+    tooltipster(".tooltipster-tooltip")
   ) %>>%
   save_tags(file="example02.html")
 ```
