@@ -1,0 +1,296 @@
+---
+title: "Week44 - tooltipsterR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+save_tags <- function (tags, file, selfcontained = F, libdir = "./lib") 
+{
+    if (is.null(libdir)) {
+        libdir <- paste(tools::file_path_sans_ext(basename(file)), 
+            "_files", sep = "")
+    }
+    htmltools::save_html(tags, file = file, libdir = libdir)
+    if (selfcontained) {
+        if (!htmlwidgets:::pandoc_available()) {
+            stop("Saving a widget with selfcontained = TRUE requires pandoc. For details see:\n", 
+                "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
+        }
+        htmlwidgets:::pandoc_self_contained_html(file, file)
+        unlink(libdir, recursive = TRUE)
+    }
+    return(htmltools::tags$iframe(src= file, height = "400px", width = "100%", style="border:0;"))
+}
+
+
+library(pipeR)
+
+```
+
+## Only 7 More Weeks
+
+As I typed "Week 44" in the title of the post, I realized the year is almost done.  I do not anticipate another widget-a-week commitment next year, but I certainly will make some commitment.  Let me know if you have ideas.  Also, I have some `htmlwidgets` in the pipeline, but not seven, so please let me know if you have a strong compelling story for a `htmlwidget` to end the year with a bang.
+
+## This Week's Widget - tooltipsterR
+
+Tooltips are an invaluable but often neglected component of a visualization or story.  The jQuery plugin [`tooltipster`](http://iamceege.github.io/tooltipster/) is a mature, well-documented, and full-featured tooltip library, so I feel like we need it in `R` and thus [`tooltipsterR`](https://github.com/timelyportfolio/tooltipsterR).
+
+
+## Installation
+
+This is not on CRAN, so to install we will need some help from `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/tooltipsterR")
+```
+
+## Examples
+
+Check out the nicely done [tooltipster demos](http://iamceege.github.io/tooltipster/#demos) to see all the power and beauty of `tooltipster`.  I'll just show some basic examples below.
+
+
+### Easy
+
+Just by adding `class="tooltip"` and `title=...`, we can get tooltips.
+
+```{r "example01", eval = F}
+#devtools::install_github("timelyportfolio/tooltipsterR")
+
+library(tooltipsterR)
+library(htmltools)
+
+tagList(
+  tooltipster(),
+  tags$p(
+    "See if you can find my ",
+    tags$span(
+      class = "tooltip", # can change if desired
+      title = "you found me",
+      style = "border-bottom: 1px dashed #999;",      
+      "tooltip"
+    )
+  ),
+  tags$div(
+    class = "tooltip",
+    title = "nowhere to hide",
+    style = "height:200px;width:200px;",
+    style = "border-radius:100%;background:#B062C3;",
+    tags$span(
+      style = "text-align:center;padding-top:5.5em;display:block;",
+      "not here"
+    )
+  )
+)
+```
+
+```{r "example01_run", echo = F}
+#devtools::install_github("timelyportfolio/tooltipsterR")
+
+library(tooltipsterR)
+library(htmltools)
+
+tagList(
+  tooltipster(),
+  tags$p(
+    "See if you can find my ",
+    tags$span(
+      class = "tooltip", # can change if desired
+      title = "you found me",
+      style = "border-bottom: 1px dashed #999;",      
+      "tooltip"
+    )
+  ),
+  tags$div(
+    class = "tooltip",
+    title = "nowhere to hide",
+    style = "height:200px;width:200px;",
+    style = "border-radius:100%;background:#B062C3;",
+    tags$span(
+      style = "text-align:center;padding-top:5.5em;display:block;",
+      "not here"
+    )
+  )
+) %>>%
+  save_tags(file="example01.html")
+```
+
+
+### With Formattable
+
+For a little more advanced example, let's combine `tooltipsterR` with week 23's [`formattable`](http://www.buildingwidgets.com/blog/2015/6/12/week-23-formattable).
+
+```{r "example02", eval = F}
+#devtools::install_github("timelyportfolio/tooltipsterR")
+
+library(tooltipsterR)
+library(htmltools)
+library(dplyr)
+library(tidyr)
+library(pipeR)
+
+biggest <- formatter(
+  "span",
+  class = x ~ ifelse(rank(-x) ==1, "tooltipster-tooltip", ""),
+  style = x ~ ifelse(rank(-x) ==1, "color:green;font-weight:bold;", NA),
+  title = x ~ ifelse(rank(-x) ==1, "most common", NA)
+)
+
+hair_eye <- prop.table(
+  xtabs(Freq~Eye+Hair,HairEyeColor)
+) %>>%
+  data.frame() %>>%
+  mutate( Freq = percent(Freq) ) %>>%
+  spread(
+    Eye, Freq
+  )
+
+hair_eye %>>%
+  (
+    formattable(
+      .,
+      structure(
+        lapply(
+          colnames(.)[-1],
+          function(z){
+            biggest
+          }
+        ),
+        names = colnames(.)[-1]
+      )
+    )
+  ) %>>%
+  formattable::as.htmlwidget() %>>%
+  tagList(
+    tooltipster()
+  ) %>>%
+  browsable
+
+```
+
+```{r "example02_run", echo = F}
+#devtools::install_github("timelyportfolio/tooltipsterR")
+
+library(tooltipsterR)
+library(htmltools)
+library(formattable)
+library(dplyr)
+library(tidyr)
+library(pipeR)
+
+biggest <- formatter(
+  "span",
+  class = x ~ ifelse(rank(-x) ==1, "tooltipster-tooltip", ""),
+  style = x ~ ifelse(rank(-x) ==1, "color:green;font-weight:bold;", NA),
+  title = x ~ ifelse(rank(-x) ==1, "most common", NA)
+)
+
+hair_eye <- prop.table(
+  xtabs(Freq~Eye+Hair,HairEyeColor)
+) %>>%
+  data.frame() %>>%
+  mutate( Freq = percent(Freq) ) %>>%
+  spread(
+    Eye, Freq
+  )
+
+hair_eye %>>%
+  (
+    formattable(
+      .,
+      structure(
+        lapply(
+          colnames(.)[-1],
+          function(z){
+            biggest
+          }
+        ),
+        names = colnames(.)[-1]
+      )
+    )
+  ) %>>%
+  formattable::as.htmlwidget() %>>%
+  tagList(
+    tooltipster()
+  ) %>>%
+  save_tags(file="example02.html")
+```
+
+### With SVG
+
+My favorite thing about `tooltipster` is it works with `SVG`.  Let's add a tooltip to our points that tells us their color.  By the way, if you have not seen [`svglite`](https://github.com/hadley/svglite), I strongly encourage checking [it](https://github.com/hadley/svglite) out.
+
+```{r "example03", eval = F}
+#devtools::install_github("timelyportfolio/tooltipsterR")
+
+library(tooltipsterR)
+library(htmltools)
+#devtools::install_github("hadley/svglite")
+library(svglite)
+
+browsable(
+  tagList(
+    htmlSVG(plot(1:3,col=blues9[7:9],pch=16,cex=3)),
+    tooltipster(),
+    tags$script(
+"
+$('circle').each(function(){
+  $(this).tooltipster({
+    content: $(this).css('fill')
+  })
+})
+"      
+    )
+  )
+)
+```
+
+```{r "example03_run", echo = F}
+#devtools::install_github("timelyportfolio/tooltipsterR")
+
+library(tooltipsterR)
+library(htmltools)
+#devtools::install_github("hadley/svglite")
+library(svglite)
+
+tagList(
+  htmlSVG(plot(1:3,col=blues9[7:9],pch=16)),
+  tooltipster(),
+  tags$script(
+"
+$('circle').each(function(){
+$(this).tooltipster({
+  content: $(this).css('fill')
+})
+})
+"      
+  )
+) %>>%
+  save_tags(file="example03.html")
+```
+
+
+
+## Thanks
+
+Thanks [Caleb Jacob](http://calebjacob.com) for `tooltipster`.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
