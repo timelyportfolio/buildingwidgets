@@ -29,7 +29,7 @@ Somehow I missed [`queryBuildR`](https://github.com/Yannael/queryBuildR) when it
 
 ## This Week's Widget - shotsignR
 
-[Peter Beshai](http://peterbeshai.com) created beautiful `d3.js` [Shooting Signatures](https://gist.github.com/pbeshai/ffd0f9d84b4e8df27db2) to visualize basketball shooting performance.  It was definitely love at first sight for me.  However, to justify spending time creating an `htmlwidget`, I needed some inspiration and also a non-basketball use case.  Both the inspiration and use case came from [Kevin Ferris \@kferris10](https://github.com/kferris10) in this [issue](https://github.com/timelyportfolio/buildingwidgets/issues/14).
+[Peter Beshai](http://peterbeshai.com) created beautiful `d3.js` [Shooting Signatures](https://gist.github.com/pbeshai/ffd0f9d84b4e8df27db2) to visualize basketball shooting performance.  It was definitely love at first sight for me.  However, to justify spending time creating an `htmlwidget`, I needed some inspiration and also a non-basketball use case.  Both the inspiration and use case came from a reader.
 
 Unfortunately, this is still very much a work-in-progress.  I'm hoping for some additional inspiration/help to finish it up.  Also, midway through this project, I realized that this is sort-of a modified `streamgraph`, so I might circle back to see if I can build on top of Bob Rudis' excellent [streamgraph package](https://github.com/hrbrmstr/streamgraph).
 
