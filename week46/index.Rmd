@@ -1,0 +1,188 @@
+---
+title: "Week46 - colaR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - colaR
+
+
+
+## Installation
+
+This is not on CRAN, so to install we will need some help from `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/colaR")
+```
+
+## Examples
+
+### igraph and V8
+
+```{r "example01"}
+# devtools::install_github("timelyportfolio/colaR")
+# demo how we can use WebCola in R with V8
+
+library(V8)
+library(jsonlite)
+library(igraph)
+library(scales)
+library(pipeR)
+
+ctx = new_context(global="window")
+
+ctx$source(system.file("htmlwidgets/lib/WebCola/cola.js",package = "colaR"))
+
+### small grouped example
+group_json <- fromJSON(
+  system.file(
+    "htmlwidgets/lib/WebCola/examples/graphdata/smallgrouped.json",
+    package = "colaR"
+  )
+)
+
+# need to get forEach polyfill
+ctx$source(
+  "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.10/es5-shim.min.js"
+)
+
+# code to recreate small group example
+js_group <- '
+// console.assert does not exists
+console = {}
+console.assert = function(){};
+
+var width = 960,
+    height = 500
+
+graph = {
+    "nodes":[
+{"name":"a","width":60,"height":40},
+{"name":"b","width":60,"height":40},
+{"name":"c","width":60,"height":40},
+{"name":"d","width":60,"height":40},
+{"name":"e","width":60,"height":40},
+{"name":"f","width":60,"height":40},
+{"name":"g","width":60,"height":40}
+],
+"links":[
+{"source":1,"target":2},
+{"source":2,"target":3},
+{"source":3,"target":4},
+{"source":0,"target":1},
+{"source":2,"target":0},
+{"source":3,"target":5},
+{"source":0,"target":5}
+],
+"groups":[
+{"leaves":[0], "groups":[1]},
+{"leaves":[1,2]},
+{"leaves":[3,4]}
+]
+}
+
+var g_cola = new cola.Layout()
+    .linkDistance(100)
+    .avoidOverlaps(true)
+    .handleDisconnected(false)
+    .size([width, height]);
+
+g_cola
+    .nodes(graph.nodes)
+    .links(graph.links)
+    .groups(graph.groups)
+    .start()
+
+'
+
+# run the small group JS code in V8
+ctx$eval(js_group)
+
+# make an igraph from the graph JSON
+igf <- graph.data.frame(
+  group_json$links + 1
+  ,vertices =  data.frame(id = 1:nrow(group_json$nodes),group_json$nodes)
+)
+
+# use WebCola in V8 to layout the graph
+igf_layout <- ctx$get('
+  graph.nodes.map(function(d){
+    return [d.x,-d.y]
+  })                    
+')
+
+# plot the small group as much like the example as possible
+# start with an empty plot
+plot.new()
+# set our x and y scale limits
+plot.window(xlim=c(-3,3),ylim=c(-1,1))
+
+
+ctx$get('graph.groups.map(function(d){return d.bounds})') %>>%
+  (
+    rect(
+      xleft = rescale(.$x, c(-1,1), from = range(igf_layout[,1]))
+      ,ybottom = rescale(-.$Y, c(-1,1), range(igf_layout[,2]))
+      ,xright = rescale(.$X, c(-1,1), from = range(igf_layout[,1]))
+      ,ytop = rescale(-.$y, c(-1,1), range(igf_layout[,2]))
+      ,col = c(
+        rgb(31/255, 119/255, 180/255,alpha=0.7)
+        ,rgb(174/255, 199/255, 232/255,alpha=0.7)
+        ,rgb(255/255, 127/255, 14/255,alpha=0.7)
+      )
+      ,border = NA
+    )
+  )
+
+plot(
+  igf
+  , layout = igf_layout
+  , vertex.shape = "square"
+  , vertex.label.color = "white"
+  , vertex.color = rgb(255, 187, 120, maxColorValue = 255)
+  , vertex.frame.color = "white"
+  , vertex.size = 25
+  , edge.arrow.mode = "-"
+  , edge.color = "#7A4E4E"
+  , edge.width= 2
+  #, mark.groups = lapply(group_json$groups$leaves,function(x)x+1)
+  , add = TRUE
+)
+
+```
+
+
+### htmltools
+
+<iframe src="http://timelyportfolio.github.io/buildingwidgets/week46/example02.html" height="600px" width="100%" style="border:0;"></iframe> 
+
+
+## Thanks
+
+Thanks [Tim Dwyer](http://marvl.infotech.monash.edu/~dwyer/) for [WebCola](https://github.com/tgdwyer/WebCola).
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
