@@ -25,7 +25,9 @@ library(pipeR)
 
 ## This Week's Widget - colaR
 
+[Tim Dwyer](http://marvl.infotech.monash.edu/~dwyer/) makes really great stuff.  As one recent example, see [this video](https://vimeo.com/groups/vis2015previews/videos/136205841) preview of HOLA: Human-like Orthogonal Network Layout which won Best Infovis Paper at [VIS 2015](http://ieeevis.org/year/2015/info/overview-amp-topics/papers-sessions).  Unfortunately though, Dwyer does not make his great stuff in `R`.  This is where what I call super-isomorphism with `htmlwidgets` and Jeroen Ooms' [`V8`](https://github.com/jeroenooms/V8) becomes very handy.  We can get all the benefit of something like Dwyer's [WebCola](http://marvl.infotech.monash.edu/webcola/) without the need to rewrite or port code.
 
+I hesitate to call this week's [`colaR`](https://github.com/timelyportfolio/colaR) an `htmlwidget`, since I only use the htmlwidget infrastructure currently to provide the JavaScript dependencies for `HTML` or `V8`.  I can't help dedicating this week to this amazing JavaScript.  I hope someone smarter, more creative, and/or more diligent can take this and run with it.  Of all the `htmlwidgets`, this is one I really, really hope someone pushes to its full potential.
 
 ## Installation
 
@@ -36,6 +38,8 @@ devtools::install_github("timelyportfolio/colaR")
 ```
 
 ## Examples
+
+We'll explore some super-isomorphism.  First, let's recreate the [gridified small group example](http://marvl.infotech.monash.edu/webcola/examples/gridifiedSmallGroups.html) with `igraph` and `V8` + `colaR`.  I'll try to get as close as possible to the final output minus the interactivity of course.
 
 ### igraph and V8
 
@@ -174,12 +178,39 @@ plot(
 
 ### htmltools
 
-<iframe src="http://timelyportfolio.github.io/buildingwidgets/week46/example02.html" height="600px" width="100%" style="border:0;"></iframe> 
+Now let's use `htmltools` to recreate the [alignment constraints example](http://marvl.infotech.monash.edu/webcola/examples/alignment.html) exactly with full interactivity.  Note, I deserve no credit for this code.  I'll include the condensed version below.  Please see [htmltools_alignment_example.R](https://github.com/timelyportfolio/colaR/blob/master/inst/examples/htmltools_aligment_example.R) for the full source.
+
+```{r "example_02", eval = FALSE}
+# devtools::install_github("timelyportfolio/colaR")
+library(htmltools)
+library(colaR)
+
+# almost all code copied/pasted from
+#   WebCola example
+#   https://github.com/tgdwyer/WebCola/blob/master/WebCola/examples/alignment.html
+#   http://marvl.infotech.monash.edu/webcola/examples/alignment.html
+#  make our alignment page
+browsable(tagList(
+  tags$html(
+    tags$head(
+      webcola_alignment_style()
+    ),
+    tags$h1("Alignment constraints with guidelines"),
+    webcola_alignment_script(),
+    tags$p("Nodes 'a', 'b' and 'e' are constrained to the same y-coordinate.  'b', 'c' and 'd' are constrained to the same x.")
+  ),
+  # add d3 and WebCola
+  d3(),
+  cola()
+))
+```
+
+<iframe src="http://timelyportfolio.github.io/buildingwidgets/week46/example02.html" height="700px" width="100%" style="border:0;"></iframe> 
 
 
 ## Thanks
 
-Thanks [Tim Dwyer](http://marvl.infotech.monash.edu/~dwyer/) for [WebCola](https://github.com/tgdwyer/WebCola).
+Thanks [Tim Dwyer](http://marvl.infotech.monash.edu/~dwyer/) for [WebCola](https://github.com/tgdwyer/WebCola) and all his research.
 
 As always, thanks to 
 
