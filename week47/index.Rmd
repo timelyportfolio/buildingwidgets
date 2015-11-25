@@ -1,0 +1,427 @@
+---
+title: "Week46 - vegaliteR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## This Week's Widget - vegaliteR
+
+When [`vega`](https://github.com/vega/vega) was first released, I spent a lot of time exploring its potential.  Then [`ggvis`](https://github.com/rstudio/ggvis) sort of eliminated the need to learn the internals of `vega`.  Then `ggvis` stalled, and `vega` got lots of new features (mainly [frp interactivity](http://idl.cs.washington.edu/files/2015-ReactiveVega-InfoVis.pdf)), and the team at University of Washington Interactive Data Lab went hyper-productive releasing the vega derivatives [`voyager`](https://github.com/vega/voyager), [`polestar`](https://github.com/vega/polestar), [`compass`](https://github.com/vega/compass), and [`vega-lite`](https://github.com/vega/vega-lite).  After listening to [Arvind Satyanarayan](http://arvindsatya.com/) on the [PolicyVis podcast](http://policyviz.com/episode-23-arvind-satyanarayn/), I decided that a `vega-lite` htmlwidget would help get me caught up.
+
+This week's widget [`vegaliteR`](https://github.com/timelyportfolio/vegaliteR) is the result of that exercise.  Currently, it doesn't come close to fulfilling the checklist for a good `htmlwidget`, but this very literal interpretation will require learning the easy `vega-lite` schema.  With some iteration, I hope to make it much more `R`-like.
+
+## Installation
+
+This is not on CRAN, so to install we will need some help from `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/vegaliteR")
+```
+
+## data.frame into a list of lists
+
+Most good `htmlwidgets` handle this bit for us, but like I said in the introduction, this first release is a very literal interpretation, so the code might look a little strange with nested lists and data as an array of objects (or `dataframe="rows"` in `jsonlite`).  For those familiar with `rCharts` we deliberately avoided all this, since it can be a little bewildering for an `R` user.  However, there is certainly no harm in straddling the line between `R` and `JavaScript`.  Plus, learning some new techniques with [`purrr`](https://github.com/hadley/purrr) and [`rlist`](https://github.com/renkun-ken/rlist) might even be fun.
+
+Let's start by looking at 3 ways in `R` we can make a `data.frame` into a `list` of `lists` or an `array` of `objects`.
+
+### with apply
+
+`apply` seems easy, but doesn't really work since `apply` coerces to `array` or `matrix`, so we lose `class`.  We can make it work, but I'm lazy, so let's skip it.
+
+```{r eval = FALSE}
+unname(apply(mtcars, MARGIN=1, as.list))
+```
+
+### with rlist
+
+[`rlist`](http://renkun.me/blog/2014/08/06/introducing-rlist-0.3.html) has lots of `list` helpers, including `list.parse`.
+
+```{r eval = FALSE}
+library(rlist)
+
+# without rownames
+unname(list.parse(mtcars))
+
+# with rownames
+unname(list.parse(
+  data.frame(name=rownames(mtcars),mtcars,stringsAsFactors = FALSE)
+))
+```
+
+### with purrr
+
+[`purrr`](https://github.com/hadley/purrr) provides `by_row`.  Let's see how we can use it.
+
+```{r eval = FALSE}
+library(purrr)
+
+# without rownames
+by_row(mtcars,as.list)$.out
+
+# with rownames
+by_row(
+  data.frame(name=rownames(mtcars),mtcars,stringsAsFactors = FALSE),
+  as.list
+)$.out
+)
+```
+
+## Examples
+
+Now that we know three different ways of converting a `data.frame` to a `list` of `lists`, let's make some `vega` charts.  To make it easy, we'll store our converted data.
+
+```{r}
+# remove . from colnames
+colnames(swiss) <- gsub(
+  x = colnames(swiss),
+  pattern = "\\.",
+  replacement = ""
+)
+swiss_list <- unname(rlist::list.parse(
+  data.frame(village=rownames(swiss),swiss,stringsAsFactors = FALSE)
+))
+```
+
+### Scatter Plot
+
+```{r "example01", eval = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+
+vegalite(
+  list(
+    data = list(values = swiss_list),
+    marktype = "point",
+    encoding = list(
+      x = list(field = "Fertility", type = "Q"),
+      y = list(field = "InfantMortality", type = "Q")
+    )
+  )
+)
+```
+
+```{r "example01_run", echo = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+
+vegalite(
+  list(
+    data = list(values = swiss_list),
+    marktype = "point",
+    encoding = list(
+      x = list(field = "Fertility", type = "Q"),
+      y = list(field = "InfantMortality", type = "Q")
+    )
+  )
+,height = 300, width = 500) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 650
+      , height = 450
+      , overflow = "hidden"
+    )
+  )
+```
+
+`vega-lite` also makes aggregation easy.
+
+```{r "example02", eval = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+library(pipeR)
+
+lapply(
+  swiss_list,
+  function(x){
+    c(
+      majority_catholic = if(x[["Catholic"]]>50) "yes" else "no",
+      x
+    )
+  }
+) %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "square",
+      encoding = list(
+        y = list(field="Fertility",type="Q",aggregate="mean"),
+        x = list(field="majority_catholic",type="nominal"),
+        color = list(field="majority_catholic",type="nominal")
+      ),
+      config = list(
+        largeBandWidth = 60
+      )
+    )
+  ) %>>%
+  vegalite()
+```
+
+```{r "example02_run", echo = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+library(pipeR)
+
+lapply(
+  swiss_list,
+  function(x){
+    c(
+      majority_catholic = if(x[["Catholic"]]>50) "yes" else "no",
+      x
+    )
+  }
+) %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "square",
+      encoding = list(
+        y = list(field="Fertility",type="Q",aggregate="mean"),
+        x = list(field="majority_catholic",type="nominal"),
+        color = list(field="majority_catholic",type="nominal")
+      ),
+      config = list(
+        largeBandWidth = 60
+      )
+    )
+  ) %>>%
+  vegalite(height = 300,width = 400) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 550
+      , height = 450
+      , overflow = "hidden"
+    )
+  )
+```
+
+### Line Chart
+
+For a line chart, we simply change `marktype = "line"`.  As a not best-practice example, we can plot `Agriculture` as a function of `Education`.
+
+```{r "example03", eval = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+library(pipeR)
+
+swiss_list %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "line",
+      encoding = list(
+        y = list(field="Agriculture",type="Q"),
+        x = list(field="Education",type="Q")
+      )
+    )
+  ) 
+```
+
+```{r "example03_run", echo = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+library(pipeR)
+
+swiss_list %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "line",
+      encoding = list(
+        y = list(field="Agriculture",type="Q"),
+        x = list(field="Education",type="Q")
+      )
+    )
+  ) %>>%
+  vegalite(height = 300, width = 400) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 550
+      , height = 450
+      , overflow = "hidden"
+    )
+  )
+```
+
+
+### Bar Chart
+
+We can easily make our aggregate scatter example into a bar chart by changing the `marktype`.
+
+```{r "example04", eval = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+library(pipeR)
+
+lapply(
+  swiss_list,
+  function(x){
+    c(
+      majority_catholic = if(x[["Catholic"]]>50) "yes" else "no",
+      x
+    )
+  }
+) %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "bar",
+      encoding = list(
+        y = list(field="Fertility",type="Q",aggregate="mean"),
+        x = list(field="majority_catholic",type="nominal"),
+        color = list(field="majority_catholic",type="nominal")
+      ),
+      config = list(
+        largeBandWidth = 60
+      )
+    )
+  ) %>>%
+  vegalite()
+```
+
+```{r "example04_run", echo = F}
+library(vegaliteR)
+library(pipeR)
+
+lapply(
+  swiss_list,
+  function(x){
+    c(
+      majority_catholic = if(x[["Catholic"]]>50) "yes" else "no",
+      x
+    )
+  }
+) %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "bar",
+      encoding = list(
+        y = list(field="Fertility",type="Q",aggregate="mean"),
+        x = list(field="majority_catholic",type="nominal"),
+        color = list(field="majority_catholic",type="nominal")
+      ),
+      config = list(
+        largeBandWidth = 60
+      )
+    )
+  ) %>>%
+  vegalite(height = 300, width = 400) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 550
+      , height = 450
+      , overflow = "hidden"
+    )
+  )
+```
+
+### Stacked Bar Chart
+
+For a facetted stacked bar, we can recreate the `vega-lite` [stacked bar](http://vega.github.io/vega-editor/?mode=vega-lite&spec=trellis_stacked_bar&renderer=svg).
+
+```{r "example05", eval = F}
+#devtools::install_github("timelyportfolio/vegaliteR")
+library(vegaliteR)
+library(pipeR)
+library(purrr)
+
+data(barley, package="lattice")
+
+by_row(barley,as.list)$.out %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "bar",
+      encoding = list(
+        x = list(field="yield",type="Q",aggregate="sum"),
+        y = list(field="variety",type="nominal"),
+        color = list(field="site",type="nominal")
+      )
+    )
+  ) %>>%
+  vegalite()
+```
+
+```{r "example05_run", echo = F}
+library(vegaliteR)
+library(pipeR)
+library(purrr)
+
+data(barley, package="lattice")
+
+by_row(barley,as.list)$.out %>>%
+  (
+    list(
+      data = list(values = .),
+      marktype = "bar",
+      encoding = list(
+        x = list(field="yield",type="Q",aggregate="sum"),
+        y = list(field="variety",type="nominal"),
+        color = list(field="site",type="nominal")
+      )
+    )
+  ) %>>%
+  vegalite(height = 300, width = 400) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example05.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 550
+      , height = 450
+      , overflow = "hidden"
+    )
+  )
+```
+
+## More
+
+That's probably enough for this post.  I'll try to make `vegaliteR` more `R`-like as I get time and the API stabilizes.  For more `vega-lite` examples, see the [vega-editor](http://vega.github.io/vega-editor/?mode=vega-lite).
+
+Happy Thanksgiving to those in the US.
+
+## Thanks
+
+Thanks [University of Washington Interactive Data Lab](http://idl.cs.washington.edu/) for their hyper-productive efforts with `vega` and all its derivatives.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
