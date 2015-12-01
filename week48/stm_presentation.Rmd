@@ -1,0 +1,78 @@
+---
+title: "stm in a htmlwidget"
+author: ""
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  revealjs::revealjs_presentation:
+     mathjax: null
+     theme: simple
+---
+
+<style>
+.sourceCode.r {
+  max-height: none !important;
+  background: none !important;
+  color: inherit !important;
+}
+</style>
+
+```{r "example01", eval = FALSE}
+library(stm)
+library(stmBrowser)
+library(pipeR)
+
+# piped version of example in ?stm
+textProcessor(
+  documents=gadarian$open.ended.response
+  ,metadata=gadarian
+) %>>%
+  (
+    prepDocuments( .$documents, .$vocab, .$meta )
+  ) %>>%
+( ~out ) %>>% #save as out for later
+  ({
+    set.seed(02138)
+    stm( .$documents, .$vocab, 20,
+       prevalence=~treatment + s(pid_rep),
+       data = .$meta 
+    )
+  }) %>>%
+~ mod_out
+```
+
+---
+
+```{r "example01_run", eval = TRUE, echo = FALSE, message= FALSE}
+library(stm)
+library(stmCorrViz)
+library(pipeR)
+
+load("data/stm_model_data.Rdata")
+
+stmCorrViz_htmlwidget(
+  stmJSON(
+    mod_out
+    ,documents_raw = as.character(gadarian$open.ended.response)
+    ,documents_matrix = out$documents
+    ,verbose = TRUE
+  ),
+  width = 600
+)
+```
+
+---
+
+```{r "example02_run", eval = TRUE, echo = FALSE, message= FALSE}
+library(stm)
+library(stmBrowser)
+library(pipeR)
+
+load("data/stm_model_data.Rdata")
+
+stmBrowser_widget(
+  mod = mod_out
+  ,data = out$meta
+  ,covariates = c("treatment", "pid_rep")
+  ,text = "open.ended.response"
+)
+```

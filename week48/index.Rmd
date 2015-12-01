@@ -1,0 +1,55 @@
+---
+title: "Week48 - stmCorrViz"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set(
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+```
+
+## This Week's Widget - `stmCorrViz` | htmlwidgetized stmCorrViz 
+
+Way back in [week 13](www.buildingwidgets.com/blog/2015/4/2/week-13-interactive-stm), I html-widgetized [`stmBrowser`](https://github.com/mroberts/stmBrowser) which pairs with [`stm`](http://structuraltopicmodel.com/) and [`stmCorrViz`](https://github.com/AntonioCoppola/stmCorrViz).  [Scott Jacobs](https://www.linkedin.com/in/scottpatrickjacobs) very kindly asked if I could also html-widgetize `stmCorrViz`, and I said yes.  While at it, I also fixed a couple bugs in `stmBrowser`.
+
+**Please note that any screwups or malfunctions are mine and not the original authors.**
+
+### Quick Installation
+
+The `htmlwidget` version of `stmBrowser` currently exists as a fork with a different branch on Github.  For now please install with `devtools::install_github`.  Also, you'll need [`stm`](http://cran.r-project.org/web/packages/stm/index.html) from CRAN.
+
+```{r eval = F}
+#install.packages("stm")
+#devtools::install_github("timelyportfolio/stmBrowser@htmlwidget")
+devtools::install_github("timelyportfolio/stmCorrViz@htmlwidget")
+```
+
+
+### Example in a Presentation
+
+Remember I know basically nothing about Structural Topic Models (stm), so I'll just use one of the examples from `?stm::stm` and then slap both the `stmCorrViz` and `stmBrowser` in a `rmarkdown` presentation to prove that it really is an `htmlwidget`.  This demonstrates one of the many benefits of `htmlwidgets`.
+
+<iframe src = "http://timelyportfolio.github.io/buildingwidgets/week48/stm_presentation.html" style = "height: 600px; width:100%; border: " seamless></iframe>
+
+
+## Thanks
+
+Thanks so much for all the work by
+
+- [Antonio Coppola](https://github.com/AntonioCoppola), [Michael Freeman](http://mfviz.com), [Jason Chuang](http://jason.chuang.info), [Molly Roberts](http://margaretroberts.net), [Brandon Stewart](http://scholar.harvard.edu/bstewart) and [Dustin Tingley](http://scholar.harvard.edu/dtingley) for letting me barge in on their great work and mess it up in who knows how many ways
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R`
+
