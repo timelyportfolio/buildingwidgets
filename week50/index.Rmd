@@ -1,0 +1,129 @@
+---
+title: "Week50 - summarytrees"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+## Bleeding Edge - crosstalk
+
+**I feel obligated to mention this again**.  If you want to get a preview of the exciting changes for `htmlwidgets`, be sure to check out `htmlwidgets` [issue 86](https://github.com/ramnathv/htmlwidgets/issues/86#issuecomment-159863989).  Thanks to Joe Cheng from RStudio for taking the lead on this.
+
+We can see some early [examples](https://mytinyshinys.shinyapps.io/premierLeague) with `plotly` from early adopter [Andrew Clark \@pssguy](https://twitter.com/pssguy).
+
+## This Week's Widget - summarytrees_htmlwidget
+
+[Kenneth Shirley](http://www.kennyshirley.com/) and Howard Karloff authored an interesting [paper](https://scholar.google.com/scholar?cluster=11439479883993290700&hl=en&as_sdt=0,1).
+
+<blockquote>
+(2013). Howard Karloff and Kenneth E. Shirley. "Maximum Entropy Summary Trees", Computer Graphics Forum (Proc. EuroVis), Volume 32, Issue 3, Part 1, pp. 71-80.
+</blockquote>
+
+Subsequently, Kenny made an `R` package [`summarytrees`](https://github.com/kshirley/summarytrees) to create and visualize these summary trees.  I learned about the R/d3.js combination after Kenny's [presentation at JSM 2015](https://www.amstat.org/meetings/jsm/2015/onlineprogram/AbstractDetails.cfm?abstractid=314588).  Similar to the `htmlwidget` conversions of [`stmBrowser`](http://www.buildingwidgets.com/blog/2015/4/2/week-13-interactive-stm) and [`stmCorrViz`](http://www.buildingwidgets.com/blog/2015/12/1/week-48-stmcorrviz), I thought `summarytrees` would also be a great candidate for an `htmlwidget`.
+
+## Installation
+
+This is not on CRAN and only exists in a `summarytrees` fork, so to install we will need some help from `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/summarytrees@htmlwidget")
+```
+
+## Examples
+
+
+```{r "example01", eval = F}
+# devtools::install_github("timelyportfolio/summarytrees@htmlwidget")
+
+library(summarytrees)
+data(dmoz)
+
+#use example from vignette
+K <- 100
+g <- greedy(node = dmoz[, "node"],
+           parent = dmoz[, "parent"],
+           weight = dmoz[, "weight"],
+           label = dmoz[, "label"],
+           K = K)
+
+# Prepare the summary trees for visualization:
+json <- prepare.vis(tree.list = g$summary.trees,
+                    labels = g$data[, "label"],
+                    tree = g$tree,
+                    legend.width = 150,
+                    node.width = 225,
+                    node.height = 14,
+                    units = "# of URLs",
+                    print.weights = TRUE,
+                    legend.color = "lightsteelblue",
+                    color.level = 3)
+summarytrees_htmlwidget(json)
+```
+
+```{r "example01_run", echo = F}
+# devtools::install_github("timelyportfolio/summarytrees@htmlwidget")
+
+library(summarytrees)
+data(dmoz)
+
+#use example from vignette
+K <- 100
+g <- greedy(node = dmoz[, "node"],
+           parent = dmoz[, "parent"],
+           weight = dmoz[, "weight"],
+           label = dmoz[, "label"],
+           K = K)
+
+# Prepare the summary trees for visualization:
+json <- prepare.vis(tree.list = g$summary.trees,
+                    labels = g$data[, "label"],
+                    tree = g$tree,
+                    legend.width = 150,
+                    node.width = 225,
+                    node.height = 14,
+                    units = "# of URLs",
+                    print.weights = TRUE,
+                    legend.color = "lightsteelblue",
+                    color.level = 3)
+summarytrees_htmlwidget(json, height = 500, width = 600 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 680
+      , height = 580
+      , overflow = "hidden"
+    )
+  )
+```
+
+
+## Thanks
+
+Thanks [Kenneth Shirley](http://www.kennyshirley.com/) for the research and implementation of `summarytrees`.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
