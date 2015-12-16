@@ -39,6 +39,8 @@ We can see some early [examples](https://mytinyshinys.shinyapps.io/premierLeague
 
 Subsequently, Kenny made an `R` package [`summarytrees`](https://github.com/kshirley/summarytrees) to create and visualize these summary trees.  I learned about the R/d3.js combination after Kenny's [presentation at JSM 2015](https://www.amstat.org/meetings/jsm/2015/onlineprogram/AbstractDetails.cfm?abstractid=314588).  Similar to the `htmlwidget` conversions of [`stmBrowser`](http://www.buildingwidgets.com/blog/2015/4/2/week-13-interactive-stm) and [`stmCorrViz`](http://www.buildingwidgets.com/blog/2015/12/1/week-48-stmcorrviz), I thought `summarytrees` would also be a great candidate for an `htmlwidget`.
 
+This is a work in progress.  Please offer feedback and ideas on this Github [issue](https://github.com/kshirley/summarytrees/issues/1).
+
 ## Installation
 
 This is not on CRAN and only exists in a `summarytrees` fork, so to install we will need some help from `devtools::install_github`.

@@ -201,9 +201,6 @@ HTMLWidgets.widget({
         .attr("viewBox", '0,-50,' + svg_width + ',' + svg_height )
         .append("g");
         
-    var zoomlayer = outerlayer.append("g")
-        .attr("class","summarytree-zoomlayer");
-          
     // add zooming
     // http://gist.github.com/mbostock/2374239
     
@@ -217,11 +214,11 @@ HTMLWidgets.widget({
     var zoom = d3.behavior.zoom()
       .translate([0, 0])
       .scale(1)
-      .scaleExtent([1, 8])
+      .scaleExtent([0.25, 10])
       .on("zoom", zoomed);          
     
     // the dark gray rectangle defining the data plotting area:
-    zoomlayer.append("rect")
+    outerlayer.append("rect")
       .attr("class","summarytree-zoomrect")
       .attr("x", 0)
       .attr("y", -50)
@@ -231,8 +228,11 @@ HTMLWidgets.widget({
       .attr("fill-opacity", 0.00)
       .attr("stroke", "black")
       .attr("stroke-opacity", 0.00)
+      .style("pointer-events","all")
       .call(zoom);
       
+    var zoomlayer = outerlayer.append("g")
+        .attr("class","summarytree-zoomlayer");
 
     // add another g for the plot for smooth zooming/panning
     vis = zoomlayer.append("g");
@@ -792,7 +792,7 @@ HTMLWidgets.widget({
       var maxheight = ( +d3.max(node.data(),function(d){return d.x}) + 20 + 50 );
       
       // adjust viewBox to fit the bounds of our new tree
-      d3.select(el).select("svg.svgplot").transition().duration(2000)
+      d3.select(el).select("svg.svgplot").transition().duration(1000)
         .attr(
           "viewBox",
           '0,-50,' + maxwidth + ',' + maxheight
@@ -800,9 +800,8 @@ HTMLWidgets.widget({
       
       d3.select(el).select(".summarytree-zoomrect")
         .attr("width", maxwidth)
-        .attr("height", maxheight)
-        .style("pointer-events","all");
-        
+        .attr("height", maxheight);
+      
       
   }
   
