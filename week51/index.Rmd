@@ -1,0 +1,225 @@
+---
+title: "Week50 - functionplotR"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+
+## This Week's Widget - functionplotR
+
+[Mauricio Poppe](https://twitter.com/iMauricio) has built a really amazing 2d `d3-js`-based function plotter [function-plot](https://github.com/maurizzzio/function-plot).  I think it has all sorts of helpful uses in `R`, so [functionplotR](https://github.com/timelyportfolio/functionplotR) will be this week's `htmlwidget`.  Note, I released a couple days early.  I hope nobody minds.
+
+## Installation
+
+This is not on CRAN, so to install we will need some help from `devtools::install_github`.
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/functionplotR")
+```
+
+## Examples
+
+I was able to replicate nearly all of the [fantastic examples](http://maurizzzio.github.io/function-plot/) from the `function-plot` JavaScript library.  For the sake of brevity, I'll only include a couple here.  Go [here](https://github.com/timelyportfolio/functionplotR/blob/master/inst/examples/examples.R) or `?functionplot` to see all of them.
+
+
+### One Simple Equation
+
+```{r "example01", eval = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot("x + 2")
+```
+
+```{r "example01_run", echo = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot("x + 2", height = 300, width = 400 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 570
+      , height = 470
+      , overflow = "hidden"
+    )
+  )
+```
+
+### Multiple Simple Functions
+
+There a couple ways to supply functions to `functionplot`.  Below is the easiest but least flexible.
+
+```{r "example02", eval = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot(c("x + 2","x"))
+```
+
+```{r "example02_run", echo = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot(c("x + 2","x"), height = 300, width = 400 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 570
+      , height = 470
+      , overflow = "hidden"
+    )
+  )
+```
+
+### With Some Options
+
+`function-plot` gives us lots of `options`.  Let's use some of them to configure our plot from above.
+
+
+```{r "example03", eval = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot(
+  # use the more flexible but a little more confusing
+  #  way to provide functions
+  fn = list(
+    list( fn = "x + 2", color = "black" ),
+    list( fn = "x", color = "gray" )
+  ),
+  yDomain = c(-4, 4),
+  xDomain = c(-4, 4),
+  width = 420, 
+  height = 400
+)
+```
+
+```{r "example03_run", echo = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot(
+  # use the more flexible but a little more confusing
+  #  way to provide functions
+  fn = list(
+    list( fn = "x + 2", color = "black" ),
+    list(
+      fn = "x",
+      color = "gray",
+      nSamples = 100,
+      graphType = "scatter"
+    )
+  ),
+  yDomain = c(-4, 4),
+  xDomain = c(-4, 4),
+  width = 420, 
+  height = 400
+) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example03.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 590
+      , height = 570
+      , overflow = "hidden"
+    )
+  )
+```
+
+### Function with Derivative
+
+One of my favorite features of `function-plot` is the ability to plot interactive derivatives.  It does require you to know the derivative though.  With a quick Google, I think I now remember the derivative of `cos(x)`.  It is fun to put in something other than the derivative.  Try `x` as an example.
+
+```{r "example04", eval = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot(
+  fn = list(
+    list(
+      fn = "cos(x)",
+      derivative = list(
+        fn = "-sin(x)",
+        updateOnMouseMove = TRUE
+      )
+    )
+  )
+)
+```
+
+```{r "example04_run", echo = F}
+# devtools::install_github("timelyportfolio/functionplotR")
+
+library(functionplotR)
+
+functionplot(
+  fn = list(
+    list(
+      fn = "cos(x)",
+      derivative = list(
+        fn = "-sin(x)",
+        updateOnMouseMove = TRUE
+      )
+    )
+  ),
+  width = 420, 
+  height = 400
+) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example04.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 590
+      , height = 570
+      , overflow = "hidden"
+    )
+  )
+```
+
+
+## Thanks
+
+Thanks [Mauricio Poppe](http://maurizzzio.com/) for the really special [`function-plot`](https://github.com/maurizzzio/function-plot/) plotting library.
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
