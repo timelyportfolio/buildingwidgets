@@ -1,5 +1,5 @@
 ---
-title: "Week50 - functionplotR"
+title: "Week51 - functionplotR"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
