@@ -1,0 +1,78 @@
+---
+title: "Week52 - d3kit_timeline"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+```{r echo=F}
+### get knitr just the way we like it
+
+knitr::opts_chunk$set( 
+  message = FALSE
+  , warning = FALSE
+  , error = FALSE
+  , tidy = FALSE
+  , cache = FALSE
+)
+
+library(pipeR)
+
+```
+
+
+## This Week's Widget - d3kit_timeline
+
+
+
+## Installation
+
+This is not on CRAN, so to install we will need some help from `devtools::install_github`.  **We will also require the newest `htmlwidgets`.**
+
+```{r eval = FALSE}
+devtools::install_github("ramnathv/htmlwidgets")
+devtools::install_github("timelyportfolio/timelineR")
+```
+
+## Examples
+
+```{r "example01", eval = F}
+# devtools::install_github("timelyportfolio/timelineR")
+
+library(timelineR)
+
+functionplot("x + 2")
+```
+
+```{r "example01_run", echo = F}
+# devtools::install_github("timelyportfolio/timelineR")
+
+library(timelineR)
+
+functionplot("x + 2", height = 300, width = 400 ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example01.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 570
+      , height = 470
+      , overflow = "hidden"
+    )
+  )
+```
+
+
+## Thanks
+
+Thanks 
+
+As always, thanks to 
+
+- Ramnath Vaidyanathan and RStudio for `htmlwidgets`
+- all the contributors to `R` and `JavaScript`
+
