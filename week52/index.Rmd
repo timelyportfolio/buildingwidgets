@@ -24,13 +24,17 @@ library(pipeR)
 ```
 
 
+The clock is ticking rapidly--so rapidly that I won't be able to do the full year summary, meta-filled post that I had hoped in this final week of the htmlwidget/week project started with this January 2, 2015 post [Can I Commmit?](http://www.buildingwidgets.com/blog/2015/1/2/can-i-commit).  I'll stick with the traditional post format for the release of week 52's widget `d3kit_timeline`.  Then in 2016, I'll try to complete the post I had planned.  Thanks so much for all those who have followed along.
+
 ## This Week's Widget - d3kit_timeline
 
+At this point in the year, we often focus on time, so I thought this week's `htmlwidget` should also focus on time.  Ramnath Vaidyanathan (one of the primary htmlwidgets authors) suggested [`TimelineJS`](https://timeline.knightlab.com/) which he had previously [wrapped in `rCharts`](http://ramnathv.github.io/sachin100s/) and I used for this [history of `R` releases](http://timelyportfolio.github.io/rCharts_timeline_r/).  However, I got distracted by [Krist Wongsuphasawat's / \@kristw ](https://twitter.com/kristw) `d3.js` based timeline [`d3kit_timeline`](https://github.com/kristw/d3kit-timeline) that uses his highly starred, newly released [labella.js](http://twitter.github.io/labella.js/index.html).  It is not quite as flashy as `TimelineJS`, but I think it is highly useful.
 
+I try to combine similar `htmlwidgets` into packages when possible.  `d3kit_timeline` seemed to fit nicely into [`timelineR`](https://github.com/timelyportfolio/timelineR) that also contains [week 39's `timeline`](http://www.buildingwidgets.com/blog/2015/10/2/week-39-timeliner).
 
 ## Installation
 
-This is not on CRAN, so to install we will need some help from `devtools::install_github`.  **We will also require the newest `htmlwidgets`.**
+This is not on CRAN, so to install we will need some help from `devtools::install_github`.  **We will also require the newest `htmlwidgets`** to use the new instance-bound syntax.
 
 ```{r eval = FALSE}
 devtools::install_github("ramnathv/htmlwidgets")
@@ -39,20 +43,106 @@ devtools::install_github("timelyportfolio/timelineR")
 
 ## Examples
 
+### Simple Example
+
+Let's start by replicating one of the [examples](http://kristw.github.io/d3kit-timeline/) from `d3kit-timeline`.  For those who want more, I have [replicated all of these examples](https://github.com/timelyportfolio/timelineR/blob/master/inst/examples/example_d3kit_timeline.R) in `?d3kit_timeline`.
+
+I really wanted to focus this week on being very flexible with the arguments to bridge the `R` and JavaScript worlds.  To accomplish this, I spent a lot of time on this [ugly bit of code](https://github.com/timelyportfolio/timelineR/blob/master/R/d3kit_timeline.R#L87-L168) inspired by these [lines](https://github.com/jcheng5/d3scatter/blob/master/R/d3scatter.R#L10-L16) from Joe Cheng at RStudio in his test `htmlwidget` `d3scatter`.
+
 ```{r "example01", eval = F}
+# devtools::install_github("ramnathv/htmlwidgets")
 # devtools::install_github("timelyportfolio/timelineR")
 
 library(timelineR)
 
-functionplot("x + 2")
+# replicate example from http://kristw.github.io/d3kit-timeline/#
+# define starwars release data used in all the examples
+starwars_data <- data.frame(
+  time = c(
+    "1977-04-25",
+    "1980-04-17",
+    "1984-04-25",
+    "1999-04-19",
+    "2002-04-16",
+    "2005-04-19",
+    "2015-11-18"
+  ),
+  episode = c(4,5,6,1,2,3,7),
+  name = c(
+    'A New Hope',
+    'The Empire Strikes Back',
+    'Return of the Jedi',
+    'The Phantom Menace',
+    'Attack of the Clones',
+    'Revenge of the Sith',
+    'The Force Awakens'
+  ),
+  stringsAsFactors = FALSE
+)
+
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
+  # time is default but show as example of flexible argument types
+  timeFn = ~time,
+  textFn = htmlwidgets::JS(
+"
+function(d){
+    return new Date(d.time).getFullYear() + ' - ' + d.name;
+}
+"
+  ),
+  width = 400,
+  height = 250
+)
 ```
 
 ```{r "example01_run", echo = F}
+# devtools::install_github("ramnathv/htmlwidgets")
 # devtools::install_github("timelyportfolio/timelineR")
 
 library(timelineR)
 
-functionplot("x + 2", height = 300, width = 400 ) %>>%
+# replicate example from http://kristw.github.io/d3kit-timeline/#
+# define starwars release data used in all the examples
+starwars_data <- data.frame(
+  time = c(
+    "1977-04-25",
+    "1980-04-17",
+    "1984-04-25",
+    "1999-04-19",
+    "2002-04-16",
+    "2005-04-19",
+    "2015-11-18"
+  ),
+  episode = c(4,5,6,1,2,3,7),
+  name = c(
+    'A New Hope',
+    'The Empire Strikes Back',
+    'Return of the Jedi',
+    'The Phantom Menace',
+    'Attack of the Clones',
+    'Revenge of the Sith',
+    'The Force Awakens'
+  ),
+  stringsAsFactors = FALSE
+)
+
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
+  # time is default but show as example of flexible argument types
+  timeFn = ~time,
+  textFn = htmlwidgets::JS(
+"
+function(d){
+    return new Date(d.time).getFullYear() + ' - ' + d.name;
+}
+"
+  ),
+  width = 400,
+  height = 250
+) %>>%
   (
     htmlwidgets::as.iframe(
       .
@@ -60,16 +150,140 @@ functionplot("x + 2", height = 300, width = 400 ) %>>%
       , libdir = "lib"
       , selfcontained=F
       , width = 570
-      , height = 470
+      , height = 420
       , overflow = "hidden"
     )
   )
 ```
 
+### Use With `xts`
+
+I love `xts`, and `xts` is one of the reasons I finally learned `R`, so I wanted `d3kit_timeline` to play nicely with these time series objects.
+
+Off topic from `R`, AJ McCarron finally broke the 1987 winless streak for starting NFL quarterbacks from Alabama ([see article](http://ftw.usatoday.com/2015/12/aj-mccarron-breaks-alabama-quarterback-win-nfl-drought-which-college-has-next-longest-qb-drought)).  I thought it would be interesting to see the Alabama quarterbacks that played (all won) in the Superbowl with our new `d3kit_timeline`.  I combined data into an `xts` object from this [NFL.com article](http://www.nfl.com/news/story/0ap2000000321044/article/notre-dame-stanford-have-most-super-bowl-starts-at-qb) and this [wikipedia data](https://en.wikipedia.org/wiki/List_of_Super_Bowl_champions).
+
+```{r "example02", eval = F}
+# devtools::install_github("ramnathv/htmlwidgets")
+# devtools::install_github("timelyportfolio/timelineR")
+
+library(timelineR)
+library(xts)
+library(pipeR)
+
+# sources:
+# http://www.nfl.com/news/story/0ap2000000321044/article/notre-dame-stanford-have-most-super-bowl-starts-at-qb
+# https://en.wikipedia.org/wiki/List_of_Super_Bowl_champions
+
+alqb_xts <- as.xts(
+  data.frame(
+    quarterback = c(rep("Bart Starr",2),"Joe Namath", "Kenny Stabler"),
+    team = c(rep("Packers",2),"Jets","Raiders"),
+    color = c(rep("#FFB612",2),"#0C371D","#000"),
+    stringsAsFactors = FALSE
+  ),
+  order.by = as.Date(c(
+    "1967-01-15",
+    "1968-01-14",
+    "1969-01-12",
+    "1977-01-09"
+  ))
+)
+
+colorJS <- htmlwidgets::JS("function(d){return d.color;}")
+
+d3kit_timeline(
+  alqb_xts,
+  direction = "down",
+  textFn = htmlwidgets::JS(
+"
+function(d){
+    return d.quarterback + ' - ' + d.team;
+}
+"
+  ),
+  # color probably needs to be treated like the *Fn arguments
+  #  for ultimate flexibility
+  dotColor = colorJS,
+  linkColor = colorJS,
+  labelTextColor = "#FFF",
+  labelBgColor = colorJS,
+  dotRadius = 5,
+  labella = list(maxPos = 600),
+  margin = list(left = 20, right = 50, top = 20, bottom = 40),
+  width = 500,
+  height = 250
+) %>>%
+  add_axis( ticks = 7  )
+```
+
+```{r "example02_run", echo = F}
+# devtools::install_github("ramnathv/htmlwidgets")
+# devtools::install_github("timelyportfolio/timelineR")
+
+library(timelineR)
+library(xts)
+library(pipeR)
+
+# sources:
+# http://www.nfl.com/news/story/0ap2000000321044/article/notre-dame-stanford-have-most-super-bowl-starts-at-qb
+# https://en.wikipedia.org/wiki/List_of_Super_Bowl_champions
+
+alqb_xts <- as.xts(
+  data.frame(
+    quarterback = c(rep("Bart Starr",2),"Joe Namath", "Kenny Stabler"),
+    team = c(rep("Packers",2),"Jets","Raiders"),
+    color = c(rep("#FFB612",2),"#0C371D","#000"),
+    stringsAsFactors = FALSE
+  ),
+  order.by = as.Date(c(
+    "1967-01-15",
+    "1968-01-14",
+    "1969-01-12",
+    "1977-01-09"
+  ))
+)
+
+colorJS <- htmlwidgets::JS("function(d){return d.color;}")
+
+d3kit_timeline(
+  alqb_xts,
+  direction = "down",
+  textFn = htmlwidgets::JS(
+"
+function(d){
+    return d.quarterback + ' - ' + d.team;
+}
+"
+  ),
+  # color probably needs to be treated like the *Fn arguments
+  #  for ultimate flexibility
+  dotColor = colorJS,
+  linkColor = colorJS,
+  labelTextColor = "#FFF",
+  labelBgColor = colorJS,
+  dotRadius = 5,
+  labella = list(maxPos = 600),
+  margin = list(left = 20, right = 50, top = 20, bottom = 40),
+  width = 500,
+  height = 250
+) %>>%
+  add_axis( ticks = 7  ) %>>%
+  (
+    htmlwidgets::as.iframe(
+      .
+      ,file="example02.html"
+      , libdir = "lib"
+      , selfcontained=F
+      , width = 620
+      , height = 420
+      , overflow = "hidden"
+    )
+  )
+```
 
 ## Thanks
 
-Thanks 
+Thanks [Krist Wongsuphasawat](https://twitter.com/kristw) for his beautiful work on Labella.js and d3kit-timeline.
 
 As always, thanks to 
 
