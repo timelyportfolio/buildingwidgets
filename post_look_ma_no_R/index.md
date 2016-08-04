@@ -1,4 +1,4 @@
-`htmlwidgets` in effect are reusable HTML/JS/CSS components (think simple Polymer or WebComponents)  I don't recommend it, but if we wanted to use an `htmlwidget` with no R, it is fairly straightforward.  Even if you decided not to do this, I think it will be helpful in your journey to `htmlwidgets` mastery.
+`htmlwidgets` in effect are reusable HTML/JS/CSS components (think simple Polymer or WebComponents).  I don't recommend it, but if we wanted to use an `htmlwidget` with no R, it is fairly straightforward.  Even if you decided not to do this, I think it will be helpful in your journey to `htmlwidgets` mastery.
 
 We'll use the simple but powerful `jsonedit` from the `listviewer` package.  Its JavaScript binding is very sparse, so I hope it will be a good subject.
 
