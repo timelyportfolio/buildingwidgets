@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  
+  <head>
+    <script src="https://cdn.rawgit.com/ramnathv/htmlwidgets/master/inst/www/htmlwidgets.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.6/jsoneditor.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.6/jsoneditor.min.css" rel="stylesheet">
+    
+    <script src="https://cdn.rawgit.com/timelyportfolio/listviewer/master/inst/htmlwidgets/jsonedit.js"></script>
+  </head>
+  
+  <body>
+    <textarea id="text-data">{"x":1,"y":[1,2,3,4]}</textarea>
+    <button id="btn-make" onclick="make_widget()">Make a Widget</button>
+    <div id="mywidget" class="jsonedit" style="height:100%;width:100%;"></div>
+    
+    <script>
+      function make_widget(){
+        // this time we'll parse the JavaScript from the textarea
+        //  to populate jsonedit
+        var jsondata = JSON.parse(
+          document.getElementById('text-data').value
+        );
+        
+        // use HTMLWidgets.widgets to give us a list of available htmlwiget bindings
+        //  in this case should just have one
+        var widgets = HTMLWidgets.widgets;
+        // assume there might be lots, so filter for the one we want
+        //  in this case, we want jsonedit
+        var jed = widgets.filter(function(widget){
+          return widget.name === "jsonedit"
+        })[0];
+        
+        
+        
+        // the binding should have an intialize, renderValue, and resize
+        //  to render we use renderValue with arguments
+        //    el the DOM element in which we want to render
+        //    x  the data and options
+        //    instance return value from initialize
+        
+        // get our htmlwidget DOM element
+        var el = document.getElementById('mywidget');
+        // make our x data and options
+        //  this varies by widget
+        //    and if widget built robustly then might be able
+        //    to eliminate much of this
+        var x= {
+          "data":jsondata,
+          "options":{"mode":"tree","modes":["code","form","text","tree","view"]}
+        };
+        // get our htmlwidget instance with initialize
+        var instance = jed.initialize(el);
+        
+        jed.renderValue(
+          el,
+          x,
+          instance
+        );
+      };
+    </script>
+  </body>
+</html>
