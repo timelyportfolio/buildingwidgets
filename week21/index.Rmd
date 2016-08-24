@@ -20,6 +20,34 @@ knitr::opts_chunk$set(
 
 library(pipeR)
 
+as.iframe <- function(widget, file = NULL, selfcontained = TRUE,
+   libdir = NULL, width = '100%', height = 500, `border-width` = '0px', ...){
+  if (is.null(file)){
+    file <- basename(tempfile(fileext = '.html'))
+  }
+  htmlwidgets::saveWidget(widget,
+                          file = file, selfcontained = selfcontained, libdir = libdir
+  )
+  styles = list(`border-width` = `border-width`, ...)
+  style = paste(
+    paste(paste(names(styles), styles, sep = ':'), collapse = ';'),
+    ";"
+  )
+  content <- if (selfcontained){
+    on.exit(unlink(file), add = TRUE)
+    list(
+      srcdoc = paste(readLines(file), collapse = '\n'),
+      width = width, height = height, style = style
+    )
+  } else {
+    list(
+      src = file,
+      width = width, height = height, style = style
+    )
+  }
+  htmltools::tag('iframe', content)
+}
+
 ```
 
 ## htmlwidgets News This Week
@@ -32,10 +60,10 @@ When I saw Wm Leler demonstrate his radial tree on this [d3.bayarea() Show and T
 
 ## Quick Installation
 
-`radialNetwork` currently exists in a fork of `networkD3`.  To try it out, please use `devtools::install_github`.
+`radialNetwork` started as a fork of `networkD3`, but is now its own package.  To try it out, please use `devtools::install_github`.
 
 ```{r eval = F}
-devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
+devtools::install_github("timelyportfolio/radialNetworkR")
 ```
 
 ## Example
@@ -44,8 +72,8 @@ While we are exploring `radialNetwork`, I would also like to publicize the helpf
 
 ```{r "example01", echo=T, eval = F}
 # you'll need this fork of networkD3
-# devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
-library(networkD3)
+# devtools::install_github("timelyportfolio/radialNetworkR")
+library(radialNetworkR)
 
 # devtools::install_github( "gluc/data.tree" )
 library(data.tree)
@@ -54,12 +82,12 @@ library(data.tree)
 data(acme)
 
 # unname = TRUE to get in the proper d3 format
-radialNetwork(  acme$ToList( unname = TRUE ) )
+radialNetwork( ToListExplicit(acme, unname = TRUE ) )
 
 ```
 
 ```{r "example01_run", echo=F, eval = T}
-library(networkD3)
+library(radialNetworkR)
 
 # devtools::install_github( "gluc/data.tree" )
 library(data.tree)
@@ -68,9 +96,12 @@ library(data.tree)
 data(acme)
 
 # unname = TRUE to get in the proper d3 format
-radialNetwork(  acme$ToList( unname = TRUE ), height= 500, width = 650 ) %>>%
+radialNetwork(
+  ToListExplicit(acme, unname = TRUE ),
+  height= 500, width = 650
+) %>>%
   (
-    htmlwidgets::as.iframe(
+    as.iframe(
       .
       ,file="example01.html"
       , libdir = "lib"
@@ -87,22 +118,20 @@ Of course, no `d3.js` network example is complete without `flare.json`.
 ```{r "example02", echo=T, eval = F}
 # you'll need this fork of networkD3
 # devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
-library(networkD3)
-library(curl)
+library(radialNetworkR)
 
 radialNetwork(
-  rjson::fromJSON(
+  jsonlite::fromJSON(
    paste0(
      readLines(
-       curl(
-         paste0(
-           "https://gist.githubusercontent.com/mbostock/"
-           ,"1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
-         )
+       paste0(
+         "https://gist.githubusercontent.com/mbostock/"
+         ,"1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
        )
      )
      ,collapse = "\n"
-   )
+   ),
+   simplifyDataFrame = FALSE
   )
 )
 ```
@@ -110,26 +139,24 @@ radialNetwork(
 ```{r "example02_run", echo=F, eval = T}
 # you'll need this fork of networkD3
 # devtools::install_github("timelyportfolio/networkD3@feature/radialNetwork")
-library(networkD3)
-library(curl)
+library(radialNetworkR)
 
 radialNetwork(
-  rjson::fromJSON(
+  jsonlite::fromJSON(
    paste0(
      readLines(
-       curl(
-         paste0(
-           "https://gist.githubusercontent.com/mbostock/"
-           ,"1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
-         )
+       paste0(
+         "https://gist.githubusercontent.com/mbostock/"
+         ,"1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
        )
      )
      ,collapse = "\n"
-   )
+   ),
+   simplifyDataFrame = FALSE
   )
 , height= 600, width = 680 ) %>>%
   (
-    htmlwidgets::as.iframe(
+    as.iframe(
       .
       ,file="example02.html"
       , libdir = "lib"
