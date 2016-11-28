@@ -1,0 +1,33 @@
+---
+title: "d3 hierarchy as nested tibble"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+After Jenny Bryan's fantastic PlotCon presentation [Data Rectangling](https://speakerdeck.com/jennybc/data-rectangling), I started thinking what would a `d3.js` hierarchy look like as a nested `tibble`.
+
+
+## d3r Shows Us
+
+I had forgotten that in `d3r::d3_nest` I provided an argument to get the `tibble` instead of the JSON, so getting an example on your machine should be fairly simple (let me know if it isn't).  We will use the helpful `random.hierarchical.data` function in the `treemap` package to generate the data.
+
+```{r}
+# install.packages("d3r")
+# install.packages("treemap")
+library(treemap)
+library(d3r)
+
+d3_nest(
+  random.hierarchical.data(),
+  json = FALSE
+)[,c("id","children")]
+```
+
+## Still No Easier to Query
+
+Unfortunately, even though we can get the data in this form, I don't think R tooling makes it any easier to query or manipulate.  Please let me know if you have ideas or a workflow for working with this type data in R.  [`data.tree`](https://github.com/gluc/data.tree) seems to be our best option.
+
