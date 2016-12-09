@@ -1,0 +1,38 @@
+---
+title: "break from unpaid open source"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: ~
+    toc: true
+    mathjax: null
+---
+
+Today I start my day differently.  I start my day writing this very difficult post instead of open source code.  For 2017, I plan to take a break from all unpaid open source contributions.  Saying all this is especially difficult knowing that there are others out there, namely [CRAN team](http://r-pkgs.had.co.nz/release.html#release-check) and [Mike Bostock](https://bost.ocks.org/mike/) who do far more than I.  In my [PlotCon talk](https://youtu.be/1h8uQi6Du14) I showed this slide.
+
+
+![image of slide explaining vulnerability of open source]()
+
+Of the [four types of open source developers](http://www.buildingwidgets.com/blog/2016/2/28/who-makes-the-open-source-you-use), I am Type 4, and I average 15-20 hours/week of personal time to commit to open source.
+
+1. Full-time developers whose job is to work on employer sponsored open-source projects.
+1. Developers who use open source software in their job and who contribute the byproducts of their work back to the core project or as extensions. Many do this as a way to give back to the open source projects on which they or their employers rely.
+1. Academic researchers who post open source code as a byproduct of their research or as a method of reproducibility.
+1. Passionate volunteers who sacrifice personal time to contribute out of a sense for charity, for fun, or some other reason that leads them to believe they should not be paid for their efforts.
+
+## Motivations
+
+As I evaluate this decision, I realize that I am driven by the following motivations.
+
+1.  I absolutely love working on open source, and I understand that I never ever expected to get anything back from those contributions.  However, this cost/benefit analysis doesn't reconcile and is in absolutely no way sustainable.  I still plan to share much of what I do and, if lucky enough to get paid to work on a project, I will do everything possible to make sure that I can open source it.
+
+2.  My real career and compensation have stalled for nearly 10 years, and I need to spend time and mental energy figuring that out.
+
+3.  I know my audience is small, but I want to raise awareness among all those who rely on open source yet give nothing in return.  If you depend on open source, please, please find a way to support or contribute to those projects on which you rely.  This can be as simple as sharing examples and use cases or could be as difficult as pricing your consulting work such that you can pay the open source developers who are providing the tools on which you earn your livelihood.
+
+4.  Those 15-20 hours/week add up.  I want to see how I fill these 15-20 hours each week.  I am 40 years old, and time is an extremely scarce resource.  I want to make sure I am maximizing however much I have left.
+
+
+## Conclusion
+
+I am a little scared, and I now face a void.
