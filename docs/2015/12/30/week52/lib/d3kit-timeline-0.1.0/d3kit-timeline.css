@@ -1,0 +1,14 @@
+.d3kit-timeline .axis path{
+  fill: none;
+  stroke-width: 2px;
+  stroke: #222;
+}
+.d3kit-timeline .axis line{
+  fill: none;
+  stroke-width: 1px;
+  stroke: #222;
+}
+.d3kit-timeline .path.link{
+  stroke-width: 2px;
+  opacity: 0.6;
+}

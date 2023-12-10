@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<script src="lib/htmlwidgets-0.3.2/htmlwidgets.js"></script>
+<script src="lib/viz-0.3/viz.js"></script>
+<link href="lib/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="lib/grViz-binding-0.4.1/grViz.js"></script>
+<link href="lib/responsive-nav.js-1.0.34/responsive-nav.css" rel="stylesheet" />
+<link href="lib/responsive-nav.js-1.0.34/responsive-nav-advanced.css" rel="stylesheet" />
+<script src="lib/responsive-nav.js-1.0.34/responsive-nav.min.js"></script>
+<script src="lib/navr-binding-0.1/navr.js"></script>
+
+</head>
+<body style="background-color:white;">
+<div id="diagram-needs-toolbar">
+  <div id="htmlwidget-1398" style="width:600px;height:300px;" class="grViz"></div>
+  <script type="application/json" data-for="htmlwidget-1398">{ "x": {
+ "diagram": "digraph{ DiagrammeR -> HTML; navr -> HTML; HTML -> beautiful; }",
+"config": {
+ "engine": "dot",
+"options": null 
+} 
+},"evals": [  ] }</script>
+</div>
+<div id="htmlwidget-6590" style="width:0px;height:0px;" class="navr"></div>
+<script type="application/json" data-for="htmlwidget-6590">{ "x": {
+ "selector": "#diagram-needs-toolbar",
+"taglist": "\n      <ul>\n        <li><a onclick = 'exportSVG()' href = '#diagram-needs-toolbar'>Export to SVG</a></li>\n      </ul>\n    ",
+"options": null 
+},"evals": [  ] }</script>
+<script>
+    function exportSVG(){
+      window.open(
+        [
+          'data:;base64,',
+          window.btoa((new XMLSerializer()).serializeToString(
+              document.getElementById('diagram-needs-toolbar')
+                .getElementsByTagName('svg')[0]
+          ))
+        ].join('')
+      )
+    }
+  </script>
+</body>
+</html>

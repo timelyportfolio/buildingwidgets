@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A Hugo website</title>
+    <title>Building Widgets | R &#43; JS</title>
     <link>/</link>
-    <description>Recent content on A Hugo website</description>
+    <description>Recent content on Building Widgets | R &#43; JS</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 05 Feb 2015 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Dec 2016 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Break from Unpaid Open Source</title>
+      <link>/2016/12/09/break-from-open-source/</link>
+      <pubDate>Fri, 09 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/12/09/break-from-open-source/</guid>
+      <description>&lt;!DOCTYPE html&gt;break from unpaid open sourcebreak from unpaid open sourceDecember 09, 2016MotivationsConclusionToday I start my day differently. I start my day writing this very difficult post instead of open source code. For 2017, I plan to take a break from all unpaid open source contributions. Saying all this is especially difficult knowing that there are others out there, namely CRAN team and Mike Bostock who do far more than I.</description>
+    </item>
+    
+    <item>
+      <title>d3 Hierarchy as Nested Tibble</title>
+      <link>/2016/11/28/d3-hierarchy-as-tibble/</link>
+      <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/11/28/d3-hierarchy-as-tibble/</guid>
+      <description>&lt;!DOCTYPE html&gt;d3 hierarchy as nested tibbled3 hierarchy as nested tibbleNovember 28, 2016d3r Shows UsStill No Easier to QueryAfter Jenny Bryan’s fantastic PlotCon presentation Data Rectangling, I started thinking what would a d3.js hierarchy look like as a nested tibble.
+d3r Shows UsI had forgotten that in d3r::d3_nest I provided an argument to get the tibble instead of the JSON, so getting an example on your machine should be fairly simple (let me know if it isn’t).</description>
+    </item>
+    
+    <item>
+      <title>Look Ma No R</title>
+      <link>/2016/08/04/widgets-without-r/</link>
+      <pubDate>Thu, 04 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/08/04/widgets-without-r/</guid>
+      <description>&lt;!DOCTYPE html&gt;htmlwidgets in effect are reusable HTML/JS/CSS components (think simple Polymer or WebComponents) I don’t recommend it, but if we wanted to use an htmlwidget with no R, it is fairly straightforward. Even if you decided not to do this, I think it will be helpful in your journey to htmlwidgets mastery.
+We’ll use the simple but powerful jsonedit from the listviewer package. Its JavaScript binding is very sparse, so I hope it will be a good subject.</description>
+    </item>
+    
     <item>
       <title>About</title>
       <link>/about/</link>
@@ -14,6 +43,402 @@
       
       <guid>/about/</guid>
       <description>Building WidgetsBridging the engine of R with the Innovative Interactivity of JavaScript/HTML2015 -&amp;gt;in this little tweet, I declared the year 2015 the year of the htmlwidget and built one a weekPlease contact me at kent [.dot.]&amp;nbsp;russell [@at@] timelyportfolio.com.Contribute with Paypalto my open source efforts. More than likely I will use the money for books to make even better open source.Blog</description>
+    </item>
+    
+    <item>
+      <title>Week51 - functionplotR</title>
+      <link>/2015/12/30/week51/</link>
+      <pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/12/30/week51/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week51 - functionplotRWeek51 - functionplotRDecember 30, 2015This Week’s Widget - functionplotRInstallationExamplesOne Simple EquationMultiple Simple FunctionsWith Some OptionsFunction with DerivativeThanksThis Week’s Widget - functionplotRMauricio Poppe has built a really amazing 2d d3-js-based function plotter function-plot. I think it has all sorts of helpful uses in R, so functionplotR will be this week’s htmlwidget. Note, I released a couple days early.</description>
+    </item>
+    
+    <item>
+      <title>Week52 - d3kit_timeline</title>
+      <link>/2015/12/30/week52/</link>
+      <pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/12/30/week52/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week52 - d3kit_timelineWeek52 - d3kit_timelineDecember 30, 2015This Week’s Widget - d3kit_timelineInstallationExamplesSimple ExampleUse With xtsThanksThe clock is ticking rapidly–so rapidly that I won’t be able to do the full year summary, meta-filled post that I had hoped in this final week of the htmlwidget/week project started with this January 2, 2015 post Can I Commmit?. I’ll stick with the traditional post format for the release of week 52’s widget d3kit_timeline.</description>
+    </item>
+    
+    <item>
+      <title>Week50 - summarytrees</title>
+      <link>/2015/12/16/week50/</link>
+      <pubDate>Wed, 16 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/12/16/week50/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week50 - summarytreesWeek50 - summarytreesDecember 16, 2015Bleeding Edge - crosstalkThis Week’s Widget - summarytrees_htmlwidgetInstallationExamplesThanksBleeding Edge - crosstalkI feel obligated to mention this again. If you want to get a preview of the exciting changes for htmlwidgets, be sure to check out htmlwidgets issue 86. Thanks to Joe Cheng from RStudio for taking the lead on this.
+We can see some early examples with plotly from early adopter Andrew Clark @pssguy.</description>
+    </item>
+    
+    <item>
+      <title>Week49 - d3radarR</title>
+      <link>/2015/12/09/week49/</link>
+      <pubDate>Wed, 09 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/12/09/week49/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week49 - d3radarRWeek49 - d3radarRDecember 09, 2015Bleeding Edge - crosstalkThis Week’s Widget - d3radarRInstallationExamplesThanksBleeding Edge - crosstalkIf you want to get a preview of the exciting changes for htmlwidgets, be sure to check out htmlwidgets issue 86. Thanks to Joe Cheng from RStudio for taking the lead on this.
+This Week’s Widget - d3radarRCharles Allen at TennisVisuals blogging at tennisvis.</description>
+    </item>
+    
+    <item>
+      <title>Week48 - stmCorrViz</title>
+      <link>/2015/12/01/week48/</link>
+      <pubDate>Tue, 01 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/12/01/week48/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week48 - stmCorrVizWeek48 - stmCorrVizDecember 01, 2015This Week’s Widget - stmCorrViz | htmlwidgetized stmCorrVizQuick InstallationExample in a PresentationThanksThis Week’s Widget - stmCorrViz | htmlwidgetized stmCorrVizWay back in week 13, I html-widgetized stmBrowser which pairs with stm and stmCorrViz. Scott Jacobs very kindly asked if I could also html-widgetize stmCorrViz, and I said yes. While at it, I also fixed a couple bugs in stmBrowser.</description>
+    </item>
+    
+    <item>
+      <title>Week47 - vegaliteR</title>
+      <link>/2015/11/25/week47/</link>
+      <pubDate>Wed, 25 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/11/25/week47/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week47 - vegaliteRWeek46 - vegaliteRNovember 25, 2015This Week’s Widget - vegaliteRInstallationdata.frame into a list of listswith applywith rlistwith purrrExamplesScatter PlotLine ChartBar ChartStacked Bar ChartMoreThanksThis Week’s Widget - vegaliteRWhen vega was first released, I spent a lot of time exploring its potential. Then ggvis sort of eliminated the need to learn the internals of vega.</description>
+    </item>
+    
+    <item>
+      <title>Week46 - colaR</title>
+      <link>/2015/11/19/week46/</link>
+      <pubDate>Thu, 19 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/11/19/week46/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week46 - colaRWeek46 - colaRNovember 19, 2015This Week’s Widget - colaRInstallationExamplesigraph and V8htmltoolsThanksThis Week’s Widget - colaRTim Dwyer makes really great stuff. As one recent example, see this video preview of HOLA: Human-like Orthogonal Network Layout which won Best Infovis Paper at VIS 2015. Unfortunately though, Dwyer does not make his great stuff in R. This is where what I call super-isomorphism with htmlwidgets and Jeroen Ooms’ V8 becomes very handy.</description>
+    </item>
+    
+    <item>
+      <title>Week45 - shotsignR</title>
+      <link>/2015/11/13/week45/</link>
+      <pubDate>Fri, 13 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/11/13/week45/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week45 - shotsignRWeek45 - shotsignRNovember 13, 2015Some Love for queryBuildRThis Week’s Widget - shotsignRInstallationExamplesBasketball ExampleNon-basketball UsageThanksSome Love for queryBuildRSomehow I missed queryBuildR when it was released. I strongly recommend checking it out.
+This Week’s Widget - shotsignRPeter Beshai created beautiful d3.js Shooting Signatures to visualize basketball shooting performance. It was definitely love at first sight for me.</description>
+    </item>
+    
+    <item>
+      <title>Week44 - tooltipsterR</title>
+      <link>/2015/11/06/week44/</link>
+      <pubDate>Fri, 06 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/11/06/week44/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week44 - tooltipsterRWeek44 - tooltipsterRNovember 06, 2015Only 7 More WeeksThis Week’s Widget - tooltipsterRInstallationExamplesEasyWith FormattableWith SVGThanksOnly 7 More WeeksAs I typed “Week 44” in the title of the post, I realized the year is almost done. I do not anticipate another widget-a-week commitment next year, but I certainly will make some commitment. Let me know if you have ideas.</description>
+    </item>
+    
+    <item>
+      <title>Week43 - emoji</title>
+      <link>/2015/10/26/week43/</link>
+      <pubDate>Mon, 26 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/10/26/week43/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week43 - emojiWeek43 - emojiOctober 26, 2015This Week’s Widget - twemojiInstallationExamplesKnow the UnicodeFind with remojiThanksThis Week’s Widget - twemojiFor this week’s htmlwidget, all I needed was an excuse, and that excuse came in the form of a tweet by Jenny Bryan. Of course, we need an emoji htmlwidget. Since remoji already brings some emoji power to R, I thought I would try to piggyback on it and reduce the future number of R packages by at least 1.</description>
+    </item>
+    
+    <item>
+      <title>Week42 - adjacency matrix</title>
+      <link>/2015/10/22/week42/</link>
+      <pubDate>Thu, 22 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/10/22/week42/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week42 - adjacency matrixWeek42 - adjacency matrixOctober 22, 2015This Week’s Widget - adjacency matrixInstallationExamplesThanksThis Week’s Widget - adjacency matrixThis beautiful little adjacency matrix by Mike Bostock inspired this Github issue/request. At the beginning of the week, I started banging away on a htmlwidget extension to networkD3 using Elijah Meeks’ d3.layout.adjacencyMatrix. The deeper I got the more I realized that an adjacency matrix really is just a subset of a heatmap, so then I started replicating Matthew Lincoln’s fine Shiny/ggplot2 adjacency matrix with RStudio/Joe Cheng’s d3heatmap.</description>
+    </item>
+    
+    <item>
+      <title>Week41 - railroadR</title>
+      <link>/2015/10/16/week41/</link>
+      <pubDate>Fri, 16 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/10/16/week41/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week41 - railroadRWeek41 - railroadROctober 16, 2015This Week’s Widget - railroadRInstallationExamplesUNICODE-RANGESQLThanksThis Week’s Widget - railroadRRailroad diagrams are generally used in computer science to represent language syntax or grammar. However, I just know these can be used for other purposes. I just have not had the time for creativity or inspiration. Please, please let me know if you have ideas.</description>
+    </item>
+    
+    <item>
+      <title>Week40 - networkD3 0.2.1 -&amp;gt; 0.2.4</title>
+      <link>/2015/10/08/week40/</link>
+      <pubDate>Thu, 08 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/10/08/week40/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week40 - networkD3 0.2.1 -&amp;gt; 0.2.4Week40 - networkD3 0.2.1 -&amp;gt; 0.2.4October 08, 2015This Week’s Widget - networkD3InstallationExamplesdiagonal/radialNetworksankeyNetworkThanksThis Week’s Widget - networkD3networkD3 from Christopher Gandrud is the second most popular htmlwidget based on Github stars, so I think it is important that it stays in elite shape. Last week networkD3 hit CRAN with version 0.2.4, so I’ll claim networkD3 as the htmlwidget of the week.</description>
+    </item>
+    
+    <item>
+      <title>Week39 - timelineR</title>
+      <link>/2015/10/02/week39/</link>
+      <pubDate>Fri, 02 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/10/02/week39/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week39 - timelineRWeek39 - timelineROctober 02, 2015This Week’s Widget - timelineRInstallationExampleThanksThis Week’s Widget - timelineRThe stream of d3.js layouts and plugins has slowed considerably, so I got excited when I saw Elijah Meeks’ new d3.layout.timeline. This swimlane timeline layout fills a void for both the JavaScript and R world, so I thought let’s make an htmlwidget with it. I very creatively call it timelineR.</description>
+    </item>
+    
+    <item>
+      <title>Week38 - datacomb</title>
+      <link>/2015/09/28/week38/</link>
+      <pubDate>Mon, 28 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/09/28/week38/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week38 - datacombWeek38 - datacombSeptember 28, 2015This Week’s Widget - datacombInstallationExampleThanksThis Week’s Widget - datacombI was blown away when an August 21 @ChrisPolis tweet led me to this animated GIF.
+Then, I was even more delighted when I saw the magic word htmlwidget on the roadmap/todos. Just a month later thanks to magic/diligence of Chris Polis we can make a datacomb interactive table viewer in one-line of R.</description>
+    </item>
+    
+    <item>
+      <title>Week37 - parsetR</title>
+      <link>/2015/09/17/week37/</link>
+      <pubDate>Thu, 17 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/09/17/week37/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week37 - parsetRWeek37 - parsetRSeptember 17, 2015This Week’s Widget - parsetRInstallationExamples + VignetteThanksThis Week’s Widget - parsetRAs far as I know, ggparallel is the only way to make Robert Kosara’s parallel sets in R. While ggparallel does a very nice job, this ridiculously amazing interactive d3.js parallel sets implementation by Jason Davies needs a htmlwidget. When a JavaScript library is as well designed as d3-parsets, wrapping it as an htmlwidget can be very quick and straightforward.</description>
+    </item>
+    
+    <item>
+      <title>Week36 - stockchartR</title>
+      <link>/2015/09/10/week36/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/09/10/week36/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week36 - stockchartRWeek36 - stockchartRSeptember 10, 2015This Week’s Widget - stockchartRInstallationExamplesThanksThis Week’s Widget - stockchartRI intentionally do not talk much finance here at Building Widgets, but for those who are unaware of TimelyPortfolio, finance pays the bills for me. Although d3.js was released in 2010 (see this first Github commit, we did not see robust finance-targeted d3.js visualization libraries until last year.</description>
+    </item>
+    
+    <item>
+      <title>Week35 - gifrecordeR</title>
+      <link>/2015/09/05/week35/</link>
+      <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/09/05/week35/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week35 - gifrecordeRWeek35 - gifrecordeRSeptember 05, 2015This Week’s Widget - gifrecordeRInstallationExamplesThanksThis Week’s Widget - gifrecordeRAnimated GIFs are really useful for documenting, illustrating, sharing, and sometimes annoying. Yaron Noveh’s absolutely amazing gifw00t lets us record GIFs in the browser client-side, so if I wrap it in a htmlwidget I can record GIFs of my RStudio Viewer or Shiny session and share them with the world.</description>
+    </item>
+    
+    <item>
+      <title>Week34 - Contribution Week</title>
+      <link>/2015/08/29/week34/</link>
+      <pubDate>Sat, 29 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/08/29/week34/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week34 - Contribution WeekWeek33 - Contribution WeekAugust 29, 2015This Week’s Widget - ContributionsedgebundleRsunburstRLeaflet.measureThanksThis Week’s Widget - ContributionsSince I make the rules for what counts as a htmlwidget, I’ll create this new rule.
+A series of contributions to existing htmlwidgets counts as an htmlwidget in the weekly series.This week I made contributions to edgebundleR, sunburstR, and leaflet. Thanks to the authors for all their work on these existing htmlwidgets and their willingness to accept my pull requests.</description>
+    </item>
+    
+    <item>
+      <title>Week33 - RBioFabric</title>
+      <link>/2015/08/20/week33/</link>
+      <pubDate>Thu, 20 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/08/20/week33/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week33 - RBioFabricWeek33 - RBioFabricAugust 20, 2015This Week’s Widget - RBioFabricQuick InstallationExamplesBridges of KoenigsbergshadowLinksOrdering NodesLes MisThanksThis Week’s Widget - RBioFabricWilliam Longabaugh (@wjrl) developed a novel hairball-less way to visualize networks called BioFabric in his 2012 paper.
+Longabaugh, W.J.R. Combing the hairball with BioFabric: a new approach for visualization of large networks. BMC Bioinformatics, 13:275, 2012.Since then, he has done an incredible amount to speed adoption by implementing BioFabric in Java, JavaScript (d3.</description>
+    </item>
+    
+    <item>
+      <title>Week32 - mapshaperWidget</title>
+      <link>/2015/08/14/week32/</link>
+      <pubDate>Fri, 14 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/08/14/week32/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week32 - mapshaperWidgetWeek32 - mapshaperWidgetAugust 14, 2015This Week’s Widget - mapshaperWidgetQuick InstallationExamplesStraight geojsonWorld Data from tmapMultiple Spatial ObjectsNext…ThanksThis Week’s Widget - mapshaperWidgetEven a geo-novice like me can quickly see the amazing power of mapshaper and its web gui and even use it immediately. The author has clearly focused on a speedy, intuitive, but still full-feautured user experience.</description>
+    </item>
+    
+    <item>
+      <title>Week31 - taucharts</title>
+      <link>/2015/08/05/week31/</link>
+      <pubDate>Wed, 05 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/08/05/week31/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week31 - tauchartsWeek30 - tauchartsAugust 05, 2015This Week’s Widget - tauchartsQuick InstallationExamplesStacked BarFacets/StripsFacetted LineTricky R-&amp;gt;JS DatesTrendlinesThanksThis Week’s Widget - tauchartsAs I said in week 1, an htmlwidget collaboration still qualifies as an htmlwidget of the week. This week’s taucharts is a very fine case of why I set this rule. boB Rudis @hrbrmstr delighted me when he started to tackle the very well-designed TauCharts.</description>
+    </item>
+    
+    <item>
+      <title>Week29 - d3treeR 2</title>
+      <link>/2015/07/22/week29/</link>
+      <pubDate>Wed, 22 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/07/22/week29/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week29 - d3treeR 2Week29 - d3treeR 2July 22, 2015htmlwidgets News This WeekThis Week’s Widget - d3treeR AgainQuick InstallationExamplestreemap as dataJSON as dataThankshtmlwidgets News This WeekA gallery is up thanks to Ryan Hafen, but not “official”. As always, for all the newest and updated htmlwidgets, just do this Github search.
+This Week’s Widget - d3treeR Againd3treeR was released last week in the post Week 28 | d3treeR.</description>
+    </item>
+    
+    <item>
+      <title>Week28 - d3treeR</title>
+      <link>/2015/07/17/week28/</link>
+      <pubDate>Fri, 17 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/07/17/week28/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week28 - d3treeRWeek28 - d3treeRJuly 17, 2015htmlwidgets News This WeekThis Week’s Widget - d3treeRQuick InstallationExamplestreemap as dataJSON as dataThankshtmlwidgets News This WeekA gallery is really close. Just a little longer until its release, for all the newest and updated htmlwidgets, continue to search Github search.
+Also, I should note that Week 2’s widget svgPanZoom achieved CRAN. Just ask if you would like me to work through the CRAN process for any others.</description>
+    </item>
+    
+    <item>
+      <title>Week27 - d3hiveR</title>
+      <link>/2015/07/11/week27/</link>
+      <pubDate>Sat, 11 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/07/11/week27/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week27 - d3hiveRWeek27 - d3hiveRJuly 11, 2015htmlwidgets News This WeekThis Week’s Widget - d3hiveRMore Unfinished Than Any OtherQuick InstallationExamplesThankshtmlwidgets News This WeekYay, it appears a gallery is now in the works. Until its release though, for all the newest and updated htmlwidgets, just do this Github search, and you’ll quickly get up to date.
+This Week’s Widget - d3hiveRMartin Krzywinski makes beautiful things.</description>
+    </item>
+    
+    <item>
+      <title>Week26 - sunburstR</title>
+      <link>/2015/07/02/week26/</link>
+      <pubDate>Thu, 02 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/07/02/week26/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week26 - sunburstRWeek26 - sunburstRJuly 02, 2015htmlwidgets News This WeekWhy My Naming Scheme?This Week’s Widget - sunburstRBreaking My RulesQuick InstallationExamplesOriginal Example but in RExample with TraMineRAdditional ReadingThankshtmlwidgets News This WeekI can’t keep up with all that is happening in widget-world, so for all the newest and updated htmlwidgets, just do this Github search, and you’ll quickly get up to date.</description>
+    </item>
+    
+    <item>
+      <title>Week25 - sweetAlertR</title>
+      <link>/2015/06/29/week25/</link>
+      <pubDate>Mon, 29 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/06/29/week25/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week25 - sweetAlertRWeek25 - sweetAlertRJune 29, 2015htmlwidgets News This WeekThis Week’s Widget - sweetalertRQuick InstallationSweetAlert Example Recreated in rmarkdownThankshtmlwidgets News This WeekI can’t keep up with all that is happening in widget-world, so for all the newest and updated htmlwidgets, just do this Github search, and you’ll quickly get up to date.
+This Week’s Widget - sweetalertRSweetAlert by Tristan Edwards is a beautiful, dependency-free, and really popular replacement for JavaScript’s ugly and crude alert, so in my mind perfect for an htmlwidget.</description>
+    </item>
+    
+    <item>
+      <title>Week24 - flowtypeR</title>
+      <link>/2015/06/23/week24/</link>
+      <pubDate>Tue, 23 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/06/23/week24/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week24 - flowtypeRWeek23 - flowtypeRJune 17, 2015htmlwidgets News This WeekThis Week’s Widget - flowtypeRQuick InstallationExample from FlowTypeJSExample from RThankshtmlwidgets News This WeekI can’t keep up with all that is happening in widget-world, so for all the newest and updated htmlwidgets, just do this Github search, and you’ll quickly get up to date.
+This Week’s Widget - flowtypeRflowtypeR attempts to make your R output more readable.</description>
+    </item>
+    
+    <item>
+      <title>Week23 - formattable</title>
+      <link>/2015/06/17/week23/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/06/17/week23/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week23 - formattableWeek23 - formattableJune 17, 2015htmlwidgets News This WeekThis Week’s Widget - formattableQuick InstallationVignetteThankshtmlwidgets News This WeekAvid readers already know, but for all the newest and updated htmlwidgets, just do this Github search, and you’ll quickly get up to date.
+This Week’s Widget - formattableThis week’s widget formattable is unique from all of the other widgets so far.</description>
+    </item>
+    
+    <item>
+      <title>Week22 - Introductory Use of d3vennR</title>
+      <link>/2015/06/05/week22/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/06/05/week22/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week 22 - Introductory Use of d3vennRIntroductory Use of d3vennRKent Russell2015-06-05Venn diagrams are certainly not perfect. However, if you understand their limitations, Venn (Euler) diagrams can provide a useful way to provide context and overview. venn.js from Ben Frederickson makes creating Venn diagrams easy by doing the math to layout the sets and leveraging d3.js for rendering and interactivity.
+Installd3vennR is not on CRAN and probably never will be unless someone asks me to submit, so please use devtools::install_github() to install.</description>
+    </item>
+    
+    <item>
+      <title>Week20 - DiagrammeR with VivaGraphJS</title>
+      <link>/2015/05/22/week20/</link>
+      <pubDate>Fri, 22 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/05/22/week20/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week20 - DiagrammeR with VivaGraphJSDiagrammeR with VivaGraphJSKent Russell2015-05-22Way back in my first real post on this blog Week 01 | Easy Flowcharts and Diagrams ~ DiagrammeR, we announced DiagrammeR. Since then, DiagrammeR’s author Rich Iannone has amazed me with his efforts to improve, grow, and document (truly something special) the package. DiagrammeR began with mermaid(mermaid.js) and then quickly added grViz(viz.js/graphviz) as two methods to both layout and render diagrams specified as text.</description>
+    </item>
+    
+    <item>
+      <title>Week19 - loryR Quick and Easy</title>
+      <link>/2015/05/14/week19/</link>
+      <pubDate>Thu, 14 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/05/14/week19/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week19 - loryR Quick and EasyloryR Quick and EasyKent Russell2015-05-14loryR offers the fine dependency-free slider lory.js from Maximilian Heinz as a htmlwidget. R users can employ a slider (or embedded slideshow/gallery) like this in many ways. Let’s look at two different uses to help us explore how we might work with loryR.
+Quick Installdevtools::install_github( &amp;quot;timelyportfolio/loryR&amp;quot; )Use 1 | RStudio GalleryAs we bang away in RStudio, we can unintentionally collect quite a few plots in our Plots tab.</description>
+    </item>
+    
+    <item>
+      <title>Week17 - Accessing the Power of materializeR</title>
+      <link>/2015/05/01/week17/</link>
+      <pubDate>Fri, 01 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/05/01/week17/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week17 - Accessing the Power of materializeRAccessing the Power of materializeRKent Russell2015-05-01materializeR | materialize for Rmaterialize implements Google’s Material Design in a CSS/JS/HTML framework. It is built by a talented team of Carnegie Mellon Students and has amassed &amp;gt; 8,000 stars in less than half a year. Although I have been watching it closely since its release, Alex Bresler deserves the credit for motivating me to assemble this little htmlwidget.</description>
+    </item>
+    
+    <item>
+      <title>Week16 - Games in R</title>
+      <link>/2015/04/21/week16/</link>
+      <pubDate>Tue, 21 Apr 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/04/21/week16/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week16 - Games in RWeek16 - Games in RApril 21, 2015htmlwidgets News This WeekThis Week’s Widget - gamerQuick InstallationExampleThankshtmlwidgets News This WeekBe sure to check out rcstatebin from Ramnath Vaidyanathan, author of htmlwidgets. For rcstatebin, Ramnath created both the underlying d3js library and R wrapper, so they integrate beautifully. In creating the d3js side, he is able to contribute back to the JavaScript community from which we source so much.</description>
+    </item>
+    
+    <item>
+      <title>Week15 - List Viewer</title>
+      <link>/2015/04/14/week15/</link>
+      <pubDate>Tue, 14 Apr 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/04/14/week15/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week15 - List ViewerWeek15 - List ViewerApril 14, 2015htmlwidgets News This WeekThis Week’s Widget - listviewerQuick InstallationExamplesWhat’s my par?What’s in my lattice?What’s in my broom?What’s in my htmlwidget?Shiny?Thankshtmlwidgets News This Weekhtmlwidgets now uses jsonlite. I recommend anyone serious about their widgets to read through the discussion of pull #28. Whether you care about the details or not, I would encourage updatating jsonlite, htmlwidgets, and Shiny with</description>
+    </item>
+    
+    <item>
+      <title>Week14 - Exporting Widgets</title>
+      <link>/2015/04/09/week14/</link>
+      <pubDate>Thu, 09 Apr 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/04/09/week14/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week14 - Exporting WidgetsWeek14 - Exporting WidgetsApril 09, 2015htmlwidgets News This WeekThis Week’s Widget - exportwidgetQuick InstallationExamplesExample With SVG + Custom FontExample with another widget streamgraphExample with multiple widgetsExample | Headless with webshotThankshtmlwidgets News This WeekJust do this Github search, and you’ll likely see all the newest and latest. As a follow-up to last week’s widget stmBrowser, I thought this research on applications of stm to MOOCs is especially interesting.</description>
+    </item>
+    
+    <item>
+      <title>Week13 - Interactive stm</title>
+      <link>/2015/04/02/week13/</link>
+      <pubDate>Thu, 02 Apr 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/04/02/week13/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week13 - Interactive stmWeek13 - Interactive stmApril 02, 2015htmlwidgets News This WeekThis Week’s Widget - stmBrowser | htmlwidgetized stmBrowserQuick InstallationExample in a PresentationThankshtmlwidgets News This WeekJust do this Github search, and you’ll likely see all the newest and latest.
+This Week’s Widget - stmBrowser | htmlwidgetized stmBrowserI get sad when I see a really great R package that generates HTML/JS that does not use htmlwidgets, but it is entirely understandable since htmlwidgets is so new.</description>
+    </item>
+    
+    <item>
+      <title>Week12 - Intense Image Viewer</title>
+      <link>/2015/03/25/week12/</link>
+      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/03/25/week12/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week12 - Intense Image ViewerWeek12 - Intense Image ViewerMarch 25, 2015htmlwidgets News This WeekThis Week’s Widget - imageR | Image ViewingQuick InstallationSimple ExampleExample with Pairs to Show AutoExample with a Non-imgWith Other htmlwidgets and FlickrThankshtmlwidgets News This WeekJust do this Github search, and you’ll likely see all the newest and latest.
+This Week’s Widget - imageR | Image ViewingWhile I consider svgPanZoom as one of the most universally applicable htmlwidgets, sometimes non-svg images are just easier and more comfortable.</description>
+    </item>
+    
+    <item>
+      <title>Week11 - dimple as htmlwidget</title>
+      <link>/2015/03/18/week11/</link>
+      <pubDate>Wed, 18 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/03/18/week11/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week11 - dimple as htmlwidgetWeek11 - dimple as htmlwidgetMarch 18, 2015htmlwidgets News This WeekThis Week’s Widget - rcdimple | rCharts dimpleGetting StartedVignette ExamplesIntroduction to rcdimpleExamples with r-graph-catalogThankshtmlwidgets News This WeekJust do this Github search, and you’ll likely see all the newest and latest. I would like to highlight the very thorough work by
+Thomas Siegmund on D3TableFilter</description>
+    </item>
+    
+    <item>
+      <title>Week10 - Responsive Toolbars</title>
+      <link>/2015/03/11/week10/</link>
+      <pubDate>Wed, 11 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/03/11/week10/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week10 - Responsive ToolbarsWeek10 - Responsive ToolbarsMarch 11, 2015htmlwidgets News This Weekhtmlwidgets IterationVideosThis Week’s Widget - navr | Responsive Toolbars and NavGetting StartedSimple Examplehtmlwidget ExampleStylish Hover EffectsAwesome Font-Awesome Iconsnavr + sortableRThankshtmlwidgets News This Weekhtmlwidgets are getting so popular that it is very difficult to keep up with them. Hopefully, we’ll soon have a gallery of built and in-process htmlwidgets, since it now seems beyond my ability to keep up with all the developments.</description>
+    </item>
+    
+    <item>
+      <title>Week08 - Interactive Phylogeny</title>
+      <link>/2015/02/26/week08/</link>
+      <pubDate>Thu, 26 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/02/26/week08/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week08 - Interactive PhylogenyWeek08 - Interactive PhylogenyFebruary 26, 2015htmlwidgets News This WeekThis Week’s Widget - treewidget | Interactive Phylogeny + TreeExamplesThankshtmlwidgets News This Week-@HarlanH - c3 htmlwidget c3r. c3 is a really nice reusable d3.js charting library that will make for a very powerful htmlwidget. Be sure to check out the c3.js demo and all of the examples.
+-@yutannihilation - two more from this prolific htmlwidget-er</description>
+    </item>
+    
+    <item>
+      <title>Week07 - bokeh now for R</title>
+      <link>/2015/02/17/week07/</link>
+      <pubDate>Tue, 17 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/02/17/week07/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week07 - bokeh now for RWeek07 - bokeh now for RFebruary 17, 2015htmlwidgets News This WeekThis Week’s Widget - rbokeh | bokeh for RExamplesExamples from ggplot2 &amp;amp; lattice booksThankshtmlwidgets News This Week-@hrbrmstr - d3 streamgraph layout streamgraph. Bob Rudis builds on his list of authored widgets with this very nice htmlwidget for streamgraphs. See the announcement for a through discussion.</description>
     </item>
     
     <item>
@@ -64,507 +489,6 @@ This Week’s Widget - katexR | KaTeX rendering for RI’m guessing your first 
       <guid>/2015/01/08/week01/</guid>
       <description>&lt;!DOCTYPE html&gt;Week01 - Easy Flowcharts and DiagramsWeek01 - Easy Flowcharts and DiagramsJanuary 08, 2015Already Cheating?This Week’s Widget - DiagrammeRWhat Does it Do?Better Than Where We Found ItExamples in RConclude and ReproduceAlready Cheating?It’s just week 1 of the Building Widgets widget-a-week challenge, and some might think I am already cheating for two reasons:
 This widget was started last week, andI’m not the sole author.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Responsive Nav Responsive navigation plugin without library dependencies and with fast touch screen support. Responsive Nav is a tiny JavaScript plugin which weighs only 1.3kb minified and Gzip’ed, and helps you to create a toggled navigation for small screens. It uses touch events and CSS3 transitions for the best possible performance. It also contains a “clever” workaround that makes it possible to transition from height: 0 to height: auto, which isn’t normally possible with CSS3 transitions.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Copyright (c) 2010-2014, Michael Bostock All rights reserved.
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Copyright 2014 PMSI-AlignAlytics www.pmsi-consulting.com
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>dimple Dimple is an object-oriented API allowing you to create flexible axis-based charts using d3.js.
-The intention of this project is to allow analysts who are not necessarily expert JavaScript programmers to create standard (and some not-so-standard) business analytics.
-The API will also expose the core d3 objects where possible so that as users gain confidence they can extend the base functionality in whatever way they wish.
-Please visit the main website dimplejs.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Intense Images A stand alone javascript library for viewing images on the full, full screen. Using the touch/mouse position for panning. Here&amp;rsquo;s a demo! You can also play with the code live on CodePen.
-Instructions Intense images is a stand alone library (no jquery, or the likes) so usage is pretty straight forward. All styling of image elements is up to the user, Intense.js only handles the creation, styling and management of the image viewer and captions.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Responsive Nav Responsive navigation plugin without library dependencies and with fast touch screen support. Responsive Nav is a tiny JavaScript plugin which weighs only 1.3kb minified and Gzip’ed, and helps you to create a toggled navigation for small screens. It uses touch events and CSS3 transitions for the best possible performance. It also contains a “clever” workaround that makes it possible to transition from height: 0 to height: auto, which isn’t normally possible with CSS3 transitions.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Introduction canvg is a SVG parser and renderer. It takes a URL to a SVG file or the text of an SVG file, parses it in JavaScript, and renders the result on a Canvas element. The rendering speed of the examples is about as fast as native SVG.
-What&amp;rsquo;s implemented? The end goal is everything from the SVG spec. The majority of the rendering and animation is working. If you would like to see a feature implemented, don&amp;rsquo;t hesitate to contact me or add it to the issues list.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Contributing If you’re looking for ways to contribute, please peruse open issues. The icebox is a good place to find ideas that are not currently in development. If you already have an idea, please check past issues to see whether your idea or a similar one was previously discussed.
-Before submitting a pull request, consider implementing a live example first, say using bl.ocks.org. Real-world use cases go a long way to demonstrating the usefulness of a proposed feature.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Copyright (c) 2010-2014, Michael Bostock All rights reserved.
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Copyright 2014 PMSI-AlignAlytics www.pmsi-consulting.com
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>dimple Dimple is an object-oriented API allowing you to create flexible axis-based charts using d3.js.
-The intention of this project is to allow analysts who are not necessarily expert JavaScript programmers to create standard (and some not-so-standard) business analytics.
-The API will also expose the core d3 objects where possible so that as users gain confidence they can extend the base functionality in whatever way they wish.
-Please visit the main website dimplejs.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>DOWNLOAD JS Intelligent JavaScript solution for file downloading. Easy to use - just call downloadFile(URL) global function.
-See it in action
-Article about
-Why DownloadJS? Avoids stupid blank screens after file starts downloading in Chrome, Safari; Ignores content type by using virtual link with &amp;ldquo;download&amp;rdquo; attribute. So file will be downloaded even if content type says browser to show file`s content in new window. This allows to download PNGs, HTMLs and so on; Small function without any dependencies.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Copyright (c) 2010-2014, Michael Bostock All rights reserved.
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>FlowType.JS Responsive web typography at its finest: font-size and line-height based on element width.
-Check out the demo site.
-What does FlowType.JS do? Ideally, the most legible typography contains between 45 and 75 characters per line. This is difficult to accomplish for all screen widths with only CSS media-queries. FlowType.JS eases this difficulty by changing the font-size and line-height based on a specific element&amp;rsquo;s width. This allows for a perfect character count per line at any screen width.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>This example shows how it is possible to use a D3 sunburst visualization (partition layout) with data that describes sequences of events.
-A good use case is to summarize navigation paths through a web site, as in the sample synthetic data file (visit_sequences.csv). The visualization makes it easy to understand visits that start directly on a product page (e.g. after landing there from a search engine), compared to visits where users arrive on the site&amp;rsquo;s home page and navigate from there.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>See my article on Krzywinski’s Hive Plots. See also area hive plots.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>__/\ \ ____ __ ___ \_\ \ __ _ __ ____ ___ ___ _ __ __ /\_\ ____/\ \/\ \ /&#39; _ `\ /&#39;_ \ /&#39;__`\/\ __\/ ,__\ / ___\ / __`\/\ __\/&#39;__`\ \/\ \ /&#39;,__\\ \ \_\ \/\ \/\ \/\ \ \ \/\ __/\ \ \//\__, `\/\ \__//\ \ \ \ \ \//\ __/ __ \ \ \/\__, `\\ \____/\ \_\ \_\ \___,_\ \____\\ \_\\/\____/\ \____\ \____/\ \_\\ \____\/\_\ _\ \ \/\____/\/___/ \/_/\/_/\/__,_ /\/____/ \/_/ \/___/ \/____/\/___/ \/_/ \/____/\/_//\ \_\ \/___/\ \____/\/___/Underscore.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>mapshaper Introduction Mapshaper is software for editing Shapefile, GeoJSON, TopoJSON and several other data formats, written in JavaScript.
-The mapshaper command line program supports common map making tasks like simplifying shapes, editing attribute data, clipping, erasing, dissolving, filtering and more.
-There is a web UI that supports interactive simplification and attribute editing. The web interface also has as a built in console for running cli commands.
-See the project wiki for documentation on using mapshaper.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>biofabric a module for generating biofabric graphs using d3. adapted from this example and made more abstract
-You will most likely have to do edits to the code to get your graph to render beautifully as the original code this was adapted from was designed around the miserables.json data.
-usage var fabric = require(&#39;biofabric&#39;)fabric(graph, {width: 1400})graph should be a JS object like this:
-{&amp;quot;nodes&amp;quot;:[{&amp;quot;name&amp;quot;:&amp;quot;Bob&amp;quot;,&amp;quot;group&amp;quot;:1},{&amp;quot;name&amp;quot;:&amp;quot;Alice&amp;quot;,&amp;quot;group&amp;quot;:2}],&amp;quot;links&amp;quot;:[{&amp;quot;source&amp;quot;:1,&amp;quot;target&amp;quot;:0,&amp;quot;value&amp;quot;:1}]}</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>React Stockcharts Create highly customizable stock charts
-Built with React JS and d3
-Installation npm install react-stockcharts --saveDocumentation Getting started
-Examples Refer to some quick start examples</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Railroad-diagram Generator This is a small js library for generating railroad diagrams (like what JSON.org uses) using SVG.
-Railroad diagrams are a way of visually representing a grammar in a form that is more readable than using regular expressions or BNF. I think (though I haven&amp;rsquo;t given it a lot of thought yet) that if it&amp;rsquo;s easy to write a context-free grammar for the language, the corresponding railroad diagram will be easy as well.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Contributing If you’re looking for ways to contribute, please peruse open issues. The icebox is a good place to find ideas that are not currently in development. If you already have an idea, please check past issues to see whether your idea or a similar one was previously discussed.
-Before submitting a pull request, consider implementing a live example first, say using bl.ocks.org. Real-world use cases go a long way to demonstrating the usefulness of a proposed feature.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>d3.tip: Tooltips for d3.js visualizations See a live demo Example code API Docs See the API Documentation
-Download Latest Version Development Version : 6kb / ~2kb gzipped Install with Bower bower install d3-tipQuick Usage /* Initialize tooltip */tip = d3.tip().attr(&#39;class&#39;, &#39;d3-tip&#39;).html(function(d) { return d; });/* Invoke the tip in the context of your visualization */vis.call(tip)vis.selectAll(&#39;rect&#39;).data(data).enter().append(&#39;rect&#39;).attr(&#39;width&#39;, function() { return x.rangeBand() }).attr(&#39;height&#39;, function(d) { return h - y(d) }).</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Vega: A Visualization Grammar Vega is a visualization grammar, a declarative format for creating and saving interactive visualization designs. With Vega you can describe data visualizations in a JSON format, and generate interactive views using either HTML5 Canvas or SVG.
-To learn more, visit the wiki.
-The Vega Runtime This repository contains the vega-runtime system, which parses Vega specifications to produce interactive visualizations which run in the browser using a scenegraph-based rendering system.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>d3-legend Full documentation: http://d3-legend.susielu.com
-Usage Using just the minified file You must inclue the d3 library before including the legend file. Then you can simply add the compiled js file to your website:
-d3-legend.min.js d3-legend.js (Human readable version) Using CDN You can also add latest version of d3-legend hosted on cdnjs.
-Using npm Already using d3? Great! You can add the d3 legend as a node module by running:
-npm i d3-svg-legend -S</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>reusable updating radarChart ###Design based on original by NadiehBremer at Visual Cinnamon
-###Coding philosophy inspired by Rob Moore
-####See this block in production with Live Data
-Find the Latest Code on GitHub #####I figured out enter/exit/update for nested objects by studying Lee Mendelowitz&amp;rsquo;s block and reviewing Mike&amp;rsquo;s comments
-###Features:
-Separate layer for hover objects which need to remain on top of chart Separate layer for tooltip which needs to be uppermost layer Events are configurable as options such that external functions can be seamlessly integrated e.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Contributing Important: these GitHub issues are for bug reports and feature requests only. Please use StackOverflow or the d3-js Google group for general help.
-If you’re looking for ways to contribute, please peruse open issues. The icebox is a good place to find ideas that are not currently in development. If you already have an idea, please check past issues to see whether your idea or a similar one was previously discussed.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
-Want to learn more? See the wiki.
-For examples, see the gallery and mbostock’s bl.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>htmlwidgets in effect are reusable HTML/JS/CSS components (think simple Polymer or WebComponents). I don&amp;rsquo;t recommend it, but if we wanted to use an htmlwidget with no R, it is fairly straightforward. Even if you decided not to do this, I think it will be helpful in your journey to htmlwidgets mastery.
-We&amp;rsquo;ll use the simple but powerful jsonedit from the listviewer package. Its JavaScript binding is very sparse, so I hope it will be a good subject.</description>
     </item>
     
     <item>

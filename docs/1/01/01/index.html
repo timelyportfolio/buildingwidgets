@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.119.0">
 
 
-<title> - A Hugo website</title>
-<meta property="og:title" content=" - A Hugo website">
+<title> - Building Widgets | R &#43; JS</title>
+<meta property="og:title" content=" - Building Widgets | R &#43; JS">
 
 
   <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
@@ -19,11 +19,6 @@
 
 
 
-
-
-
-
-<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
 
 
 
@@ -62,7 +57,7 @@
 
   <article class="article">
     
-    <span class="article-duration">3 min read</span>
+    <span class="article-duration">1 min read</span>
     
 
     <h1 class="article-title"></h1>
@@ -73,128 +68,15 @@
 
     <div class="article-content">
       
-      <p><code>htmlwidgets</code> in effect are reusable HTML/JS/CSS components (think simple Polymer or WebComponents).  I don&rsquo;t recommend it, but if we wanted to use an <code>htmlwidget</code> with no R, it is fairly straightforward.  Even if you decided not to do this, I think it will be helpful in your journey to <code>htmlwidgets</code> mastery.</p>
-<p>We&rsquo;ll use the simple but powerful <code>jsonedit</code> from the <code>listviewer</code> package.  Its JavaScript binding is very sparse, so I hope it will be a good subject.</p>
-<h3 id="output-from-a-htmlwidget">Output from a <code>htmlwidget</code></h3>
-<p>Let&rsquo;s start by seeing what happens when we create our htmlwidget.  The <code>R</code> code would look something like this.</p>
-<pre><code>library(listviewer)
-# give it an empty list() or {} in JavaScript
-jsonedit(list())
-</code></pre>
-<p>If we open our developer tools in Chrome, we should see something like this.</p>
-<p><img src="C:/Users/Kent.TLEAVELL_NT/Dropbox/development/r/buildingwidgets/post_look_ma_no_R/screenshot_htmlwidget_output.png" alt="screenshot of html from htmlwidget"></p>
-<p>Each <code>htmlwidget</code> will be different, but the ingredients will usually contain:</p>
-<ol>
-<li>
-<p>JavaScript and CSS dependencies</p>
-<ul>
-<li><code>htmlwidgets.js</code></li>
-<li>js/css for the source libraries which are provided in the <code>htmlwidget</code> yaml
-<img src="C:/Users/Kent.TLEAVELL_NT/Dropbox/development/r/buildingwidgets/post_look_ma_no_R/screenshot_yaml.png" alt="screenshot of yaml dependencies"></li>
-<li>the htmlwidget binding - <code>jsonedit.js</code></li>
-</ul>
-</li>
-<li>
-<p>HTML tags</p>
-<ul>
-<li>usually a <code>&lt;div&gt;</code> with an <code>id</code> and <code>class='..widgetname.. html-widget'</code>, but depending on the widget might be a different <code>tag</code> or set of <code>tags</code></li>
-<li><code>&lt;script type='application/json' data-for='..widgetid..'&gt;</code></li>
-</ul>
-</li>
-</ol>
-<h3 id="copypaste-method">copy/paste method</h3>
-<p>Nearly every step to enlightenment in programming starts with copy/paste, so we&rsquo;ll copy/paste the bits and pieces to make this.  We&rsquo;ll change to use the CDN for <code>jsoneditor</code>.  Also, we&rsquo;ll change the random element <code>id</code> to <code>mywidget</code>.  These aren&rsquo;t necessary, but they might be considered an improvement.</p>
-<pre><code>&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;script src=&quot;https://cdn.rawgit.com/ramnathv/htmlwidgets/master/inst/www/htmlwidgets.js&quot;&gt;&lt;/script&gt;
-    
-    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.6/jsoneditor.min.js&quot;&gt;&lt;/script&gt;
-    &lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.6/jsoneditor.min.css&quot; rel=&quot;stylesheet&quot;&gt;
-    
-    &lt;script src=&quot;https://cdn.rawgit.com/timelyportfolio/listviewer/master/inst/htmlwidgets/jsonedit.js&quot;&gt;&lt;/script&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;div id=&quot;mywidget&quot; class=&quot;jsonedit html-widget&quot; style=&quot;height:100%;width:100%;&quot;&gt;&lt;/div&gt;
-    &lt;script type=&quot;application/json&quot; data-for=&quot;mywidget&quot;&gt;
-      {&quot;x&quot;:{&quot;data&quot;:[],&quot;options&quot;:{&quot;mode&quot;:&quot;tree&quot;,&quot;modes&quot;:[&quot;code&quot;,&quot;form&quot;,&quot;text&quot;,&quot;tree&quot;,&quot;view&quot;]}},&quot;evals&quot;:[],&quot;jsHooks&quot;:[]}
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>To see it working, I&rsquo;ll embed the iframe below, or go directly to the <a href="//timelyportfolio.github.io/buildingwidgets/post_look_ma_no_R/example.html">example.html</a>.</p>
-<iframe src="//timelyportfolio.github.io/buildingwidgets/post_look_ma_no_R/example.html" style="height:200px; width:400px; border:none;"></iframe>
-<h3 id="easier-way">easier way?</h3>
-<p>The data <code>script</code> with <code>data-for</code> piece can be tricky to populate.  Many times, it might be easier to manually render our <code>htmlwidget</code> from JavaScript.  We can get rid of the <code>&lt;script ... data-for&gt;</code> and use some more traditional looking JavaScript.</p>
-<h4 id="find-the-widget-binding">find the widget binding</h4>
-<pre><code>  // use HTMLWidgets.widgets to give us
-  // a list of available htmlwiget bindings
-  //  in this case we should just have one
-  var widgets = HTMLWidgets.widgets;
-  // assume there might be lots, so filter for the one we want
-  //  in this case, we want jsonedit
-  var jed = widgets.filter(function(widget){
-    return widget.name === &quot;jsonedit&quot;
-  })[0];
-  
-</code></pre>
-<h4 id="getmake-all-the-arguments-for-rendervalue">get/make all the arguments for <code>renderValue</code></h4>
-<pre><code>  // the binding should have an intialize, renderValue, and resize
-  //  to render we use renderValue with arguments
-  //    el the DOM element in which we want to render
-  //    x  the data and options
-  //    instance return value from initialize
-  
-  // get our htmlwidget DOM element
-  var el = document.getElementById('mywidget');
-  // make our x data and options
-  //  this varies by widget
-  //    and if widget built robustly then might be able
-  //    to eliminate much of this
-  var x = {
-    &quot;data&quot;:[],
-    &quot;options&quot;:{&quot;mode&quot;:&quot;tree&quot;,&quot;modes&quot;:[&quot;code&quot;,&quot;form&quot;,&quot;text&quot;,&quot;tree&quot;,&quot;view&quot;]}
-  };
-  // get our htmlwidget instance with initialize
-  var instance = jed.initialize(el);
-</code></pre>
-<h4 id="render-our-widget">render our widget</h4>
-<pre><code>  jed.renderValue(
-    el,
-    x,
-    instance
-  );
-</code></pre>
-<p>To see it working, I&rsquo;ll embed the iframe below, or go directly to the <a href="//timelyportfolio.github.io/buildingwidgets/post_look_ma_no_R/example_manualjs.html">example.html</a>.</p>
-<iframe src="//timelyportfolio.github.io/buildingwidgets/post_look_ma_no_R/example_manualjs.html" style="height:200px; width:400px; border:none;"></iframe>
-<h3 id="widget-from-a-button">widget from a button</h3>
-<p>Now let&rsquo;s push a button and let JavaScript make us a <code>htmlwidget</code> from the <code>&lt;textarea&gt;</code>.  We&rsquo;ll just need to make a few minor adjustments.</p>
-<h4 id="add-our-html-tags-for-the-textarea-and-button">add our html tags for the textarea and button</h4>
-<pre><code>&lt;textarea id=&quot;text-data&quot;&gt;{&quot;x&quot;:1,&quot;y&quot;:[1,2,3,4]}&lt;/textarea&gt;
-&lt;button id=&quot;btn-make&quot; onclick=&quot;make_widget()&quot;&gt;Make a Widget&lt;/button&gt;
-</code></pre>
-<h4 id="wrap-our-render-into-a-function">wrap our render into a function</h4>
-<pre><code>  function make_widget(){
-    // this time we'll parse the JavaScript from the textarea
-    //  to populate jsonedit
-    var jsondata = JSON.parse(
-      document.getElementById('text-data').value
-    );
-    
-    ...
-    
-        var x= {
-          &quot;data&quot;:jsondata,
-          &quot;options&quot;:{&quot;mode&quot;:&quot;tree&quot;,&quot;modes&quot;:[&quot;code&quot;,&quot;form&quot;,&quot;text&quot;,&quot;tree&quot;,&quot;view&quot;]}
-        };
-        
-    ...
-  }
-</code></pre>
-<p>To see it working, I&rsquo;ll embed the iframe below, or go directly to the <a href="//timelyportfolio.github.io/buildingwidgets/post_look_ma_no_R/example_button.html">example.html</a>.</p>
-<iframe src="//timelyportfolio.github.io/buildingwidgets/post_look_ma_no_R/example_button.html" style="height:200px; width:400px; border:none;"></iframe>
-<h3 id="reusable-components">Reusable Components</h3>
-<p>Resability and portability is quite nice, so if you really like an <code>htmlwidget</code>, but don&rsquo;t use R, you can still use them.  We&rsquo;d love to have some more JavaScript/HTML/CSS, or heck Python, Go, Elm folks.</p>
+      <p><a href="https://travis-ci.org/e-/TreeColors.js"><img src="https://travis-ci.org/e-/TreeColors.js.svg?branch=master" alt="Build Status"></a></p>
+<h1 id="treecolorsjs">TreeColors.js</h1>
+<blockquote>
+<p>A javascript implementation of the color scheme proposed in the paper &ldquo;TreeColors: Color Schemes for Tree-Structured Data&rdquo;</p>
+</blockquote>
+<h2 id="usage">Usage</h2>
+<p>will be provided soon.</p>
+<h2 id="license">License</h2>
+<p>MIT © <a href="http://www.jaeminjo.com">Jaemin Jo</a></p>
 
     </div>
   </article>
@@ -215,18 +97,6 @@ jsonedit(list())
 
     </div>
     
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
-<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
-
-
 
     
 
