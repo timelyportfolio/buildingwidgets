@@ -1,0 +1,47 @@
+.hierNetwork   .node,.cell {
+  cursor: pointer;
+}
+.hierNetwork   .node circle {
+  /*fill: #fff;
+  stroke: steelblue;*/
+  stroke-width: 1.5px;
+}
+
+.hierNetwork   path.link {
+  fill: none;
+  /*stroke: #ccc;
+  stroke-width: 1.5px;*/
+}
+.hierNetwork   text {
+  pointer-events: none;
+}
+.hierNetwork   .parent text {
+  fill: #1f77b4;
+}
+.hierNetwork   circle {
+  fill: #ccc;
+  stroke: #999;
+}
+.hierNetwork   .parent circle {
+  fill: #1f77b4;
+  fill-opacity: 0.1;
+  stroke: steelblue; 
+}
+.hierNetwork   .parent:hover circle {
+  stroke: #ff7f0e;
+  stroke-width: 0.5px;
+}
+.hierNetwork.partitionrectangle rect {
+  stroke: #eee;
+  fill: #aaa;
+  fill-opacity: .8;
+}
+.hierNetwork.partitionrectangle rect.parent {
+  cursor: pointer;
+  fill: steelblue;
+}
+.hierNetwork.partitionarc  path {
+  cursor: pointer; 
+  stroke: #fff;
+  fill-rule: evenodd;
+}
