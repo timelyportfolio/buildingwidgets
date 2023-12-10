@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="date" content="2015-01-15" />
+
+<title>Week02 - Pan and Zoom Almost Any R Graph</title>
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">Week02 - Pan and Zoom Almost Any R Graph</h1>
+<h4 class="date"><em>January 15, 2015</em></h4>
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#htmlwidgets-news-this-week">htmlwidgets News This Week</a></li>
+<li><a href="#this-weeks-widget---svgpanzoom">This Week’s Widget - <a href="https://github.com/timelyportfolio/svgPanZoom"><code>svgPanZoom</code></a></a></li>
+<li><a href="#what-does-it-do">What Does it Do?</a></li>
+<li><a href="#examples-in-r">Examples in <code>R</code></a></li>
+<li><a href="#not-enough-examples">Not Enough Examples</a></li>
+<li><a href="#some-limitations">Some Limitations</a></li>
+<li><a href="#thanks">Thanks</a></li>
+</ul>
+</div>
+
+<div id="htmlwidgets-news-this-week" class="section level2">
+<h2>htmlwidgets News This Week</h2>
+<p><span class="citation">@yutannihiliation</span> has been prolific this week with a couple new widget seeds and contributions to this widget <a href="http://hrbrmstr.github.io/metricsgraphics/"><code>metricsgraphics</code></a> announced last week.</p>
+<ul>
+<li><a href="https://github.com/yutannihilation/chartist"><code>chartist</code></a> - <a href="http://gionkunz.github.io/chartist-js">Chartist.js</a> wrapper</li>
+<li><a href="https://github.com/yutannihilation/gneisschart"><code>gneisschart</code></a> - Gneisschart/<a href="http://quartz.github.io/Chartbuilder/">Chartbuilder (Quartz)</a> wrapper</li>
+</ul>
+<p><span class="citation">@dcenergy</span></p>
+<ul>
+<li><a href="https://github.com/dcenergy/rflot"><code>rflot</code></a> - <a href="https://github.com/dcenergy/rflot">Flot</a> wrapper</li>
+</ul>
+<p><span class="citation">@armish</span></p>
+<ul>
+<li><a href="https://github.com/armish/coffeewheel"><code>coffeewheel</code></a> - <a href="https://www.jasondavies.com/coffee-wheel/"><code>coffeewheel</code> by Jason Davies</a> wrapper</li>
+<li><a href="https://github.com/armish/metabologram"><code>metabologram</code></a> - a specialized form of <code>coffeewheel</code> mentioned above</li>
+</ul>
+<p><span class="citation">@lmullen</span></p>
+<p>Not launched last week, but a big miss by me is this <code>htmlwidget</code> for mapping from <span class="citation">@lmullen</span>. It was one of the first <code>htmlwidgets</code> built after the Dec. 17 release announcement, and offers some nice functionality and interesting examples.</p>
+<ul>
+<li><a href="https://github.com/lmullen/cartographer"><code>cartographer</code></a> - <a href="https://github.com/emeeks/d3-carto-map"><code>d3.carto.map</code></a> wrapper by <span class="citation">@lmullen</span></li>
+</ul>
+<p><span class="citation">@rich-iannone</span></p>
+<p>Also, be sure to check out the new <code>graphviz</code> functionality added to last week’s widget of the week <a href="https://github.com/rich-iannone/DiagrammeR"><code>DiagrammeR</code></a>.</p>
+</div>
+<div id="this-weeks-widget---svgpanzoom" class="section level2">
+<h2>This Week’s Widget - <a href="https://github.com/timelyportfolio/svgPanZoom"><code>svgPanZoom</code></a></h2>
+<p>I wanted to head in a slightly different direction with this week’s widget. Instead of wrapping Javascript charting libraries as most <code>htmlwidgets</code> to date have done, I wanted to let <code>R</code> still do the plotting, since so many of us know and love base <code>graphics</code>, <code>ggplot2</code>, and <code>lattice</code>. I hope nearly every <code>R</code> user can easily incorporate this little widget into their <code>R</code> graphical analysis and publishing workflow.</p>
+</div>
+<div id="what-does-it-do" class="section level2">
+<h2>What Does it Do?</h2>
+<p>With some help from <a href="http://www.omegahat.org/SVGAnnotation/"><code>SVGAnnotation</code></a> or <a href="https://sjp.co.nz/projects/gridsvg/"><code>gridSVG</code></a>, <code>svgPanZoom</code> will add pan and zoom functionality to nearly all <code>R</code> graphics using <a href="https://github.com/ariutta/svg-pan-zoom"><code>svg-pan-zoom.js</code></a>, a tiny and dependency-free Javascript library. Maybe a little graphic drawn from last week’s <code>DiagrammeR</code> can help explain the process.</p>
+<pre class="r"><code>library(DiagrammeR)
+
+DiagrammeR(&quot;
+  graph LR;
+    gr[&lt;code&gt;graphics&lt;/code&gt;]--&gt;sp[&lt;code&gt;svgPlot&lt;/code&gt;]
+    la[&lt;code&gt;lattice/trellis&lt;/code&gt;]--&gt;sp
+    la[&lt;code&gt;lattice/trellis&lt;/code&gt;]--&gt;gs[&lt;code&gt;gridSVG&lt;/code&gt;]
+    gg[&lt;code&gt;ggplot2&lt;/code&gt;]--&gt;sp
+    gg[&lt;code&gt;ggplot2&lt;/code&gt;]--&gt;gs
+    sp--&gt;|svg+js|ht[Interactive Graphic]
+    gs--&gt;|svg+js|ht
+    ht--&gt;Shiny
+    ht--&gt;rs[RStudio Viewer]
+    ht--&gt;rm[R Markdown]
+    ht--&gt;html[standalone HTML]
+    ht--&gt;iframe
+    classDef default fill:none;
+&quot;, height = 300, width = 550) %&gt;&gt;%
+      htmlwidgets::as.iframe(
+        file=&quot;diagram.html&quot;
+        , libdir = &quot;lib&quot;
+        , selfcontained=F
+        , width = 650
+        , height =400
+        , overflow = &quot;hidden&quot;
+      )</code></pre>
+<p><iframe src="diagram.html" width="650" height="400" style="border-width:0px;overflow:hidden ;"></iframe></p>
+</div>
+<div id="examples-in-r" class="section level2">
+<h2>Examples in <code>R</code></h2>
+<p>Let’s start with the <code>base</code>-ics adding <code>svgPanZoom</code> to some plots created by the base <code>graphics</code> in <code>R</code>. We’ll need <code>svgPanZoom</code> and <code>SVGAnnotation</code> for this first set of examples.</p>
+<pre class="r"><code>#devtools::install_github(&quot;timelyportfolio/svgPanZoom&quot;)
+library(svgPanZoom)
+library(SVGAnnotation)</code></pre>
+<h4>
+Base Graphics + svgPanZoom
+</h4>
+<p>Plots don’t get much more basic than this, but starting simple is the best way to isolate what is happening. When you run the example below, the Pan/zoom-able graph should appear in RStudio Viewer (if using RStudio) or show up in your browser of choice.</p>
+<pre class="r"><code># as simple as it gets
+svgPanZoom(
+  svgPlot(
+    plot(1:10)
+  )
+)</code></pre>
+<p><iframe src="example01.html" width="500" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>It is hard to tell that our simple little graph now has special powers. Some icons and hints might help. I’m struggling with whether to make this behavior the default. Let me know if you have an opinion.</p>
+<pre class="r"><code># as simple as it gets
+svgPanZoom(
+  svgPlot(
+    plot(1:10)
+  )
+  ,controlIconsEnabled=T
+) </code></pre>
+<p><iframe src="example02.html" width="500" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>Just to prove that it also works with more complicated plots, let’s do one more example in base <code>graphics.  We'll pull this &quot;persian rug art&quot;  from</code>?contour`.</p>
+<pre class="r"><code>svgPanZoom(
+  svgPlot(
+    {
+      x &lt;- y &lt;- seq(-4*pi, 4*pi, len = 27)
+      r &lt;- sqrt(outer(x^2, y^2, &quot;+&quot;))
+      opar &lt;- par(mfrow = c(2, 2), mar = rep(0, 4))
+      dev.new()
+      for(f in pi^(0:3))
+      contour(
+        cos(r^2)*exp(-r/f)
+        , drawlabels = FALSE
+        , axes = FALSE
+        , frame = TRUE, col = 'cadetblue')
+    }
+  )
+)</code></pre>
+<p><iframe src="example03.html" width="500" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>For one more really nice example, see this <a href="http://asbcllc.com/blog/2015/January/kohonen_panjs/">beautiful little Kohonen masterpiece</a> from volunteer tester and lover of interactive graphics <a href="http://asbcllc.com/">Alex Bresler</a>.</p>
+<h4>
+Grid (lattice | ggplot2) + svgPanZoom
+</h4>
+<p><code>svgPanZoom</code> would be very incomplete if it did not also support the graphics libraries built on top of <code>grid</code>–<code>ggplot2</code> and <code>lattice</code>–that spoil us <code>R</code> users. Before we start with the examples, I think I should explain the two choices we have to convert <code>grid</code> graphics to <code>SVG</code>. <code>svgPlot</code> from <code>SVGAnnotation</code> wraps the <code>svg grDevice</code> (probably <code>Cairo</code>) to convert <code>R</code> plots to <code>SVG</code>. Unfortunately, it often results in ugly <code>XML</code> that is difficult to customize or enhance. However, it is much faster than the other choice <code>gridSVG</code> function <code>grid.export()</code>. <code>gridSVG</code> though concentrates on clean, well-structured <code>XML</code> with <code>text</code> elements intact, unique identifiers, helpful <code>meta</code> information, and some helper Javascript. <code>svgPanZoom</code> prefers <code>gridSVG</code>, but if you’re looking for speed choose <code>svgPlot</code>. I’ll demonstrate both with the next example. Let’s go straight into a choropleth map in <code>ggplot2</code> using <a href="https://twitter.com/arilamstein">Ari Lamstein</a>’s package <a href="https://github.com/trulia/choroplethr"><code>choroplethr</code></a>.</p>
+<pre class="r"><code>library(choroplethr)
+library(ggplot2)
+
+# start with svgPlot
+#  and use example from ?state_choropleth
+data(df_pop_state)
+sc &lt;- state_choropleth(
+  df_pop_state
+  , title=&quot;US 2012 State Population Estimates&quot;
+  , legend=&quot;Population&quot;
+)
+
+svgPanZoom(
+  svgPlot(
+    show(sc)
+    # will need to manually specify height/width
+    ,height = 9, width = 17
+  ), controlIconsEnabled = T
+)</code></pre>
+<p><iframe src="example04a.html" width="800" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>Now with gridSVG. You’ll probably notice it takes much longer.</p>
+<pre class="r"><code># now with gridSVG
+svgPanZoom( sc, controlIconsEnabled = T)</code></pre>
+<p><iframe src="example04b.html" width="800" height="500" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>Just in case you are thinking “maps are great, but what about my regular old <code>ggplot2</code>”, let’s do one from <code>?facet_wrap</code>.</p>
+<pre class="r"><code># example from ggplot2 facet_wrap documentation
+d &lt;- ggplot(diamonds, aes(carat, price, fill = ..density..)) +
+  xlim(0, 2) + stat_binhex(na.rm = TRUE) + theme(aspect.ratio = 1)
+# to do with svgPlot 
+# svgPlot( { show( d + facet_wrap(~color) ) } )
+svgPanZoom(
+  (d + facet_wrap(~ color) )
+  , controlIconsEnabled = T
+)</code></pre>
+<p><iframe src="example05.html" width="600" height="600" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>I still love <code>lattice</code> graphics. Just in case you forgot about some of its functionality, I want to revive this example from <code>?wireframe</code>.</p>
+<pre class="r"><code>library(lattice)
+m &lt;- wireframe(volcano, shade = TRUE,
+           aspect = c(61/87, 0.4),
+           light.source = c(10,0,10))
+
+svgPanZoom(
+  svgPlot( {show(m)} )
+)
+# gridSVG will take a little too long, but feel free to try
+#   svgPanZoom(m)</code></pre>
+<p><iframe src="example06.html" width="600" height="600" style="border-width:0px;overflow:hidden ;"></iframe></p>
+<p>Then as with all <code>htmlwidgets</code>, we can pair them with <code>tags</code> from <code>htmltools</code>. How about storytelling with our pan and zoom ?</p>
+<pre class="r"><code>library(htmltools)
+
+spz = svgPanZoom(
+  svgPlot( {show(m)} )
+  ,controlIconsEnabled = T
+  , height = 500
+  , width = 500
+  , elementId = &quot;story-volcano&quot;
+)
+
+html_print(tagList(
+  &quot;my favorite part of the volcano&quot;
+  ,tags$button(&quot;click here&quot;, onclick=&quot;zoomFavorite()&quot;)
+  ,spz
+  ,tags$script(&quot;
+    function zoomFavorite (){
+      var z = document.getElementById('story-volcano').zoomWidget;
+      // programatically zoom to specified point
+      z.zoomAtPoint( 3, {x:200, y:200});
+    }
+  &quot;)
+))</code></pre>
+<iframe src="example07.html" width="600" height="600" style="border-width:0px;overflow:hidden ;">
+</iframe>
+</div>
+<div id="not-enough-examples" class="section level2">
+<h2>Not Enough Examples</h2>
+<p>Before the post gets too long and unwieldy, I’ll stop here with the examples. If you still want to see more, see a whole new batch of examples in the <a href="https://github.com/timelyportfolio/svgPanZoom">Readme.md</a>. So far I have not found a single plot that didn’t work with <code>svgPanZoom</code>. Anybody that reports a failure wins the grand prize of getting mentioned in next week’s blog post.</p>
+</div>
+<div id="some-limitations" class="section level2">
+<h2>Some Limitations</h2>
+<p>I feel like I should mention some of the limitations of <code>svgPanZoom</code>. As mentioned, it is aimed wholly at ease and simplicity with minimal dependencies, so things like an axis that stays put while the graph zooms are not currently possible. Also, not really a fault of <code>svgPanZoom</code> more a weakness of the <code>svg grDevice</code>, the <code>SVG</code>s are not namespaced, so if you have more than one on a page, you’ll notice some funky labels. With <code>gridSVG</code> however, this is not a problem. I’ll try to demonstrate some solutions to this in the documentation or implement into the functionality of <code>svgPanZoom</code>.</p>
+<p>I have two killer features that I would like to implement, so stay tuned.</p>
+</div>
+<div id="thanks" class="section level2">
+<h2>Thanks</h2>
+<p>Thanks so much for the help from all the help from Twitter testers.</p>
+<ul>
+<li><a href="https://twitter.com/abresler">abresler</a></li>
+<li><a href="https://twitter.com/riannone">riannone</a></li>
+<li><a href="https://twitter.com/cpsievert">cpsievert</a></li>
+<li><a href="https://twitter.com/jalapic">jalapic</a></li>
+<li><a href="https://twitter.com/kyle_e_walker">kyle_e_walker</a></li>
+<li><a href="https://twitter.com/sbarfort">sbarfort</a></li>
+</ul>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

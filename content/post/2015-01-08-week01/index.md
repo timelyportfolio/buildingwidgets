@@ -1,0 +1,332 @@
+---
+title: "Week01 - Easy Flowcharts and Diagrams"
+date: "December 10, 2023"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/d3/d3.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/dagre/dagre-d3.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.slim.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/chromatography/chromatography.js"></script>
+<script src="{{< blogdown/postref >}}index_files/DiagrammeR-binding/DiagrammeR.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/d3/d3.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/dagre/dagre-d3.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.slim.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/chromatography/chromatography.js"></script>
+<script src="{{< blogdown/postref >}}index_files/DiagrammeR-binding/DiagrammeR.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/d3/d3.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/dagre/dagre-d3.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.slim.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/chromatography/chromatography.js"></script>
+<script src="{{< blogdown/postref >}}index_files/DiagrammeR-binding/DiagrammeR.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/d3/d3.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/dagre/dagre-d3.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.slim.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/chromatography/chromatography.js"></script>
+<script src="{{< blogdown/postref >}}index_files/DiagrammeR-binding/DiagrammeR.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/d3/d3.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/dagre/dagre-d3.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.slim.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/chromatography/chromatography.js"></script>
+<script src="{{< blogdown/postref >}}index_files/DiagrammeR-binding/DiagrammeR.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/d3/d3.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/dagre/dagre-d3.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.slim.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/chromatography/chromatography.js"></script>
+<script src="{{< blogdown/postref >}}index_files/DiagrammeR-binding/DiagrammeR.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/d3/d3.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/dagre/dagre-d3.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/mermaid/dist/mermaid.slim.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/chromatography/chromatography.js"></script>
+<script src="{{< blogdown/postref >}}index_files/DiagrammeR-binding/DiagrammeR.js"></script>
+
+## Already Cheating?
+
+It’s just week 1 of the Building Widgets [widget-a-week challenge](http://www.buildingwidgets.com/blog/2015/1/2/can-i-commit), and some might think I am already cheating for two reasons:
+
+1.  This widget was started last week, and
+2.  I’m not the sole author.
+
+However, these “transgressions” will likely occur throughout the year, since many widgets will be multi-week projects, and I very much like collaborating on widgets.
+
+## This Week’s Widget - [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR)
+
+[`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) is authored by Air Quality Scientist [Richard Iannone](http://about.me/rich_i/) who has quite a record of [GitHub activity](https://github.com/rich-iannone#contributions-calendar). Thanks Richard for letting me play along. If you are asking why I am involved, [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) didn’t start out as a [`htmlwidget`](http://htmlwidgets.org). Since I along with \> 5,000 other starrers love [`mermaid.js`](https://github.com/knsv/mermaid) and the `htmlwidgets` infrastructure is so compelling, I thought [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR) would be perfect as one of the first `htmlwidgets`. For more details on the conversion, see [Widgets for Christmas](http://timelyportfolio.blogspot.com/2014/12/widgets-for-christmas.html) or for those more technically inclined inspect this [pull request](https://github.com/rich-iannone/DiagrammeR/pull/2).
+
+### What Does it Do?
+
+[`mermaid.js`](https://github.com/knsv/mermaid) offers easy diagrams through a markdown-like spec and leverages [`d3`](http://d3js.org) and [`dagre-d3`](https://github.com/cpettitt/dagre-d3). The `mermaid.js` [site](http://knsv.github.io/mermaid/flowchart.html) offers quite a few examples of flowcharts, experimental sequence diagrams, and other diagrams.
+
+### Better Than Where We Found It
+
+In many cases, development of a [`htmlwidget`](http://htmlwidgets.org) can often impact the JavaScript library in various ways, such as bringing attention, offering new perspective, providing new examples and tests, and applying in different contexts and fields of study. Just to insure that we didn’t just take from `mermaid.js`, we were able to file two issues with `mermaid.js` and demonstrate one way of forcing the diagram to fit in its container `div`.
+
+### Examples in `R`
+
+In general for all the widgets to come, I will try to create entirely new examples and put them in `R` contexts. I will also try to convert examples from documentation of popular static `R` packages.
+
+<h4>
+Example 1 - Stylish Nodes
+</h4>
+
+As basic as they come, this example shows the options for shapes of nodes and some styling with `CSS`.
+
+``` r
+library(DiagrammeR)
+
+DiagrammeR("
+  graph TD;
+    A[rect]-- add style -->A2[rect + style];
+    B{rhombus}---|+ some style|B2{rhombus + style};
+    C(rounded);   D((circle)); 
+    style A2 fill:#c12,stroke-width:5px;
+    style B2 fill:none, stroke-dasharray:10;
+")
+```
+
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"diagram":"\n  graph TD;\n    A[rect]-- add style -->A2[rect + style];\n    B{rhombus}---|+ some style|B2{rhombus + style};\n    C(rounded);   D((circle)); \n    style A2 fill:#c12,stroke-width:5px;\n    style B2 fill:none, stroke-dasharray:10;\n"},"evals":[],"jsHooks":[]}</script>
+<h4>
+Example 2 - Workflow of a Building Widgets Post
+</h4>
+
+As I mentioned in my first [blog post](), I chose to build the site on [Squarespace](http://squarespace.com). Getting the workflow right will require quite a bit of iteration, but for now, here is a diagram of the workflow.
+
+``` r
+library(DiagrammeR)
+# workflow of a post graph
+DiagrammeR("
+  graph TD;
+    hw{htmlwidget} -->experiments;
+    hw -->content;
+    experiments -->RMarkdown
+    content -->RMarkdown
+    RMarkdown -->|R/knitr|Markdown;
+    Markdown -->|Pandoc|HTML;
+    HTML -->|git push| Github;
+    HTML -->|copy/paste| Squarespace ;
+")
+```
+
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-2" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"diagram":"\n  graph TD;\n    hw{htmlwidget} -->experiments;\n    hw -->content;\n    experiments -->RMarkdown\n    content -->RMarkdown\n    RMarkdown -->|R/knitr|Markdown;\n    Markdown -->|Pandoc|HTML;\n    HTML -->|git push| Github;\n    HTML -->|copy/paste| Squarespace ;\n"},"evals":[],"jsHooks":[]}</script>
+<h4>
+Example 3 - Dependencies of <a href="http://htmlwidgets.org/showcase_leaflet">Showcase Widgets</a>
+</h4>
+
+We learn about some of the first `htmlwidgets` in the [showcase](http://htmlwidgets.org/showcase_leaflet). `htmlwidgets` will often depend on many of the same JavaScript libraries. Fortunately, `htmlwidgets` handles these duplicate dependencies very nicely. Let’s make a diagram of the dependencies from all of the showcase `htmlwidgets`.
+
+``` r
+# htmlwidgets network of yaml dependency or package imports/suggest
+library(yaml)
+library(DiagrammeR)
+
+showcaseWidgets = list(
+  c("leaflet","rstudio/leaflet/master/inst/htmlwidgets/leaflet.yaml")
+  ,c("dygraphs","rstudio/dygraphs/master/inst/htmlwidgets/dygraphs.yaml")
+  ,c("networkD3","christophergandrud/networkD3/master/inst/htmlwidgets/sankeyNetwork.yaml")
+  ,c("DT","rstudio/DT/master/inst/htmlwidgets/datatables.yaml")
+  ,c("rthreejs","bwlewis/rthreejs/master/inst/htmlwidgets/globe.yaml")
+)
+
+deps = lapply(
+  showcaseWidgets
+  ,function(w){
+    y = paste0(
+      "https://raw.githubusercontent.com/"
+      ,w[2]
+    )
+    deps = yaml.load_file( y )
+    data.frame(
+      widget = w[1]
+      ,dependency = unlist(deps)[grep(x=names(unlist(deps)),pattern=".name")]
+      ,stringsAsFactors = F
+    )
+  }
+)
+
+deps = do.call(rbind,deps)
+```
+
+``` r
+DiagrammeR(
+  c(
+    "graph LR;"
+    ,sapply(
+      1:nrow(deps)
+      ,function(n){
+        paste0(
+          "id",which(unique(deps[,1])==deps[n,1]),"["
+          ,deps[n,"widget"]
+          ,"]-->"
+          ,"id",which(unique(deps[,2])==deps[n,2])+nrow(deps),"["
+          , deps[n,"dependency"]
+          ,"]"
+        )
+      }
+    )
+    ,paste0(
+      "style id"
+      , 1:length(unique(deps[,1]))
+      , " fill:"
+      , RColorBrewer::brewer.pal( n = 9, "Set1")[1:length(unique(deps[,1]))]
+    )
+  )
+)
+```
+
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-3" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"diagram":"graph LR;id1[leaflet]-->id13[jquery];id1[leaflet]-->id14[leaflet];id1[leaflet]-->id15[leafletfix];id2[dygraphs]-->id16[dygraphs];id2[dygraphs]-->id17[moment];id2[dygraphs]-->id18[moment-timezone];id3[networkD3]-->id19[d3];id3[networkD3]-->id20[sankey];id4[DT]-->id13[jquery];id4[DT]-->id21[datatables];id5[rthreejs]-->id19[d3];id5[rthreejs]-->id22[threejs];style id1 fill:#E41A1C;style id2 fill:#377EB8;style id3 fill:#4DAF4A;style id4 fill:#984EA3;style id5 fill:#FF7F00;"},"evals":[],"jsHooks":[]}</script>
+<h4>
+Example 4 - <code>igraph</code>
+</h4>
+
+Example 3 certainly could have benefitted from the power of `igraph` to build and manipulate the network of dependencies. Here is one way of combining `igraph` and `DiagrammeR`.
+
+``` r
+library(igraph)
+library(pipeR)
+library(DiagrammeR)
+
+# make a simple graph
+iG <- graph.formula(Sam+-Mary+-Tom++Jill)
+
+# get the edges in a form almost ready for DiagrammeR
+print( E(iG) ) %>>%
+  unlist %>>%
+  unname %>>%
+  (
+    c(
+      "graph LR"
+      ,paste0(gsub(x=.,pattern="(\\s)*(->)(\\s)*",replacement="-->"))
+    )
+  ) %>>%
+  paste(collapse=";") %>>%
+  DiagrammeR
+```
+
+    ## + 4/4 edges from 6c14dc4 (vertex names):
+    ## [1] Mary->Sam  Tom ->Mary Tom ->Jill Jill->Tom
+
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-4" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-4">{"x":{"diagram":"graph LR;1;2;3;4"},"evals":[],"jsHooks":[]}</script>
+<h4>
+Example 5 - Using <code>htmltools</code>
+</h4>
+
+RStudio’s package [`htmltools`](http://github.com/rstudio/htmltools) offers all sorts of helpful tools when constructing web content. We designed `DiagrammeR` to collaborate nicely with `htmltools`. In this example, we’ll use `DiagrammeR()` with an empty spec just to inject the necessary dependencies. `tags$div(class='mermaid',...,spec,...)` will provide the diagram spec.
+
+With `tagList` from `htmltools` we could also compose web content with multiple `DiagrammeR`s along with all the HTML & JavaScript that we know and love. The next example will illustrate this.
+
+``` r
+library(htmltools)
+library(DiagrammeR)
+
+tagList(
+  tags$div(
+    class="mermaid"
+    ,"graph LR; tw[htmltools tag] --> diagram"
+  )
+  ,DiagrammeR()  # here just used to inject dependencies
+)
+```
+
+<div class="mermaid">graph LR; tw[htmltools tag] --&gt; diagram</div>
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-5" style="width:960px;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-5">{"x":{"diagram":""},"evals":[],"jsHooks":[]}</script>
+<h4>
+Example 6 - Animated Path
+</h4>
+
+I would consider this example **advanced**. Various examples on the web demonstrate `CSS` animation to make an animated `path` in `SVG`. I chose this [example](http://css-tricks.com/svg-line-animation-works) and amended it to work with our `mermaid.js` diagram. As far as I know, it is the first example of its kind.
+
+``` r
+library(htmltools)
+# animated path example (advanced) and does not work in RStudio
+dg = DiagrammeR("
+  graph LR; animA[A]; style animA stroke-dasharray: 10,  animation: dash 1s linear infinite; 
+")
+# add a call our script makeAnimated defined in tags$script after render
+dg$x$tasks = htmlwidgets::JS("makeAnimated")
+tagList(
+  dg
+  ,tags$script(sprintf("
+    function makeAnimated (el){
+      // get the stylesheet and add a rule for an animated path
+      var sty = document.styleSheets[0] //el.getElementsByTagName('style')[0];
+      // http://davidwalsh.name/add-rules-stylesheets
+      //   http://css-tricks.com/svg-line-animation-works/
+      sty.insertRule('%s')
+    }"
+    ,HTML( ' @keyframes dash { to { stroke-dashoffset: 20;  } } ' )
+  ))
+)
+```
+
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-6" style="width:960px;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-6">{"x":{"diagram":"\n  graph LR; animA[A]; style animA stroke-dasharray: 10,  animation: dash 1s linear infinite; \n","tasks":"makeAnimated"},"evals":["tasks"],"jsHooks":[]}</script>
+<script>
+    function makeAnimated (el){
+      // get the stylesheet and add a rule for an animated path
+      var sty = document.styleSheets[0] //el.getElementsByTagName('style')[0];
+      // http://davidwalsh.name/add-rules-stylesheets
+      //   http://css-tricks.com/svg-line-animation-works/
+      sty.insertRule(' @keyframes dash { to { stroke-dashoffset: 20;  } } ')
+    }</script>
+<h4>
+Example 7 - Sequence Diagram
+</h4>
+
+I just learned about sequence diagrams as I read through the `mermaid.js` documentation, so I apologize if this is not quite right. While we are on the topic of `htmlwidgets`, a sequence diagram might help explain the life of a `htmlwidget`.
+
+``` r
+library(DiagrammeR)
+DiagrammeR("
+  sequenceDiagram;
+    participant R;
+    Note left of R: Get Data<br/>Do Calculations
+    htmlwidgets->>R: dependencies, binding 
+    alt Static
+      R->>Browser: json;
+      Note right of Browser: User Interact
+    else Shiny
+      loop continuously in response to event
+        R-->>Browser: json over socket;
+        Browser-->>R: json over socket;
+        Note left of R: Get Data<br/>Do Calculations
+        Note right of Browser: User Interact
+      end
+    end
+")
+```
+
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-7" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-7">{"x":{"diagram":"\n  sequenceDiagram;\n    participant R;\n    Note left of R: Get Data<br/>Do Calculations\n    htmlwidgets->>R: dependencies, binding \n    alt Static\n      R->>Browser: json;\n      Note right of Browser: User Interact\n    else Shiny\n      loop continuously in response to event\n        R-->>Browser: json over socket;\n        Browser-->>R: json over socket;\n        Note left of R: Get Data<br/>Do Calculations\n        Note right of Browser: User Interact\n      end\n    end\n"},"evals":[],"jsHooks":[]}</script>
+
+### Conclude and Reproduce
+
+I hope you enjoyed the first installment of the widget a week project. Please, please let me know your thoughts, comments, brilliant ideas, applications, and favorite JavaScript libraries.

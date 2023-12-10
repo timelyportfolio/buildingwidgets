@@ -1,0 +1,78 @@
+---
+title: "Week02 - Pan and Zoom Almost Any R Graph"
+date: "December 10, 2023"
+output:
+  html_document:
+    theme: ~
+    toc: true
+---
+
+
+
+## htmlwidgets News This Week
+@yutannihiliation has been prolific this week with a couple new widget seeds and contributions to this widget [`metricsgraphics`](http://hrbrmstr.github.io/metricsgraphics/) announced last week.
+
+- [`chartist`](https://github.com/yutannihilation/chartist) - [Chartist.js](http://gionkunz.github.io/chartist-js) wrapper
+- [`gneisschart`](https://github.com/yutannihilation/gneisschart) - Gneisschart/[Chartbuilder (Quartz)](http://quartz.github.io/Chartbuilder/) wrapper
+
+@dcenergy
+
+- [`rflot`](https://github.com/dcenergy/rflot) - [Flot](https://github.com/dcenergy/rflot) wrapper
+
+@armish
+
+- [`coffeewheel`](https://github.com/armish/coffeewheel) - [`coffeewheel` by Jason Davies](https://www.jasondavies.com/coffee-wheel/) wrapper
+- [`metabologram`](https://github.com/armish/metabologram) - a specialized form of `coffeewheel` mentioned above
+
+@lmullen
+
+Not launched last week, but a big miss by me is this `htmlwidget` for mapping from @lmullen.  It was one of the first `htmlwidgets` built after the Dec. 17 release announcement, and offers some nice functionality and interesting examples.
+
+- [`cartographer`](https://github.com/lmullen/cartographer) - [`d3.carto.map`](https://github.com/emeeks/d3-carto-map) wrapper by @lmullen
+
+@rich-iannone
+
+Also, be sure to check out the new `graphviz` functionality added to last week's widget of the week [`DiagrammeR`](https://github.com/rich-iannone/DiagrammeR).
+
+## This Week's Widget - [`svgPanZoom`](https://github.com/timelyportfolio/svgPanZoom)
+I wanted to head in a slightly different direction with this week's widget.  Instead of wrapping Javascript charting libraries as most `htmlwidgets` to date have done, I wanted to let `R` still do the plotting, since so many of us know and love base `graphics`, `ggplot2`, and `lattice`.  I hope nearly every `R` user can easily incorporate this little widget into their `R` graphical analysis and publishing workflow.
+
+## What Does it Do?
+With some help from [`SVGAnnotation`](http://www.omegahat.org/SVGAnnotation/) or [`gridSVG`](https://sjp.co.nz/projects/gridsvg/), `svgPanZoom` will add pan and zoom functionality to nearly all `R` graphics using [`svg-pan-zoom.js`](https://github.com/ariutta/svg-pan-zoom), a tiny and dependency-free Javascript library.  Maybe a little graphic drawn from last week's `DiagrammeR` can help explain the process.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

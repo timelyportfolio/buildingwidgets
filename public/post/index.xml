@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on A Hugo website</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Thu, 08 Jan 2015 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Week01 - Easy Flowcharts and Diagrams</title>
+      <link>/2015/01/08/week01/</link>
+      <pubDate>Thu, 08 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/01/08/week01/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week01 - Easy Flowcharts and DiagramsWeek01 - Easy Flowcharts and DiagramsJanuary 08, 2015Already Cheating?This Week’s Widget - DiagrammeRWhat Does it Do?Better Than Where We Found ItExamples in RConclude and ReproduceAlready Cheating?It’s just week 1 of the Building Widgets widget-a-week challenge, and some might think I am already cheating for two reasons:
+This widget was started last week, andI’m not the sole author.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>mermaid Generation of diagrams and flowcharts from text in a similar manner as markdown.
+Ever wanted to simplify documentation and avoid heavy tools like Visio when explaining your code?
+This is why mermaid was born, a simple markdown-like script language for generating charts from text via javascript.
+The code below would render the following image
+graph TD;A--&gt;B;A--&gt;C;B--&gt;D;C--&gt;D;would render this lovely chart:sequenceDiagramparticipant Aliceparticipant BobAlice-&gt;John: Hello John, how are you?</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Responsive Nav Responsive navigation plugin without library dependencies and with fast touch screen support. Responsive Nav is a tiny JavaScript plugin which weighs only 1.3kb minified and Gzip’ed, and helps you to create a toggled navigation for small screens. It uses touch events and CSS3 transitions for the best possible performance. It also contains a “clever” workaround that makes it possible to transition from height: 0 to height: auto, which isn’t normally possible with CSS3 transitions.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Copyright (c) 2010-2014, Michael Bostock All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Copyright 2014 PMSI-AlignAlytics www.pmsi-consulting.com
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>dimple Dimple is an object-oriented API allowing you to create flexible axis-based charts using d3.js.
+The intention of this project is to allow analysts who are not necessarily expert JavaScript programmers to create standard (and some not-so-standard) business analytics.
+The API will also expose the core d3 objects where possible so that as users gain confidence they can extend the base functionality in whatever way they wish.
+Please visit the main website dimplejs.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Intense Images A stand alone javascript library for viewing images on the full, full screen. Using the touch/mouse position for panning. Here&amp;rsquo;s a demo! You can also play with the code live on CodePen.
+Instructions Intense images is a stand alone library (no jquery, or the likes) so usage is pretty straight forward. All styling of image elements is up to the user, Intense.js only handles the creation, styling and management of the image viewer and captions.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Responsive Nav Responsive navigation plugin without library dependencies and with fast touch screen support. Responsive Nav is a tiny JavaScript plugin which weighs only 1.3kb minified and Gzip’ed, and helps you to create a toggled navigation for small screens. It uses touch events and CSS3 transitions for the best possible performance. It also contains a “clever” workaround that makes it possible to transition from height: 0 to height: auto, which isn’t normally possible with CSS3 transitions.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Introduction canvg is a SVG parser and renderer. It takes a URL to a SVG file or the text of an SVG file, parses it in JavaScript, and renders the result on a Canvas element. The rendering speed of the examples is about as fast as native SVG.
+What&amp;rsquo;s implemented? The end goal is everything from the SVG spec. The majority of the rendering and animation is working. If you would like to see a feature implemented, don&amp;rsquo;t hesitate to contact me or add it to the issues list.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Contributing If you’re looking for ways to contribute, please peruse open issues. The icebox is a good place to find ideas that are not currently in development. If you already have an idea, please check past issues to see whether your idea or a similar one was previously discussed.
+Before submitting a pull request, consider implementing a live example first, say using bl.ocks.org. Real-world use cases go a long way to demonstrating the usefulness of a proposed feature.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Copyright (c) 2010-2014, Michael Bostock All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Copyright 2014 PMSI-AlignAlytics www.pmsi-consulting.com
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>dimple Dimple is an object-oriented API allowing you to create flexible axis-based charts using d3.js.
+The intention of this project is to allow analysts who are not necessarily expert JavaScript programmers to create standard (and some not-so-standard) business analytics.
+The API will also expose the core d3 objects where possible so that as users gain confidence they can extend the base functionality in whatever way they wish.
+Please visit the main website dimplejs.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>DOWNLOAD JS Intelligent JavaScript solution for file downloading. Easy to use - just call downloadFile(URL) global function.
+See it in action
+Article about
+Why DownloadJS? Avoids stupid blank screens after file starts downloading in Chrome, Safari; Ignores content type by using virtual link with &amp;ldquo;download&amp;rdquo; attribute. So file will be downloaded even if content type says browser to show file`s content in new window. This allows to download PNGs, HTMLs and so on; Small function without any dependencies.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Copyright (c) 2010-2014, Michael Bostock All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>FlowType.JS Responsive web typography at its finest: font-size and line-height based on element width.
+Check out the demo site.
+What does FlowType.JS do? Ideally, the most legible typography contains between 45 and 75 characters per line. This is difficult to accomplish for all screen widths with only CSS media-queries. FlowType.JS eases this difficulty by changing the font-size and line-height based on a specific element&amp;rsquo;s width. This allows for a perfect character count per line at any screen width.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>This example shows how it is possible to use a D3 sunburst visualization (partition layout) with data that describes sequences of events.
+A good use case is to summarize navigation paths through a web site, as in the sample synthetic data file (visit_sequences.csv). The visualization makes it easy to understand visits that start directly on a product page (e.g. after landing there from a search engine), compared to visits where users arrive on the site&amp;rsquo;s home page and navigate from there.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>See my article on Krzywinski’s Hive Plots. See also area hive plots.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>__/\ \ ____ __ ___ \_\ \ __ _ __ ____ ___ ___ _ __ __ /\_\ ____/\ \/\ \ /&#39; _ `\ /&#39;_ \ /&#39;__`\/\ __\/ ,__\ / ___\ / __`\/\ __\/&#39;__`\ \/\ \ /&#39;,__\\ \ \_\ \/\ \/\ \/\ \ \ \/\ __/\ \ \//\__, `\/\ \__//\ \ \ \ \ \//\ __/ __ \ \ \/\__, `\\ \____/\ \_\ \_\ \___,_\ \____\\ \_\\/\____/\ \____\ \____/\ \_\\ \____\/\_\ _\ \ \/\____/\/___/ \/_/\/_/\/__,_ /\/____/ \/_/ \/___/ \/____/\/___/ \/_/ \/____/\/_//\ \_\ \/___/\ \____/\/___/Underscore.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>mapshaper Introduction Mapshaper is software for editing Shapefile, GeoJSON, TopoJSON and several other data formats, written in JavaScript.
+The mapshaper command line program supports common map making tasks like simplifying shapes, editing attribute data, clipping, erasing, dissolving, filtering and more.
+There is a web UI that supports interactive simplification and attribute editing. The web interface also has as a built in console for running cli commands.
+See the project wiki for documentation on using mapshaper.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>biofabric a module for generating biofabric graphs using d3. adapted from this example and made more abstract
+You will most likely have to do edits to the code to get your graph to render beautifully as the original code this was adapted from was designed around the miserables.json data.
+usage var fabric = require(&#39;biofabric&#39;)fabric(graph, {width: 1400})graph should be a JS object like this:
+{&amp;quot;nodes&amp;quot;:[{&amp;quot;name&amp;quot;:&amp;quot;Bob&amp;quot;,&amp;quot;group&amp;quot;:1},{&amp;quot;name&amp;quot;:&amp;quot;Alice&amp;quot;,&amp;quot;group&amp;quot;:2}],&amp;quot;links&amp;quot;:[{&amp;quot;source&amp;quot;:1,&amp;quot;target&amp;quot;:0,&amp;quot;value&amp;quot;:1}]}</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>React Stockcharts Create highly customizable stock charts
+Built with React JS and d3
+Installation npm install react-stockcharts --saveDocumentation Getting started
+Examples Refer to some quick start examples</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Railroad-diagram Generator This is a small js library for generating railroad diagrams (like what JSON.org uses) using SVG.
+Railroad diagrams are a way of visually representing a grammar in a form that is more readable than using regular expressions or BNF. I think (though I haven&amp;rsquo;t given it a lot of thought yet) that if it&amp;rsquo;s easy to write a context-free grammar for the language, the corresponding railroad diagram will be easy as well.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Contributing If you’re looking for ways to contribute, please peruse open issues. The icebox is a good place to find ideas that are not currently in development. If you already have an idea, please check past issues to see whether your idea or a similar one was previously discussed.
+Before submitting a pull request, consider implementing a live example first, say using bl.ocks.org. Real-world use cases go a long way to demonstrating the usefulness of a proposed feature.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>d3.tip: Tooltips for d3.js visualizations See a live demo Example code API Docs See the API Documentation
+Download Latest Version Development Version : 6kb / ~2kb gzipped Install with Bower bower install d3-tipQuick Usage /* Initialize tooltip */tip = d3.tip().attr(&#39;class&#39;, &#39;d3-tip&#39;).html(function(d) { return d; });/* Invoke the tip in the context of your visualization */vis.call(tip)vis.selectAll(&#39;rect&#39;).data(data).enter().append(&#39;rect&#39;).attr(&#39;width&#39;, function() { return x.rangeBand() }).attr(&#39;height&#39;, function(d) { return h - y(d) }).</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Vega: A Visualization Grammar Vega is a visualization grammar, a declarative format for creating and saving interactive visualization designs. With Vega you can describe data visualizations in a JSON format, and generate interactive views using either HTML5 Canvas or SVG.
+To learn more, visit the wiki.
+The Vega Runtime This repository contains the vega-runtime system, which parses Vega specifications to produce interactive visualizations which run in the browser using a scenegraph-based rendering system.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>d3-legend Full documentation: http://d3-legend.susielu.com
+Usage Using just the minified file You must inclue the d3 library before including the legend file. Then you can simply add the compiled js file to your website:
+d3-legend.min.js d3-legend.js (Human readable version) Using CDN You can also add latest version of d3-legend hosted on cdnjs.
+Using npm Already using d3? Great! You can add the d3 legend as a node module by running:
+npm i d3-svg-legend -S</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>reusable updating radarChart ###Design based on original by NadiehBremer at Visual Cinnamon
+###Coding philosophy inspired by Rob Moore
+####See this block in production with Live Data
+Find the Latest Code on GitHub #####I figured out enter/exit/update for nested objects by studying Lee Mendelowitz&amp;rsquo;s block and reviewing Mike&amp;rsquo;s comments
+###Features:
+Separate layer for hover objects which need to remain on top of chart Separate layer for tooltip which needs to be uppermost layer Events are configurable as options such that external functions can be seamlessly integrated e.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Contributing Important: these GitHub issues are for bug reports and feature requests only. Please use StackOverflow or the d3-js Google group for general help.
+If you’re looking for ways to contribute, please peruse open issues. The icebox is a good place to find ideas that are not currently in development. If you already have an idea, please check past issues to see whether your idea or a similar one was previously discussed.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Data-Driven Documents D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.
+Want to learn more? See the wiki.
+For examples, see the gallery and mbostock’s bl.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>htmlwidgets in effect are reusable HTML/JS/CSS components (think simple Polymer or WebComponents). I don&amp;rsquo;t recommend it, but if we wanted to use an htmlwidget with no R, it is fairly straightforward. Even if you decided not to do this, I think it will be helpful in your journey to htmlwidgets mastery.
+We&amp;rsquo;ll use the simple but powerful jsonedit from the listviewer package. Its JavaScript binding is very sparse, so I hope it will be a good subject.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>TreeColors.js A javascript implementation of the color scheme proposed in the paper &amp;ldquo;TreeColors: Color Schemes for Tree-Structured Data&amp;rdquo;
+Usage will be provided soon.
+License MIT © Jaemin Jo</description>
+    </item>
+    
+  </channel>
+</rss>

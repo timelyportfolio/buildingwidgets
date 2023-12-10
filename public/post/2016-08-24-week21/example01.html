@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<script src="lib/htmlwidgets-0.7/htmlwidgets.js"></script>
+<script src="lib/d3-3.5.2/d3.min.js"></script>
+<link href="lib/radial-0.1/radial.css" rel="stylesheet" />
+<script src="lib/TreeColors-0.1.0/TreeColors.min.js"></script>
+<script src="lib/radialNetwork-binding-0.1.0/radialNetwork.js"></script>
+
+</head>
+<body style="background-color:white;">
+<div id="htmlwidget_container">
+  <div id="htmlwidget-e4e0904c835b2ad0d40c" style="width:650px;height:500px;" class="radialNetwork html-widget">
+<div class="tree-container"></div>
+
+<div class="toolbar">
+<div class="tool">
+<div class="tlabel">zoom</div>
+<div class="tbuttons">
+<div class="button" data-key="187" title="Zoom In (+ OR scrollwheel)">+</div>
+<div class="button" data-key="189" title="Zoom Out (&minus; OR scrollwheel)">&minus;</div>
+</div>
+</div>
+<div class="tool">
+<div class="tlabel">rotate</div>
+<div class="tbuttons">
+<div class="button" data-key="33" title="Rotate CCW (Page Up OR &#8679;scrollwheel)" style="font-size:0.9em">&#8634;</div>
+<div class="button" data-key="34" title="Rotate CW (Page Down OR &#8679;scrollwheel)" style="font-size:0.9em">&#8635;</div>
+</div>
+</div>
+<div class="tool">
+<div class="tlabel">select</div>
+<div class="tbuttons">
+<div class="button" data-key="-38" title="Select Previous (&#8679;&uarr;)" style="font-size:0.9em">&#8613;</div>
+<div class="button" data-key="-40" title="Select Next (&#8679;&darr;)" style="font-size:0.9em">&#8615;</div>
+</div>
+</div>
+<div class="tool">
+<div class="tlabel">view</div>
+<div class="tbuttons">
+<div class="button" data-key="36" title="Center Root (Home)">&#8962;</div>
+<div class="button" data-key="35" title="Center Selected (End)" style="font-size:0.8em">&#9673;</div>
+</div>
+</div>
+<div class="tool">
+<div class="tlabel">toggle</div>
+<div class="tbuttons">
+<div class="button" data-key="32" title="Toggle Node (Space OR double-click)">1</div>
+<div class="button" data-key="13" title="Toggle Level (Return OR &#8679;double-click)">&oplus;</div>
+<div class="button" data-key="191" title="Toggle Root (/)">/</div>
+</div>
+</div>
+<div class="tool">
+<div class="tlabel" style="text-align:left" title="Change Root">&nbsp;selection</div>
+<div class="selection" class="tlabel"></div>
+</div>
+</div>
+
+<div class="contextmenu">
+<div data-key="32"><span class="expcol">Expand</span> Node</div>
+<div data-key="13">Expand 1 Level</div>
+<div data-key="-13">Expand Full Tree</div>
+<div data-key="35">Center This Node</div>
+<div data-key="36">Center Root</div>
+<div data-key="191">Set Root</div>
+</div>
+</div>
+</div>
+<script type="application/json" data-for="htmlwidget-e4e0904c835b2ad0d40c">{"x":{"root":{"name":"Acme Inc.","children":[{"name":"Accounting","children":[{"name":"New Software","cost":1000000,"p":0.5},{"name":"New Accounting Standards","cost":500000,"p":0.75}]},{"name":"Research","children":[{"name":"New Product Line","cost":2000000,"p":0.25},{"name":"New Labs","cost":750000,"p":0.9}]},{"name":"IT","children":[{"name":"Outsource","cost":400000,"p":0.2},{"name":"Go agile","cost":250000,"p":0.05},{"name":"Switch to R","cost":50000,"p":1}]}]},"options":[],"tasks":null},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-e4e0904c835b2ad0d40c">{"viewer":{"width":650,"height":500,"padding":15,"fill":false},"browser":{"width":650,"height":500,"padding":75,"fill":false}}</script>
+</body>
+</html>
