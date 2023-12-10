@@ -15,9 +15,9 @@ title: About
             <div class="sqs-slice" data-slice-type="body" data-slice-id="56cca302f699bb48fcf23610">
                 <p>
                     <span style="font-size:15px">2015 -&gt;in this little </span>
-                    <a target="_blank" href="https://web.archive.org/web/20180529084623/https://twitter.com/timelyportfolio/status/549977187307507712">tweet</a>
+                    <a target="_blank" href="https://twitter.com/timelyportfolio/status/549977187307507712">tweet</a>
                     <span style="font-size:15px">
-                        , I declared the year 2015 the year of the htmlwidget and <a href="/web/20180529084623/http://www.buildingwidgets.com/blog">built one a week</a>
+                        , I declared the year 2015 the year of the htmlwidget and built one a week
                     </span>
                 </p>
                 <p>
@@ -26,7 +26,7 @@ title: About
                 </p>
                 <p>
                     <strong>
-                        <a target="_blank" href="https://web.archive.org/web/20180529084623/https://www.paypal.me/kentonlrussell">Contribute with Paypal</a>
+                        <a target="_blank" href="https://www.paypal.me/kentonlrussell">Contribute with Paypal</a>
                         to my open source efforts. More than likely I will use the money for books to make even better open source.
                     </strong>
                 </p>
