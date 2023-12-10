@@ -27,6 +27,16 @@ d3r Shows UsI had forgotten that in d3r::d3_nest I provided an argument to get 
     </item>
     
     <item>
+      <title>Week21 - Radial Tree</title>
+      <link>/2016/08/24/radial-tree/</link>
+      <pubDate>Wed, 24 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/08/24/radial-tree/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week21 - Radial TreeWeek21 - Radial TreeAugust 24, 2016htmlwidgets News This WeekThis Week’s Widget - radialNetworkQuick InstallationExampleThankshtmlwidgets News This WeekAvid readers already know, but for all the newest and updated htmlwidgets, just do this Github search, and you’ll quickly get up to date.
+This Week’s Widget - radialNetworkWhen I saw Wm Leler demonstrate his radial tree on this d3.</description>
+    </item>
+    
+    <item>
       <title>Look Ma No R</title>
       <link>/2016/08/04/widgets-without-r/</link>
       <pubDate>Thu, 04 Aug 2016 00:00:00 +0000</pubDate>
@@ -34,6 +44,15 @@ d3r Shows UsI had forgotten that in d3r::d3_nest I provided an argument to get 
       <guid>/2016/08/04/widgets-without-r/</guid>
       <description>&lt;!DOCTYPE html&gt;htmlwidgets in effect are reusable HTML/JS/CSS components (think simple Polymer or WebComponents) I don’t recommend it, but if we wanted to use an htmlwidget with no R, it is fairly straightforward. Even if you decided not to do this, I think it will be helpful in your journey to htmlwidgets mastery.
 We’ll use the simple but powerful jsonedit from the listviewer package. Its JavaScript binding is very sparse, so I hope it will be a good subject.</description>
+    </item>
+    
+    <item>
+      <title>Comic Options for R Output</title>
+      <link>/2016/07/20/comic-r/</link>
+      <pubDate>Wed, 20 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/07/20/comic-r/</guid>
+      <description>&lt;!DOCTYPE html&gt;Comic Options for R OutputComic Options for R OutputKent Russell2016-07-20In this Ted Talk and his book Understanding Comics, Scott McCloud discusses his theory of iconic identification. In his theory he claims that we identify more with cartoons and icons than realistic images and words. Assuming this is true and assuming that it can be applied to output from R, some package authors have offered some packages to cartoonize R graphs.</description>
     </item>
     
     <item>
@@ -489,17 +508,6 @@ This Week’s Widget - katexR | KaTeX rendering for RI’m guessing your first 
       <guid>/2015/01/08/week01/</guid>
       <description>&lt;!DOCTYPE html&gt;Week01 - Easy Flowcharts and DiagramsWeek01 - Easy Flowcharts and DiagramsJanuary 08, 2015Already Cheating?This Week’s Widget - DiagrammeRWhat Does it Do?Better Than Where We Found ItExamples in RConclude and ReproduceAlready Cheating?It’s just week 1 of the Building Widgets widget-a-week challenge, and some might think I am already cheating for two reasons:
 This widget was started last week, andI’m not the sole author.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>TreeColors.js A javascript implementation of the color scheme proposed in the paper &amp;ldquo;TreeColors: Color Schemes for Tree-Structured Data&amp;rdquo;
-Usage will be provided soon.
-License MIT © Jaemin Jo</description>
     </item>
     
   </channel>
