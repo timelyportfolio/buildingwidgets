@@ -6,7 +6,7 @@
     <description>Recent content on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 08 Jan 2015 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Feb 2015 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About</title>
       <link>/about/</link>
@@ -17,6 +17,46 @@
     </item>
     
     <item>
+      <title>Week05 - KaTeX Math in R</title>
+      <link>/2015/02/05/week05/</link>
+      <pubDate>Thu, 05 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/02/05/week05/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week05 - KaTeX Math in RWeek05 - KaTeX Math in RFebruary 05, 2015htmlwidgets News This WeekThis Week’s Widget - katexR | KaTeX rendering for RExamplesSimple ExamplesIn MarkdownThankshtmlwidgets News This Week@jcheng5 from RStudio
+-@jcheng5 - d3 bubble chart bubbles demonstrated live in a simulated dashboard at this DataScience.LA meetup.
+This Week’s Widget - katexR | KaTeX rendering for RI’m guessing your first question will be something like this.</description>
+    </item>
+    
+    <item>
+      <title>Week04 - Interactive and Configurable Parallel Coordinates</title>
+      <link>/2015/01/30/week04/</link>
+      <pubDate>Fri, 30 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/01/30/week04/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week04 - Interactive and Configurable Parallel CoordinatesWeek04 - Interactive and Configurable Parallel CoordinatesJanuary 30, 2015htmlwidgets News This WeekThis Week’s Widget - parcoords | Interactive d3.js Parallel CoordinatesWhat Does it Do?Simple ExampleBrush On and ReorderQueue Render for Bigger Data and Some ColorUnfinishedThankshtmlwidgets News This Week@kbroman starts exploring htmlwidgets.
+-@kbroman - test htmlwidgets conversion of the scatterplot from his qtlcharts</description>
+    </item>
+    
+    <item>
+      <title>Week03 - More Networks</title>
+      <link>/2015/01/23/week03/</link>
+      <pubDate>Fri, 23 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/01/23/week03/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week03 - More NetworksWeek03 - More NetworksJanuary 23, 2015htmlwidgets News This WeekThis Week’s Widget - hierNetwork for networkD3What Does it Do?Two Lines of Code - Existing NicenessMore Layouts with hierNetworkGlitzier LayoutsDirection I’d Like to HeadThankshtmlwidgets News This Week@smartinsightsfromdata has started two new widgets over the past couple of weeks.
+-rd3pie - d3pie wrapper. This should make interactive pie charts much easier than my experiment from a couple months ago with d3pie + rCharts.</description>
+    </item>
+    
+    <item>
+      <title>Week02 - Pan and Zoom Almost Any R Graph</title>
+      <link>/2015/01/15/week02/</link>
+      <pubDate>Thu, 15 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/01/15/week02/</guid>
+      <description>&lt;!DOCTYPE html&gt;Week02 - Pan and Zoom Almost Any R GraphWeek02 - Pan and Zoom Almost Any R GraphJanuary 15, 2015htmlwidgets News This WeekThis Week’s Widget - svgPanZoomWhat Does it Do?Examples in RNot Enough ExamplesSome LimitationsThankshtmlwidgets News This Week@yutannihiliation has been prolific this week with a couple new widget seeds and contributions to this widget metricsgraphics announced last week.</description>
+    </item>
+    
+    <item>
       <title>Week01 - Easy Flowcharts and Diagrams</title>
       <link>/2015/01/08/week01/</link>
       <pubDate>Thu, 08 Jan 2015 00:00:00 +0000</pubDate>
@@ -24,19 +64,6 @@
       <guid>/2015/01/08/week01/</guid>
       <description>&lt;!DOCTYPE html&gt;Week01 - Easy Flowcharts and DiagramsWeek01 - Easy Flowcharts and DiagramsJanuary 08, 2015Already Cheating?This Week’s Widget - DiagrammeRWhat Does it Do?Better Than Where We Found ItExamples in RConclude and ReproduceAlready Cheating?It’s just week 1 of the Building Widgets widget-a-week challenge, and some might think I am already cheating for two reasons:
 This widget was started last week, andI’m not the sole author.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>mermaid Generation of diagrams and flowcharts from text in a similar manner as markdown.
-Ever wanted to simplify documentation and avoid heavy tools like Visio when explaining your code?
-This is why mermaid was born, a simple markdown-like script language for generating charts from text via javascript.
-The code below would render the following image
-graph TD;A--&gt;B;A--&gt;C;B--&gt;D;C--&gt;D;would render this lovely chart:sequenceDiagramparticipant Aliceparticipant BobAlice-&gt;John: Hello John, how are you?</description>
     </item>
     
     <item>

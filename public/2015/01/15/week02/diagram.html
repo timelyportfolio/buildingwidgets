@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<script src="lib/htmlwidgets-0.3.2/htmlwidgets.js"></script>
+<script src="lib/d3-3.3.8/d3.min.js"></script>
+<script src="lib/dagre-0.4.0/dagre-d3.min.js"></script>
+<script src="lib/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<link href="lib/styles-0.1/styles.css" rel="stylesheet" />
+<script src="lib/DiagrammeR-binding-0.2/DiagrammeR.js"></script>
+
+</head>
+<body>
+<div id="htmlwidget_container">
+  <div id="htmlwidget-7104" style="width:550px;height:300px;" class="DiagrammeR"></div>
+</div>
+<script type="application/json" data-for="htmlwidget-7104">{ "x": {
+ "diagram": "\n  graph LR;\n    gr[<code>graphics</code>]-->sp[<code>svgPlot</code>]\n    la[<code>lattice/trellis</code>]-->sp\n    la[<code>lattice/trellis</code>]-->gs[<code>gridSVG</code>]\n    gg[<code>ggplot2</code>]-->sp\n    gg[<code>ggplot2</code>]-->gs\n    sp-->|svg+js|ht[Interactive Graphic]\n    gs-->|svg+js|ht\n    ht-->Shiny\n    ht-->rs[RStudio Viewer]\n    ht-->rm[R Markdown]\n    ht-->html[standalone HTML]\n    ht-->iframe\n    classDef default fill:none;\n" 
+},"evals": [  ] }</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-7104">{ "viewer": {
+ "width":               550,
+"height":               300,
+"padding":                15,
+"fill": false 
+},"browser": {
+ "width":               550,
+"height":               300,
+"padding":                40,
+"fill": false 
+} }</script>
+</body>
+</html>
