@@ -1,7 +1,7 @@
 baseurl: /
 publishDir: docs
 languageCode: en-US
-title: A Hugo website
+title: Building Widgets | R + JS
 theme: hugo-lithium
 googleAnalytics: ''
 disqusShortname: ''
